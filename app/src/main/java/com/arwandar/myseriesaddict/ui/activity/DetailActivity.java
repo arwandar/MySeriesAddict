@@ -1,10 +1,10 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,16 +21,12 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Ajouter aux séries terminées", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Details");
+            actionBar.setDisplayShowTitleEnabled(true);
+        }
 
         Bundle mBundle = getIntent().getExtras();
         mSeries = (Series) mBundle.get("seriesSelected");
@@ -42,7 +38,11 @@ public class DetailActivity extends AppCompatActivity {
         seriesName.setText(mSeries.getmName());
         seriesPlot.setText(mSeries.getmPlot());
         seriesPicture.setBackgroundColor(mSeries.getmColor());
-
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        onBackPressed();
+        return true;
+    }
 }

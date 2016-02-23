@@ -16,7 +16,6 @@ import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.adpater.SeriesAdapter;
 import com.arwandar.myseriesaddict.common.task.FetchSeriesTask;
 import com.arwandar.myseriesaddict.common.util.ItemClickSupport;
-import com.arwandar.myseriesaddict.factory.SeriesFactory;
 import com.arwandar.myseriesaddict.model.Series;
 
 import java.util.ArrayList;
@@ -32,10 +31,6 @@ public class SeriesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private SeriesListCallback mCallback;
-
-    public SeriesFragment() {
-        mSeries = SeriesFactory.getSeriesList();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +93,7 @@ public class SeriesFragment extends Fragment {
         try {
             FetchSeriesTask task = new FetchSeriesTask(getActivity(), ACTION_FOR_INTENT_CALLBACK);
             task.execute();
-            progress = ProgressDialog.show(getActivity(), "Récupération des séries", "..", true);
+            progress = ProgressDialog.show(getActivity(), "", "Récupération des séries sur BetaSérie", true);
 
         } catch (Exception e) {
             e.printStackTrace();

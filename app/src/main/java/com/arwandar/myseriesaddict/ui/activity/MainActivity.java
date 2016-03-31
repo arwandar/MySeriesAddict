@@ -12,27 +12,32 @@ import com.arwandar.myseriesaddict.common.adpater.SeriesPagerAdapter;
 import com.arwandar.myseriesaddict.model.Series;
 import com.arwandar.myseriesaddict.ui.fragment.SeriesFragment;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements SeriesFragment.SeriesListCallback {
 
-    private ViewPager mViewPager;
     private SeriesPagerAdapter mAdapter;
+
+    @Bind(R.id.tabs) TabLayout tabLayout;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.series_pager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        ButterKnife.bind(this);
+
         tabLayout.addTab(tabLayout.newTab().setText("Séries en cours"));
         tabLayout.addTab(tabLayout.newTab().setText("Séries terminées"));
         tabLayout.setTabGravity(tabLayout.GRAVITY_FILL);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mViewPager = (ViewPager) findViewById(R.id.series_pager);
         mAdapter = new SeriesPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);

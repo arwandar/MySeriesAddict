@@ -22,11 +22,11 @@ public interface ILoginService {
     @FormUrlEncoded
     @POST("/members/access_token")
     Call<AccessToken> getAccessToken(
-            @Query("code") String code,
-            @Query("client_secret") String client_secret,
-            @Query("redirect_uri") String redirect_uri,
-            @Query("key") String key,
-            @Query("v") String v,
+            @Field("code") String code,
+            @Field("client_secret") String client_secret,
+            @Field("redirect_uri") String redirect_uri,
+            @Field("key") String key,
+            @Field("v") String v,
             @Field("client_id") String client_id
     );
 }

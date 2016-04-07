@@ -23,13 +23,6 @@
 
     <include layout="@layout/content_detail" />
 
-    <Button
-        android:id="@+id/loginbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Login"/>
 
 
 

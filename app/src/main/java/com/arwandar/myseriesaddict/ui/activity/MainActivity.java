@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements SeriesFragment.Se
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.series_pager) ViewPager mViewPager;
+
     private SeriesPagerAdapter mAdapter;
 
     @Override

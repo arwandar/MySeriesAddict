@@ -13,7 +13,19 @@ import android.widget.TextView;
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.model.Series;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
+
+    @Bind(R.id.series_detail_name)
+    TextView seriesName;
+    @Bind(R.id.series_detail_plot)
+    TextView seriesPlot;
+    @Bind(R.id.series_detail_color)
+    View seriesPicture;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private Series mSeries;
 
@@ -21,7 +33,9 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -33,29 +47,9 @@ public class DetailActivity extends AppCompatActivity {
         Bundle mBundle = getIntent().getExtras();
         mSeries = (Series) mBundle.get("seriesSelected");
 
-        TextView seriesName = (TextView) this.findViewById(R.id.series_detail_name);
-        TextView seriesPlot = (TextView) this.findViewById(R.id.series_detail_plot);
-        View seriesPicture = this.findViewById(R.id.series_detail_color);
-
         seriesName.setText(mSeries.getmName());
         seriesPlot.setText(mSeries.getmPlot());
         seriesPicture.setBackgroundColor(mSeries.getmColor());
-
-
-
-
-        Button loginButton = (Button) findViewById(R.id.loginbutton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
     }
 
     @Override

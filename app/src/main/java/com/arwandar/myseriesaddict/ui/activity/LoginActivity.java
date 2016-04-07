@@ -3,6 +3,7 @@ package com.arwandar.myseriesaddict.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -46,7 +47,11 @@ public class LoginActivity extends AppCompatActivity {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (Uri.parse(url).getHost().equals("127.0.0.1")) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+            if(url != null && url.startsWith(redirectUri)){
+            //if (Uri.parse(url).getHost().equals("127.0.0.1")) {
                 // This is my web site, so do not override; let my WebView load the page
                 Uri uri = Uri.parse(url);
                 String code = uri.getQueryParameter("code");
@@ -55,30 +60,12 @@ public class LoginActivity extends AppCompatActivity {
                     ILoginService loginService = ServiceGenerator.createService(ILoginService.class, null);
                     Call<AccessToken> call = loginService.getAccessToken(code, clientSecret, redirectUri, clientId, version, clientId);
 
-                    call.enqueue(new Callback<AccessToken>() {
-                        @Override
-                        public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                            if (response.isSuccessful()) {
-                                System.out.println(response);
-                                // tasks available
-                            } else {
-                                // error response, no access to resource?
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<AccessToken> call, Throwable t) {
-                            // something went completely south (like no internet connection)
-                            Log.d("Error", t.getMessage());
-                        }
-                    });
-
-                    //try {
-                    //    AccessToken accessToken = call.execute().body();
-                    //    System.out.println(accessToken.toString());
-                    //} catch (Exception e) {
-                    //    e.printStackTrace();
-                    //}
+                    try {
+                        AccessToken accessToken = call.execute().body();
+                        System.out.println(accessToken.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else if (uri.getQueryParameter("error") != null) {
                     // show an error message here
                 }

@@ -18,6 +18,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     public static final String API_BASE_URL = "https://api.betaseries.com";
+    private static final String API_VERSION = "2.4";
+    private static final String API_KEY = "a93691358c05";
+    private static AccessToken mApiToken;
+
+
+    public static void setApiToken(AccessToken token) {
+        mApiToken = token;
+    }
+
+    public static AccessToken getApiToken() {
+        return mApiToken;
+    }
+
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -28,7 +41,7 @@ public class ServiceGenerator {
 
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null);
+        return createService(serviceClass, mApiToken);
     }
 
     public static <S> S createService(Class<S> serviceClass, final AccessToken token) {
@@ -40,8 +53,9 @@ public class ServiceGenerator {
 
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Accept", "application/json")
-                            .header("Authorization",
-                                    token.getTokenType() + " " + token.getAccessToken())
+                            .header("X-BetaSeries-Version", API_VERSION)
+                            .header("X-BetaSeries-Key", API_KEY)
+                            .header("X-BetaSeries-Token", token.getAccessToken())
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();

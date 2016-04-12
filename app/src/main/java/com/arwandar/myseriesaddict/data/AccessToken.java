@@ -1,6 +1,5 @@
 package com.arwandar.myseriesaddict.data;
 
-import com.arwandar.myseriesaddict.data.dto.UserTest;
 
 /**
  * Created by olivi on 01/04/2016.
@@ -26,14 +25,7 @@ public class AccessToken {
         return tokenType;
     }
 
-    //private UserTest user;
-    //private String token;
-    //private String hash;
-    //private String[] errors;
 
-   // public String getAccessToken() {
-    //    return token;
-    //}
 
 
 }

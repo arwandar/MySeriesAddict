@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -13,19 +12,11 @@ import android.webkit.WebViewClient;
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.ServiceGenerator;
-import com.arwandar.myseriesaddict.data.converter.UserConverter;
-import com.arwandar.myseriesaddict.data.converter.UsersConverter;
-import com.arwandar.myseriesaddict.data.dto.UserDTO;
-import com.arwandar.myseriesaddict.data.dto.UsersDTO;
-import com.arwandar.myseriesaddict.data.service.ILoginService;
-import com.arwandar.myseriesaddict.model.User;
+import com.arwandar.myseriesaddict.data.service.CallManager;
+import com.arwandar.myseriesaddict.data.service.IBetaSeriesService;
 import com.arwandar.myseriesaddict.model.Users;
 
-import java.util.List;
-
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,30 +50,23 @@ public class LoginActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
 
             if (url != null && url.startsWith(redirectUri)) {
-                //if (Uri.parse(url).getHost().equals("127.0.0.1")) {
                 // This is my web site, so do not override; let my WebView load the page
                 Uri uri = Uri.parse(url);
                 String code = uri.getQueryParameter("code");
                 if (code != null) {
                     // get access token
-                    ILoginService loginService = ServiceGenerator.createService(ILoginService.class);
-                    Call<AccessToken> call = loginService.getAccessToken(code, clientSecret, redirectUri, clientId, version, clientId);
+                   CallManager.getAccessToken(code);
 
-                    try {
-                        AccessToken accessToken = call.execute().body();
-                        ServiceGenerator.setApiToken(accessToken);
-
-                        loginService = ServiceGenerator.createService(ILoginService.class);
-                        Call<UsersDTO> call2 = loginService.getFriendsList();
-                        UsersDTO list = call2.execute().body();
-                        UsersConverter converter = new UsersConverter();
-                        Users fList = converter.convertDtoToUsers(list);
+                    //Services tests
+                    Users fList = CallManager.getFriendsList();
+                    System.out.println("Here comes the test comment");
 
 
-                        System.out.println(accessToken.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+
+
+                    //ToDo: redirect to activity
+
                 } else if (uri.getQueryParameter("error") != null) {
                     // show an error message here
                 }

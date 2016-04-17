@@ -10,13 +10,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.data.AccessToken;
-import com.arwandar.myseriesaddict.data.ServiceGenerator;
+import com.arwandar.myseriesaddict.data.model.ShowsComplex;
 import com.arwandar.myseriesaddict.data.service.CallManager;
-import com.arwandar.myseriesaddict.data.service.IBetaSeriesService;
-import com.arwandar.myseriesaddict.model.Users;
-
-import retrofit2.Call;
+import com.arwandar.myseriesaddict.data.model.Users;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,10 +51,11 @@ public class LoginActivity extends AppCompatActivity {
                 String code = uri.getQueryParameter("code");
                 if (code != null) {
                     // get access token
-                   CallManager.getAccessToken(code);
+                   CallManager.getAccessToken(code, clientSecret, redirectUri, clientId, version);
 
                     //Services tests
                     Users fList = CallManager.getFriendsList();
+                    ShowsComplex favs = CallManager.getFavoritesShows();
                     System.out.println("Here comes the test comment");
 
 

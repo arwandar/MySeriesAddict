@@ -1,7 +1,7 @@
 package com.arwandar.myseriesaddict.data.converter;
 
 import com.arwandar.myseriesaddict.data.dto.UserDTO;
-import com.arwandar.myseriesaddict.model.User;
+import com.arwandar.myseriesaddict.data.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

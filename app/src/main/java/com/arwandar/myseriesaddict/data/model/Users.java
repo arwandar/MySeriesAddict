@@ -1,4 +1,6 @@
-package com.arwandar.myseriesaddict.model;
+package com.arwandar.myseriesaddict.data.model;
+
+import com.arwandar.myseriesaddict.data.model.User;
 
 import java.io.Serializable;
 import java.util.List;

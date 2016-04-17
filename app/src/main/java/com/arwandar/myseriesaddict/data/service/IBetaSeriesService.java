@@ -1,14 +1,11 @@
 package com.arwandar.myseriesaddict.data.service;
 
 import com.arwandar.myseriesaddict.data.AccessToken;
-import com.arwandar.myseriesaddict.data.dto.UserDTO;
+import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
-import com.arwandar.myseriesaddict.model.User;
-
-import java.util.List;
+import com.arwandar.myseriesaddict.data.model.ShowsComplex;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -31,5 +28,8 @@ public interface IBetaSeriesService {
     );
 
     @GET("/friends/list")
-    Call<UsersDTO> getFriendsList ();
+    Call<UsersDTO> getFriendsList();
+
+    @GET("/shows/favorites")
+    Call<ShowsComplexDTO> getFavoritesShows();
 }

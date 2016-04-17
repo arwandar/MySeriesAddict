@@ -1,6 +1,5 @@
 package com.arwandar.myseriesaddict.data.dto;
 
-import com.arwandar.myseriesaddict.model.User;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

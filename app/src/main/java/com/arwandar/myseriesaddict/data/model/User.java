@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.model;
+package com.arwandar.myseriesaddict.data.model;
 
 import java.io.Serializable;
 
@@ -8,9 +8,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private long mId;
-
     private String mLogin;
-
     private boolean mInAccount;
 
     public long getmId() {

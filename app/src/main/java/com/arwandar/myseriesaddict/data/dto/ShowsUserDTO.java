@@ -19,6 +19,11 @@ public class ShowsUserDTO {
     private String mStatus;
     @SerializedName("favorited")
     private String mFavorited;
+    //Ci-dessous, les propriétés pour épisodes
+    @SerializedName("downloaded")
+    private String mDownloaded;
+    @SerializedName("seen")
+    private String mSeen;
 
     public String getmTags() {
         return mTags;
@@ -42,5 +47,13 @@ public class ShowsUserDTO {
 
     public String getmFavorited() {
         return mFavorited;
+    }
+
+    public String getmDownloaded() {
+        return mDownloaded;
+    }
+
+    public String getmSeen() {
+        return mSeen;
     }
 }

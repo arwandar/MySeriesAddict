@@ -32,4 +32,10 @@ public interface IBetaSeriesService {
 
     @GET("/shows/favorites")
     Call<ShowsComplexDTO> getFavoritesShows();
+
+    @GET("/episodes/list")
+    Call<ShowsComplexDTO> getEpisodesList(
+
+    );
+
 }

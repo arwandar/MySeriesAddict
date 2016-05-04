@@ -33,6 +33,9 @@ public class Shows implements Serializable {
     private ShowsUser mUser;
     private String mCharacters;
     private String mComments;
+    //Ci-dessous, les propriétés pour épisodes
+    private String mRemaining;
+    private List<Unseen> mUnseen;
 
     public String getmCreation() {
         return mCreation;
@@ -232,5 +235,21 @@ public class Shows implements Serializable {
 
     public void setmComments(String mComments) {
         this.mComments = mComments;
+    }
+
+    public String getmRemaining() {
+        return mRemaining;
+    }
+
+    public void setmRemaining(String remaining) {
+        this.mRemaining = remaining;
+    }
+
+    public List<Unseen> getmUnseen() {
+        return mUnseen;
+    }
+
+    public void setmUnseen(List<Unseen> mUnseen) {
+        this.mUnseen = mUnseen;
     }
 }

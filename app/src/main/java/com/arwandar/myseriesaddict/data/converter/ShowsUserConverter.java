@@ -12,6 +12,7 @@ import java.util.List;
 public class ShowsUserConverter {
 
     public List<ShowsUser> convertDtoToShowsUser(List<ShowsUserDTO> dtos) {
+        if (dtos == null) dtos = new ArrayList<ShowsUserDTO>();
         List<ShowsUser> showsUsers = new ArrayList<>();
         for (ShowsUserDTO dto : dtos) {
             showsUsers.add(convertDtoToShowsUser(dto));
@@ -20,6 +21,7 @@ public class ShowsUserConverter {
     }
 
     public ShowsUser convertDtoToShowsUser(ShowsUserDTO dto) {
+        if (dto == null) return null;
         ShowsUser showsUser = new ShowsUser();
         showsUser.setmArchived(dto.getmArchived());
         showsUser.setmFavorited(dto.getmFavorited());
@@ -27,6 +29,8 @@ public class ShowsUserConverter {
         showsUser.setmRemaining(dto.getmRemaining());
         showsUser.setmStatus(dto.getmStatus());
         showsUser.setmTags(dto.getmTags());
+        showsUser.setmSeen(dto.getmSeen());
+        showsUser.setmDownloaded(dto.getmDownloaded());
         return showsUser;
     }
 }

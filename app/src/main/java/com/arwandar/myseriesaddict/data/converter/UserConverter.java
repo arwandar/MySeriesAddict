@@ -12,6 +12,7 @@ import java.util.List;
 public class UserConverter {
 
     public List<User> convertDtoToUsers(List<UserDTO> dtos) {
+        if(dtos == null) dtos = new ArrayList<UserDTO>();
         List<User> users = new ArrayList<>();
         for (UserDTO dto : dtos) {
             users.add(convertDtoToUser(dto));

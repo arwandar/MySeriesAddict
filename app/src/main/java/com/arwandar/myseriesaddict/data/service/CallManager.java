@@ -57,4 +57,18 @@ public class CallManager {
 
         return null;
     }
+
+    public static ShowsComplex getEpisodesList() {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowsComplexDTO> call = service.getEpisodesList();
+        try {
+            ShowsComplexDTO list = call.execute().body();
+            ShowsComplexConverter showsComplexConverter = new ShowsComplexConverter();
+            return showsComplexConverter.convertDtoToShowsComplex(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

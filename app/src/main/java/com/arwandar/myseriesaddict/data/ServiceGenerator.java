@@ -1,5 +1,7 @@
 package com.arwandar.myseriesaddict.data;
 
+import android.content.SharedPreferences;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -14,45 +16,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ServiceGenerator {
 
-    public static final String API_BASE_URL = "https://api.betaseries.com";
-    private static final String API_VERSION = "2.4";
-    private static final String API_KEY = "a93691358c05";
-    private static AccessToken mApiToken;
-
-
-    public static void setApiToken(AccessToken token) {
-        mApiToken = token;
-    }
-
-    public static AccessToken getApiToken() {
-        return mApiToken;
-    }
-
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder =
-            new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
+            new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create());
 
-
-    public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, mApiToken);
-    }
-
-    public static <S> S createService(Class<S> serviceClass, final AccessToken token) {
-        if (token != null) {
+    public static <S> S createService(Class<S> serviceClass, final SharedPreferences prefs) {
+        if (prefs.getString("accessToken", "").isEmpty()) {
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Interceptor.Chain chain) throws IOException {
                     Request original = chain.request();
-
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Accept", "application/json")
-                            .header("X-BetaSeries-Version", API_VERSION)
-                            .header("X-BetaSeries-Key", API_KEY)
-                            .header("X-BetaSeries-Token", token.getAccessToken())
+                            .header("X-BetaSeries-Version", prefs.getString("version", ""))
+                            .header("X-BetaSeries-Key", prefs.getString("clientId", ""))
+                            .header("X-BetaSeries-Token", prefs.getString("accessToken", ""))
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -62,7 +42,7 @@ public class ServiceGenerator {
         }
 
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = builder.client(client).build();
+        Retrofit retrofit = builder.baseUrl(prefs.getString("baseUrl", "")).client(client).build();
         return retrofit.create(serviceClass);
     }
 

@@ -1,5 +1,7 @@
 package com.arwandar.myseriesaddict.data.service;
 
+import android.content.SharedPreferences;
+
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.ServiceGenerator;
 import com.arwandar.myseriesaddict.data.converter.ShowsComplexConverter;
@@ -18,20 +20,24 @@ import retrofit2.Call;
  */
 public class CallManager {
 
-    public static void getAccessToken(String code, String clientSecret, String redirectUri, String clientId, String version) {
-        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<AccessToken> call = service.getAccessToken(code, clientSecret, redirectUri, clientId, version, clientId);
+    public static void getAccessToken(SharedPreferences prefs, String code) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class, prefs);
+        Call<AccessToken> call = service.getAccessToken(code, prefs.getString("clientSecret", "")
+                , prefs.getString("redirectUri", ""), prefs.getString("clientId", "")
+                , prefs.getString("version", ""), prefs.getString("clientId", ""));
         try {
             AccessToken accessToken = call.execute().body();
-            ServiceGenerator.setApiToken(accessToken);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("accessToken", accessToken.getAccessToken());
+            editor.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public static Users getFriendsList() {
-        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+    public static Users getFriendsList(SharedPreferences prefs) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class, prefs);
         Call<UsersDTO> call = service.getFriendsList();
         try {
             UsersDTO list = call.execute().body();
@@ -44,8 +50,8 @@ public class CallManager {
         return null;
     }
 
-    public static ShowsComplex getFavoritesShows() {
-        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+    public static ShowsComplex getFavoritesShows(SharedPreferences prefs) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class, prefs);
         Call<ShowsComplexDTO> call = service.getFavoritesShows();
         try {
             ShowsComplexDTO list = call.execute().body();

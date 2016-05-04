@@ -2,5 +2,15 @@
     <string name="app_name">MySeriesAddict</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="episodes_label">Episodes non vus</string>
+    <string name="pending_shows_label">Séries en cours</string>
+    <string name="archived_shows_label">Séries archivées</string>
+    <string name="friends_label">Liste des amis</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="deconnexion_label">Déconnexion</string>
 
 </resources>

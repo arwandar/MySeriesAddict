@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.arwandar.myseriesaddict">
+<manifest
+    package="com.arwandar.myseriesaddict"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -16,9 +17,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         <activity
@@ -28,16 +27,39 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.arwandar.myseriesaddict.ui.activity.MainActivity" />
+                android:value="com.arwandar.myseriesaddict.ui.activity.MainActivity"/>
         </activity>
         <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <action android:name="android.intent.action.VIEW"/>
                 <data
                     android:host="127.0.0.1"
-                    android:scheme="http" />
+                    android:scheme="http"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.HomeActivity">
+        </activity>
+        <activity android:name=".ui.activity.ShowsListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.arwandar.myseriesaddict.ui.activity.HomeActivity"/>
+        </activity>
+        <activity android:name=".ui.activity.FriendsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.arwandar.myseriesaddict.ui.activity.HomeActivity"/>
+        </activity>
+        <activity
+            android:name=".ui.activity.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash_screen"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>

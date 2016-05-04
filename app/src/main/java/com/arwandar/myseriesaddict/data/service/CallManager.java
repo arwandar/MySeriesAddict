@@ -65,12 +65,12 @@ public class CallManager {
     }
 
 
-    public static ShowsComplex getEpisodesList() {
-        return getEpisodesList(null);
+    public static ShowsComplex getEpisodesList(SharedPreferences prefs) {
+        return getEpisodesList(null, prefs);
     }
 
-    public static ShowsComplex getEpisodesList(Integer limit) {
-        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+    public static ShowsComplex getEpisodesList(Integer limit, SharedPreferences prefs) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class, prefs);
         Call<ShowsComplexDTO> call = service.getEpisodesList(limit);
         try {
             ShowsComplexDTO list = call.execute().body();
@@ -79,7 +79,6 @@ public class CallManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

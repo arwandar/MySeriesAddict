@@ -4,10 +4,14 @@ import android.content.SharedPreferences;
 
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.ServiceGenerator;
+import com.arwandar.myseriesaddict.data.converter.EpisodeComplexConverter;
+import com.arwandar.myseriesaddict.data.converter.EpisodeConverter;
 import com.arwandar.myseriesaddict.data.converter.ShowsComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.UsersConverter;
+import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
+import com.arwandar.myseriesaddict.data.model.EpisodeComplex;
 import com.arwandar.myseriesaddict.data.model.ShowsComplex;
 import com.arwandar.myseriesaddict.data.model.Users;
 
@@ -81,4 +85,18 @@ public class CallManager {
         }
         return null;
     }
+
+    public static EpisodeComplex markEpisodeAsWatched(String episodeId, SharedPreferences prefs) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class, prefs);
+        Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId);
+        try {
+            EpisodeComplexDTO list = call.execute().body();
+            EpisodeComplexConverter episodeComplexConverter = new EpisodeComplexConverter();
+            return episodeComplexConverter.convertDtoToEpisodeComplex(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

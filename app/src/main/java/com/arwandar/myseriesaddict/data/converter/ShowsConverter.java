@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class ShowsConverter {
     public List<Shows> convertDtoToShows(List<ShowsDTO> dtos) {
+        if(dtos == null) dtos = new ArrayList<ShowsDTO>();
         List<Shows> shows = new ArrayList<>();
         for (ShowsDTO dto : dtos) {
             shows.add(convertDtoToShows(dto));
@@ -25,6 +26,8 @@ public class ShowsConverter {
         ImagesConverter imagesConverter = new ImagesConverter();
         NotesConverter notesConverter = new NotesConverter();
         ShowsUserConverter showsUserConverter = new ShowsUserConverter();
+        UnseenConverter unseenConverter = new UnseenConverter();
+
 
         shows.setmCreation(dto.getmCreation());
         shows.setmGenres(dto.getmGenres());
@@ -51,6 +54,8 @@ public class ShowsConverter {
         shows.setmUser(showsUserConverter.convertDtoToShowsUser(dto.getmUser()));
         shows.setmCharacters(dto.getmCharacters());
         shows.setmComments(dto.getmComments());
+        shows.setmRemaining(dto.getmRemaining());
+        shows.setmUnseen(unseenConverter.convertDtoToUnseen(dto.getmUnseen()));
 
         return shows;
     }

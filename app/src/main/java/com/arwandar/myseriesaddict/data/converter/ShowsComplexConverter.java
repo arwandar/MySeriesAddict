@@ -12,8 +12,13 @@ public class ShowsComplexConverter {
         ShowsComplex showsComplex = new ShowsComplex();
         ShowsConverter showsConverter = new ShowsConverter();
 
-        showsComplex.setmShows(showsConverter.convertDtoToShows(dto.getmShows()));
-        showsComplex.setmErrors(dto.getmErrors());
+        try {
+            showsComplex.setmShows(showsConverter.convertDtoToShows(dto.getmShows()));
+            showsComplex.setmErrors(dto.getmErrors());
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
         return showsComplex;
     }
 }

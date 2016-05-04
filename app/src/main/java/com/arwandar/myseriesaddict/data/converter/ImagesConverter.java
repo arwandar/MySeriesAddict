@@ -12,6 +12,7 @@ import java.util.List;
 public class ImagesConverter {
 
     public List<Images> convertDtoToImages(List<ImagesDTO> dtos) {
+        if(dtos == null) dtos = new ArrayList<ImagesDTO>();
         List<Images> images = new ArrayList<>();
         for (ImagesDTO dto : dtos) {
             images.add(convertDtoToImages(dto));
@@ -21,6 +22,7 @@ public class ImagesConverter {
 
 
     public Images convertDtoToImages(ImagesDTO dto) {
+        if(dto == null) return null;
         Images images = new Images();
         images.setmBanner(dto.getmBanner());
         images.setmBox(dto.getmBox());

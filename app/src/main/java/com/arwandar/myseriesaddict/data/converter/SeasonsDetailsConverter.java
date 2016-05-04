@@ -12,6 +12,7 @@ import java.util.List;
 public class SeasonsDetailsConverter {
 
     public List<SeasonsDetails> convertDtoToSeasonsDetails(List<SeasonsDetailsDTO> dtos) {
+        if(dtos == null) dtos = new ArrayList<SeasonsDetailsDTO>();
         List<SeasonsDetails> seasonsDetails = new ArrayList<>();
         for (SeasonsDetailsDTO dto : dtos) {
             seasonsDetails.add(convertDtoToSeasonsDetails(dto));

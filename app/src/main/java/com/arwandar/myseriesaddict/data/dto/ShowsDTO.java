@@ -64,6 +64,11 @@ public class ShowsDTO {
     private String mCharacters;
     @SerializedName("comments")
     private String mComments;
+    //Ci-dessous, les propriétés pour épisodes
+    @SerializedName("remaining")
+    private String mRemaining;
+    @SerializedName("unseen")
+    private List<UnseenDTO> mUnseen;
 
     public String getmCreation() {
         return mCreation;
@@ -163,5 +168,13 @@ public class ShowsDTO {
 
     public String getmComments() {
         return mComments;
+    }
+
+    public String getmRemaining() {
+        return mRemaining;
+    }
+
+    public List<UnseenDTO> getmUnseen() {
+        return mUnseen;
     }
 }

@@ -13,6 +13,10 @@ public class ShowsUser implements Serializable {
     private String mArchived;
     private String mStatus;
     private String mFavorited;
+    //Ci-dessous, les propriétés pour épisodes
+    private String mDownloaded;
+    private String mSeen;
+
 
     public String getmTags() {
         return mTags;
@@ -60,5 +64,21 @@ public class ShowsUser implements Serializable {
 
     public void setmFavorited(String mFavorited) {
         this.mFavorited = mFavorited;
+    }
+
+    public String getmDownloaded() {
+        return mDownloaded;
+    }
+
+    public void setmDownloaded(String mDownloaded) {
+        this.mDownloaded = mDownloaded;
+    }
+
+    public String getmSeen() {
+        return mSeen;
+    }
+
+    public void setmSeen(String mSeen) {
+        this.mSeen = mSeen;
     }
 }

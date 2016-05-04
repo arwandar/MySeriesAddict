@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by olivi on 01/04/2016.
@@ -35,7 +36,7 @@ public interface IBetaSeriesService {
 
     @GET("/episodes/list")
     Call<ShowsComplexDTO> getEpisodesList(
-
+            @Query("limit") Integer limit
     );
 
 }

@@ -58,9 +58,14 @@ public class CallManager {
         return null;
     }
 
+
     public static ShowsComplex getEpisodesList() {
+        return getEpisodesList(null);
+    }
+
+    public static ShowsComplex getEpisodesList(Integer limit) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<ShowsComplexDTO> call = service.getEpisodesList();
+        Call<ShowsComplexDTO> call = service.getEpisodesList(limit);
         try {
             ShowsComplexDTO list = call.execute().body();
             ShowsComplexConverter showsComplexConverter = new ShowsComplexConverter();

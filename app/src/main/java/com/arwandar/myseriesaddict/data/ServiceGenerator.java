@@ -1,6 +1,6 @@
 package com.arwandar.myseriesaddict.data;
 
-import android.content.SharedPreferences;
+import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 
 import java.io.IOException;
 
@@ -22,17 +22,17 @@ public class ServiceGenerator {
     private static Retrofit.Builder builder =
             new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create());
 
-    public static <S> S createService(Class<S> serviceClass, final SharedPreferences prefs) {
-        if (prefs.getString("accessToken", "").isEmpty()) {
+    public static <S> S createService(Class<S> serviceClass) {
+        if (!SharedPrefsSingleton.getAccessToken().isEmpty()) {
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Interceptor.Chain chain) throws IOException {
                     Request original = chain.request();
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Accept", "application/json")
-                            .header("X-BetaSeries-Version", prefs.getString("version", ""))
-                            .header("X-BetaSeries-Key", prefs.getString("clientId", ""))
-                            .header("X-BetaSeries-Token", prefs.getString("accessToken", ""))
+                            .header("X-BetaSeries-Version", SharedPrefsSingleton.getVersion())
+                            .header("X-BetaSeries-Key", SharedPrefsSingleton.getClientId())
+                            .header("X-BetaSeries-Token", SharedPrefsSingleton.getAccessToken())
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -42,7 +42,7 @@ public class ServiceGenerator {
         }
 
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = builder.baseUrl(prefs.getString("baseUrl", "")).client(client).build();
+        Retrofit retrofit = builder.baseUrl(SharedPrefsSingleton.getBaseUrl()).client(client).build();
         return retrofit.create(serviceClass);
     }
 

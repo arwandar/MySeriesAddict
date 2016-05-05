@@ -1,41 +1,36 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.arwandar.myseriesaddict.R;
+import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.data.service.CallManager;
 
 public class LoginActivity extends AppCompatActivity {
-
-    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        if (prefs.getString("accessToken", "").isEmpty()) {
+        if (SharedPrefsSingleton.getAccessToken().isEmpty()) {
 
             WebView myWebView = (WebView) findViewById(R.id.webview);
             WebSettings webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             myWebView.setWebViewClient(new MyWebViewClient());
             //myWebView.loadUrl(url + "?client_id=" + clientId + "&version=" + version + "&redirect_uri=" + redirectUri);
-            myWebView.loadUrl(prefs.getString("url", "") + "?client_id="
-                    + prefs.getString("clientId", "") + "&version="
-                    + prefs.getString("version", "") + "&redirect_uri="
-                    + prefs.getString("redirectUri", ""));
+            myWebView.loadUrl(SharedPrefsSingleton.getUrl() + "?client_id="
+                    + SharedPrefsSingleton.getClientId() + "&version="
+                    + SharedPrefsSingleton.getVersion() + "&redirect_uri="
+                    + SharedPrefsSingleton.getRedirectURI());
         } else {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
@@ -53,12 +48,12 @@ public class LoginActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
-            if (url != null && url.startsWith(prefs.getString("redirectUri", ""))) {
+            if (url != null && url.startsWith(SharedPrefsSingleton.getRedirectURI())) {
                 // This is my web site, so do not override; let my WebView load the page
                 Uri uri = Uri.parse(url);
                 String code = uri.getQueryParameter("code");
                 if (code != null) {
-                    CallManager.getAccessToken(prefs, code);
+                    CallManager.getAccessToken(code);
                     //redirection to homepage
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);

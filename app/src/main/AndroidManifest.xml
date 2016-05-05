@@ -35,6 +35,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <action android:name="android.intent.action.VIEW"/>
+
                 <data
                     android:host="127.0.0.1"
                     android:scheme="http"/>
@@ -59,8 +60,11 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.FriendDetailActivity">
         </activity>
     </application>
 

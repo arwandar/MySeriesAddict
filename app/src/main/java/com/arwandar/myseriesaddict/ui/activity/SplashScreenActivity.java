@@ -1,13 +1,13 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arwandar.myseriesaddict.R;
+import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -22,7 +22,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        initializePreferences();
+        SharedPrefsSingleton.initInstance(PreferenceManager.getDefaultSharedPreferences(this));
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -36,15 +36,5 @@ public class SplashScreenActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
     }
 
-    private void initializePreferences() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("url", "https://www.betaseries.com/authorize");
-        editor.putString("clientId", "a93691358c05");
-        editor.putString("clientSecret", "17d90f0c382e7623a09c6c29d3519028");
-        editor.putString("version", "2.4");
-        editor.putString("redirectUri", "http://127.0.0.1");
-        editor.putString("baseUrl", "https://api.betaseries.com");
-        editor.commit();
-    }
+
 }

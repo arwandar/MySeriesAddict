@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.common.task;
+package com.arwandar.myseriesaddict.common.task.old;
 
 import android.content.Context;
 import android.content.Intent;

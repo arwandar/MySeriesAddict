@@ -1,11 +1,11 @@
-package com.arwandar.myseriesaddict.ui.fragment;
+package com.arwandar.myseriesaddict.ui.fragment.old;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.arwandar.myseriesaddict.common.task.FetchSeriesTask;
-import com.arwandar.myseriesaddict.model.Series;
+import com.arwandar.myseriesaddict.common.task.old.FetchSeriesTask;
+import com.arwandar.myseriesaddict.model.old.Series;
 
 import org.json.JSONException;
 import org.json.JSONObject;

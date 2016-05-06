@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.common.adpater;
+package com.arwandar.myseriesaddict.common.adpater.old;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.model.Series;
+import com.arwandar.myseriesaddict.model.old.Series;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.series_small_item, parent, false);
+                .inflate(R.layout.old_series_small_item, parent, false);
         return new ViewHolder(v);
     }
 

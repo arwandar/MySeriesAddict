@@ -1,17 +1,15 @@
-package com.arwandar.myseriesaddict.ui.activity;
+package com.arwandar.myseriesaddict.ui.activity.old;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.model.Series;
+import com.arwandar.myseriesaddict.model.old.Series;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +30,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.old_activity_detail);
 
         ButterKnife.bind(this);
 

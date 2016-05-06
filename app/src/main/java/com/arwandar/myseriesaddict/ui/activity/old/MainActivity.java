@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui.activity;
+package com.arwandar.myseriesaddict.ui.activity.old;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.SeriesPagerAdapter;
-import com.arwandar.myseriesaddict.model.Series;
-import com.arwandar.myseriesaddict.ui.fragment.SeriesFragment;
+import com.arwandar.myseriesaddict.common.adpater.old.SeriesPagerAdapter;
+import com.arwandar.myseriesaddict.model.old.Series;
+import com.arwandar.myseriesaddict.ui.fragment.old.SeriesFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements SeriesFragment.Se
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.old_activity_main);
 
         ButterKnife.bind(this);
 

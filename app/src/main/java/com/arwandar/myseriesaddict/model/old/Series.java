@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.model;
+package com.arwandar.myseriesaddict.model.old;
 
 import android.graphics.Color;
 

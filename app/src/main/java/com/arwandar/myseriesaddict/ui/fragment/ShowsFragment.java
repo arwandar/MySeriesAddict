@@ -13,42 +13,51 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.SeriesAdapter;
-import com.arwandar.myseriesaddict.common.task.FetchSeriesTask;
+import com.arwandar.myseriesaddict.common.adpater.ShowsAdapter;
 import com.arwandar.myseriesaddict.common.util.ItemClickSupport;
-import com.arwandar.myseriesaddict.model.Series;
+import com.arwandar.myseriesaddict.data.model.Shows;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeriesFragment extends Fragment {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
+
+/**
+ * Created by Arwandar on 05/05/2016.
+ */
+public abstract class ShowsFragment extends Fragment {
     protected BroadcastReceiver receiver;
     protected ProgressDialog progress;
-    protected SeriesAdapter mAdapter;
-    protected List<Series> mSeries = new ArrayList<>();
-    protected String mContent;
+    protected ShowsAdapter mAdapter;
+    protected List<Shows> mShows = new ArrayList<>();
     protected String ACTION_FOR_INTENT_CALLBACK = "INTENT_CALLBACK";
-    private RecyclerView mRecyclerView;
+
+    @Bind(R.id.shows_list)
+    protected RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private SeriesListCallback mCallback;
+    private ShowsListCallback mCallback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_series, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.series_list);
-        mRecyclerView.setHasFixedSize(false);
         getContent();
+
+        View view = inflater.inflate(R.layout.fragment_shows, container, false);
+        ButterKnife.bind(this, view);
+
+        mRecyclerView.setHasFixedSize(false);
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SeriesAdapter(getActivity(), mSeries);
+        mAdapter = new ShowsAdapter(getActivity(), mShows);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport
                 .OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                mCallback.onItemSelected(mSeries.get(position));
+                mCallback.onItemSelected(mShows.get(position));
             }
         });
 
@@ -63,8 +72,8 @@ public class SeriesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof SeriesListCallback) {
-            mCallback = (SeriesListCallback) context;
+        if (context instanceof ShowsListCallback) {
+            mCallback = (ShowsListCallback) context;
         } else {
             throw new RuntimeException(context.toString());
         }
@@ -89,18 +98,15 @@ public class SeriesFragment extends Fragment {
     }
 
     protected void getContent() {
-        mSeries.clear();
-        try {
-            FetchSeriesTask task = new FetchSeriesTask(getActivity(), ACTION_FOR_INTENT_CALLBACK);
-            task.execute();
-            progress = ProgressDialog.show(getActivity(), "", "Récupération des séries sur BetaSérie", true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        progress = ProgressDialog.show(getActivity(), "", "Récupération des séries sur BetaSérie", true);
     }
 
-    public interface SeriesListCallback {
-        void onItemSelected(Series series);
+    @OnItemSelected(R.id.shows_list)
+    public void startShowsDetail() {
+
+    }
+
+    public interface ShowsListCallback {
+        void onItemSelected(Shows pShows);
     }
 }

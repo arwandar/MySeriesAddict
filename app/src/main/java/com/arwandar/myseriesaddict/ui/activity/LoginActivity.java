@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
             WebSettings webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             myWebView.setWebViewClient(new MyWebViewClient());
-            //myWebView.loadUrl(url + "?client_id=" + clientId + "&version=" + version + "&redirect_uri=" + redirectUri);
             myWebView.loadUrl(SharedPrefsSingleton.getUrl() + "?client_id="
                     + SharedPrefsSingleton.getClientId() + "&version="
                     + SharedPrefsSingleton.getVersion() + "&redirect_uri="

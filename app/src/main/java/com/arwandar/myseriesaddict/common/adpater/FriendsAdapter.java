@@ -19,11 +19,11 @@ import butterknife.ButterKnife;
 /**
  * Created by Arwandar on 05/05/2016.
  */
-public class FriendsAdaptater extends RecyclerView.Adapter<FriendsAdaptater.ViewHolder> {
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
     private Activity mActivity;
     private List<User> mUsersList;
 
-    public FriendsAdaptater(Activity activity, List<User> pUsersList) {
+    public FriendsAdapter(Activity activity, List<User> pUsersList) {
         mActivity = activity;
         mUsersList = pUsersList;
     }
@@ -54,16 +54,9 @@ public class FriendsAdaptater extends RecyclerView.Adapter<FriendsAdaptater.View
         @Bind(R.id.friend_color)
         protected View mColorView;
 
-//        private View mColorView;
-//        private TextView mUserName;
-
-
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
-
-//            mColorView = v.findViewById(R.id.friend_color);
-//            mUserName = (TextView) v.findViewById(R.id.friend_name_textview);
         }
     }
 }

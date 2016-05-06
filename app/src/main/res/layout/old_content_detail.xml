@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.arwandar.myseriesaddict.ui.activity.DetailActivity"
-    tools:showIn="@layout/activity_detail">
+              tools:context=".ui.activity.old.DetailActivity"
+              tools:showIn="@layout/old_activity_detail">
 
     <View
         android:id="@+id/series_detail_color"

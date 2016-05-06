@@ -6,11 +6,15 @@
     <string name="pending_shows_label">Séries en cours</string>
     <string name="archived_shows_label">Séries archivées</string>
     <string name="friends_label">Liste des amis</string>
-    <string name="title_activity_main2">Main2Activity</string>
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="deconnexion_label">Déconnexion</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_main_activity_with_navigation">MainActivityWithNavigation</string>
 
 </resources>

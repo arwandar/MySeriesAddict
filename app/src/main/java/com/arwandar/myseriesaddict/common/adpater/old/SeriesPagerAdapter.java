@@ -1,10 +1,10 @@
-package com.arwandar.myseriesaddict.common.adpater;
+package com.arwandar.myseriesaddict.common.adpater.old;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.arwandar.myseriesaddict.ui.fragment.ContinuingSeriesFragment;
-import com.arwandar.myseriesaddict.ui.fragment.EndedSeriesFragment;
+import com.arwandar.myseriesaddict.ui.fragment.old.ContinuingSeriesFragment;
+import com.arwandar.myseriesaddict.ui.fragment.old.EndedSeriesFragment;
 
 /**
  * Created by Arwandar on 22/02/2016.

@@ -10,6 +10,7 @@ import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.adpater.ShowsPagerAdapter;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class ShowsActivity extends AppCompatActivity {
 
@@ -22,8 +23,11 @@ public class ShowsActivity extends AppCompatActivity {
     private ShowsPagerAdapter mAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {;
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_shows);
+
+        ButterKnife.bind(this);
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.pending_shows_label));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.archived_shows_label));

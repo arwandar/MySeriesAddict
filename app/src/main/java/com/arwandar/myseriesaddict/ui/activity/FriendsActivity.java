@@ -11,6 +11,8 @@ import android.view.View;
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.adpater.FriendsAdapter;
 import com.arwandar.myseriesaddict.common.util.ItemClickSupport;
+import com.arwandar.myseriesaddict.data.converter.UsersConverter;
+import com.arwandar.myseriesaddict.data.dto.UsersDTO;
 import com.arwandar.myseriesaddict.data.model.User;
 import com.arwandar.myseriesaddict.data.service.CallManager;
 
@@ -18,10 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    protected List<User> mUsers = new ArrayList<>();
+    protected final List<User> mUsers = new ArrayList<>();
 
     @Bind(R.id.friends_recycler_view)
     RecyclerView mRecyclerView;
@@ -32,11 +38,9 @@ public class FriendsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friends);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        mUsers = CallManager.getFriendsList().getUsers();
+        ButterKnife.bind(this);
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -47,10 +51,28 @@ public class FriendsActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 String toDiplay = mUsers.get(position).getmLogin();
-                Snackbar sncack = Snackbar.make(recyclerView, toDiplay, Snackbar.LENGTH_LONG);
-                sncack.show();
+                Snackbar snack = Snackbar.make(recyclerView, toDiplay, Snackbar.LENGTH_LONG);
+                snack.show();
             }
         });
+
+        CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
+            @Override
+            public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
+                UsersConverter converter = new UsersConverter();
+                mUsers.clear();
+                for (User us : converter.convertDtoToUsers(response.body()).getUsers()) {
+                    mUsers.add(us);
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(Call<UsersDTO> call, Throwable t) {
+
+            }
+        });
+
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override

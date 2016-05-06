@@ -26,6 +26,14 @@ import retrofit2.Callback;
  */
 public class CallManager {
 
+
+    //Les premières méthodes de chaque 'couple' sont synchrones, les deuxièmes asynchrones
+    //Pour utiliser l'asyn, appeler un CallManager.{methodeAsync) avec un new CallBack (AS créé tout bien tout seul)
+    //Dans le @OnResponse, mettre ces deux lignes
+    //TComplexConverter converter  = new TComplexConverter();
+    //TObject object = converter.convertDtoToTObject(response.body());
+
+
     public static void getAccessToken(String code) {
 
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
@@ -145,6 +153,25 @@ public class CallManager {
     public static void getMemberInfosAsync(final Callback<MemberComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<MemberComplexDTO> call = service.getMemberInfos(true);
+        call.enqueue(callback);
+    }
+
+    public static EpisodeComplex getEpisodeDisplay(String episodeId) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<EpisodeComplexDTO> call = service.getEpisodeDisplay(episodeId);
+        try {
+            EpisodeComplexDTO list = call.execute().body();
+            EpisodeComplexConverter episodeComplexConverter = new EpisodeComplexConverter();
+            return episodeComplexConverter.convertDtoToEpisodeComplex(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void getEpisodeDisplayAsync(String episodeId, final Callback<EpisodeComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<EpisodeComplexDTO> call = service.getEpisodeDisplay(episodeId);
         call.enqueue(callback);
     }
 }

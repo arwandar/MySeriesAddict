@@ -8,13 +8,18 @@ import android.view.View;
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.home_friends)

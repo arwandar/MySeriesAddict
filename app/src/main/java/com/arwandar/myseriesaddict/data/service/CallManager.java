@@ -19,6 +19,7 @@ import com.arwandar.myseriesaddict.data.model.Users;
 import java.io.IOException;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by olivi on 17/04/2016.
@@ -54,6 +55,12 @@ public class CallManager {
         return null;
     }
 
+    public static void getFriendsListAsync(final Callback<UsersDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<UsersDTO> call = service.getFriendsList();
+        call.enqueue(callback);
+    }
+
     public static ShowsComplex getFavoritesShows() {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowsComplexDTO> call = service.getFavoritesShows();
@@ -68,6 +75,11 @@ public class CallManager {
         return null;
     }
 
+    public static void getFavoritesShowsAsync(final Callback<ShowsComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowsComplexDTO> call = service.getFavoritesShows();
+        call.enqueue(callback);
+    }
 
     public static ShowsComplex getEpisodesList() {
         return getEpisodesList(null);
@@ -86,6 +98,16 @@ public class CallManager {
         return null;
     }
 
+    public static void getEpisodesListAsync(final Callback<ShowsComplexDTO> callback) {
+        getEpisodesListAsync(null, callback);
+    }
+
+    public static void getEpisodesListAsync(Integer limit, final Callback<ShowsComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowsComplexDTO> call = service.getEpisodesList(limit);
+        call.enqueue(callback);
+    }
+
     public static EpisodeComplex markEpisodeAsWatched(String episodeId) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId);
@@ -99,6 +121,13 @@ public class CallManager {
         return null;
     }
 
+    public static void markEpisodeAsWatchedAsync(String episodeId, final Callback<EpisodeComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId);
+        call.enqueue(callback);
+    }
+
+
     public static MemberComplex getMemberInfos() {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<MemberComplexDTO> call = service.getMemberInfos(true);
@@ -111,5 +140,11 @@ public class CallManager {
         }
 
         return null;
+    }
+
+    public static void getMemberInfosAsync(final Callback<MemberComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<MemberComplexDTO> call = service.getMemberInfos(true);
+        call.enqueue(callback);
     }
 }

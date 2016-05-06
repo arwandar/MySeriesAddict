@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.data.service;
 
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
 import com.arwandar.myseriesaddict.data.model.ShowsComplex;
@@ -44,5 +45,10 @@ public interface IBetaSeriesService {
     @POST("/episodes/watched")
     Call<EpisodeComplexDTO> markEpisodeAsWatched(
       @Field("id") String episodeId
+    );
+
+    @GET("/members/infos")
+    Call<MemberComplexDTO> getMemberInfos(
+      @Query("summary") Boolean summary
     );
 }

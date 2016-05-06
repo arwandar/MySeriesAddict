@@ -5,18 +5,18 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by olivi on 07/04/2016.
+ * Created by olivi on 06/05/2016.
  */
-public class UsersDTO {
+public class MemberComplexDTO {
 
-    @SerializedName(value = "users")
-    public List<UserDTO> users;
+    @SerializedName(value = "member")
+    public UserDTO user;
 
     @SerializedName("errors")
     public List<String> errors;
 
-    public List<UserDTO> getUsers() {
-        return users;
+    public UserDTO getUser() {
+        return user;
     }
 
     public List<String> getErrors() {

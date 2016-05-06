@@ -21,6 +21,7 @@ public class SeasonsDetailsConverter {
     }
 
     public SeasonsDetails convertDtoToSeasonsDetails(SeasonsDetailsDTO dto) {
+        if(dto == null) return null;
         SeasonsDetails seasonsDetails = new SeasonsDetails();
         seasonsDetails.setmEpisodes(dto.getmEpisodes());
         seasonsDetails.setmNumber(dto.getmNumber());

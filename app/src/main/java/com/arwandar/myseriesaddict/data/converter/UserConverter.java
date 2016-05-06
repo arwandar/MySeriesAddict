@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.data.converter;
 
 import com.arwandar.myseriesaddict.data.dto.UserDTO;
+import com.arwandar.myseriesaddict.data.model.Options;
 import com.arwandar.myseriesaddict.data.model.User;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 public class UserConverter {
 
     public List<User> convertDtoToUsers(List<UserDTO> dtos) {
-        if(dtos == null) dtos = new ArrayList<UserDTO>();
+        if (dtos == null) dtos = new ArrayList<UserDTO>();
         List<User> users = new ArrayList<>();
         for (UserDTO dto : dtos) {
             users.add(convertDtoToUser(dto));
@@ -21,10 +22,21 @@ public class UserConverter {
     }
 
     public User convertDtoToUser(UserDTO dto) {
+        if (dto == null) return null;
         User user = new User();
+        StatsConverter statsConverter = new StatsConverter();
+        OptionsConverter optionsConverter = new OptionsConverter();
+
         user.setmId(dto.getmId());
         user.setmLogin(dto.getmLogin());
         user.setmInAccount(dto.ismInAccount());
+        user.setmCached(dto.getmCached());
+        user.setmStats(statsConverter.convertDtoToStats(dto.getmStats()));
+        user.setmXp(dto.getmXp());
+        user.setMProfileBbanner(dto.getMProfileBbanner());
+        user.setmAvatar(dto.getmAvatar());
+        user.setmOptions(optionsConverter.convertDtoToOptions(dto.getmOptions()));
+
         return user;
     }
 

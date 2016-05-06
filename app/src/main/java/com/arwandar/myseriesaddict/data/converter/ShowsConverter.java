@@ -21,6 +21,7 @@ public class ShowsConverter {
     }
 
     public Shows convertDtoToShows(ShowsDTO dto) {
+        if(dto == null) return null;
         Shows shows = new Shows();
         SeasonsDetailsConverter seasonsDetailsConverter = new SeasonsDetailsConverter();
         ImagesConverter imagesConverter = new ImagesConverter();

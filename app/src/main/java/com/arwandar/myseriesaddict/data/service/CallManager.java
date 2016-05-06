@@ -4,12 +4,15 @@ import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.ServiceGenerator;
 import com.arwandar.myseriesaddict.data.converter.EpisodeComplexConverter;
+import com.arwandar.myseriesaddict.data.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.ShowsComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.UsersConverter;
 import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
 import com.arwandar.myseriesaddict.data.model.EpisodeComplex;
+import com.arwandar.myseriesaddict.data.model.MemberComplex;
 import com.arwandar.myseriesaddict.data.model.ShowsComplex;
 import com.arwandar.myseriesaddict.data.model.Users;
 
@@ -96,4 +99,17 @@ public class CallManager {
         return null;
     }
 
+    public static MemberComplex getMemberInfos() {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<MemberComplexDTO> call = service.getMemberInfos(true);
+        try {
+            MemberComplexDTO list = call.execute().body();
+            MemberComplexConverter converter = new MemberComplexConverter();
+            return converter.convertDtoToMember(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

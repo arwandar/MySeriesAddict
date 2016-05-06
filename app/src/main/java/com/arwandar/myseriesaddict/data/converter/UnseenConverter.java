@@ -21,6 +21,7 @@ public class UnseenConverter {
     }
 
     public Unseen convertDtoToUnseen(UnseenDTO dto) {
+        if(dto == null) return null;
         Unseen unseen = new Unseen();
         ShowsConverter showsConverter = new ShowsConverter();
         NotesConverter notesConverter = new NotesConverter();

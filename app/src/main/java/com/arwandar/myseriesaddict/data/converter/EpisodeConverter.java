@@ -20,6 +20,7 @@ public class EpisodeConverter {
     }
 
     public Episode convertDtoToEpisode(EpisodeDTO dto) {
+        if(dto == null) return null;
         Episode episode = new Episode();
         ShowsConverter showsConverter = new ShowsConverter();
         NotesConverter notesConverter = new NotesConverter();

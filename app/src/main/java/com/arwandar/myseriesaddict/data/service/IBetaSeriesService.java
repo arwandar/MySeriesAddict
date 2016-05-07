@@ -64,4 +64,9 @@ public interface IBetaSeriesService {
             @Query("id") String showId
     );
 
+    @FormUrlEncoded
+    @POST("/shows/archive")
+    Call<ShowDisplayComplexDTO> markShowAsArchived(
+            @Field("id") String showId
+    );
 }

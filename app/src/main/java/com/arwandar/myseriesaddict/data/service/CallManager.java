@@ -196,4 +196,23 @@ public class CallManager {
         Call<ShowDisplayComplexDTO> call = service.getShowDisplay(showId);
         call.enqueue(callback);
     }
+
+    public static ShowDisplayComplex markShowAsArchived(String showId) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowDisplayComplexDTO> call = service.markShowAsArchived(showId);
+        try {
+            ShowDisplayComplexDTO list = call.execute().body();
+            ShowDisplayComplexConverter showDisplayComplexConverter = new ShowDisplayComplexConverter();
+            return showDisplayComplexConverter.convertDtoToShowDisplayComplex(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void markShowAsArchivedAsync(String showId, final Callback<ShowDisplayComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowDisplayComplexDTO> call = service.markShowAsArchived(showId);
+        call.enqueue(callback);
+    }
 }

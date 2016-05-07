@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +15,15 @@ import android.view.MenuItem;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.adpater.BasePagerAdapter;
+import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.data.service.CallManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,9 +101,25 @@ public class BaseActivity extends AppCompatActivity
         } else if (id == R.id.nav_pending_shows) {
             mViewPager.setCurrentItem(1);
         } else if (id == R.id.nav_deconnection) {
-
+            disconnection();
         }
         drawer.closeDrawers();
         return true;
+    }
+
+    private void disconnection() {
+        CallManager.destroyTokenAsync(new Callback<ErrorsComplexDTO>() {
+            @Override
+            public void onResponse(Call<ErrorsComplexDTO> call, Response<ErrorsComplexDTO> response) {
+                SharedPrefsSingleton.setAccessToken("");
+                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ErrorsComplexDTO> call, Throwable t) {
+                //TODO ajout poop deco foirée
+            }
+        });
     }
 }

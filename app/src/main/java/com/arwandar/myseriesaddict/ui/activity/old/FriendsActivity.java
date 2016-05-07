@@ -16,6 +16,7 @@ import com.arwandar.myseriesaddict.data.converter.UsersConverter;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
 import com.arwandar.myseriesaddict.data.model.User;
 import com.arwandar.myseriesaddict.data.service.CallManager;
+import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;

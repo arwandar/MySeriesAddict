@@ -1,12 +1,13 @@
-package com.arwandar.myseriesaddict.ui.activity;
+package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.adpater.FriendsAdapter;
@@ -25,26 +26,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsActivity extends AppCompatActivity {
+/**
+ * Created by Arwandar on 07/05/2016.
+ */
+public class FriendsFragment extends Fragment {
 
     protected final List<User> mUsers = new ArrayList<>();
-
     @Bind(R.id.friends_recycler_view)
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     FriendsAdapter mAdapter;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ButterKnife.bind(this);
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+        ButterKnife.bind(this, view);
 
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FriendsAdapter(this, mUsers);
+        mAdapter = new FriendsAdapter(getActivity(), mUsers);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -56,6 +57,22 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
+        getContent();
+
+
+        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
+                String toDisplay = mUsers.get(position).getmLogin();
+                Snackbar snack = Snackbar.make(recyclerView, toDisplay, Snackbar.LENGTH_LONG);
+                snack.show();
+                return false;
+            }
+        });
+        return view;
+    }
+
+    private void getContent() {
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
@@ -72,16 +89,6 @@ public class FriendsActivity extends AppCompatActivity {
 
             }
         });
-
-
-        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                String toDisplay = mUsers.get(position).getmLogin();
-                Snackbar snack = Snackbar.make(recyclerView, toDisplay, Snackbar.LENGTH_LONG);
-                snack.show();
-                return false;
-            }
-        });
     }
+
 }

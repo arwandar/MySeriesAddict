@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui.activity;
+package com.arwandar.myseriesaddict.ui.activity.old;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
+import com.arwandar.myseriesaddict.ui.activity.ShowsActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -17,7 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.old_activity_home);
 
         ButterKnife.bind(this);
     }

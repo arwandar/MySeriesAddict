@@ -16,5 +16,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_main_activity_with_navigation">MainActivityWithNavigation</string>
+    <string name="title_activity_base">BaseActivity</string>
 
 </resources>

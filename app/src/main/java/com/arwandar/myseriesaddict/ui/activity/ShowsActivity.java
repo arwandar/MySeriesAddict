@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.ShowsPagerAdapter;
+import com.arwandar.myseriesaddict.common.adpater.BasePagerAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +20,7 @@ public class ShowsActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.shows_shows_pager)
     ViewPager mViewPager;
-    private ShowsPagerAdapter mAdapter;
+    private BasePagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {;
@@ -37,7 +37,7 @@ public class ShowsActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAdapter = new ShowsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        mAdapter = new BasePagerAdapter(getSupportFragmentManager(), 1);
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
     }

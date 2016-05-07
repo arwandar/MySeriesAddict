@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pending_shows"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Séries en cours"/>
+        <item
+            android:id="@+id/nav_archived_shows"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Séries archivées"/>
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Liste des amis"/>
+    </group>
+
+    <item android:title="Compte">
+        <menu>
+            <item
+                android:id="@+id/nav_deconnection"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share"/>
+        </menu>
+    </item>
+
+</menu>

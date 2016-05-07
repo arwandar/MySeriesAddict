@@ -41,17 +41,17 @@
                     android:scheme="http"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
+        <activity android:name=".ui.activity.old.HomeActivity">
         </activity>
         <activity android:name=".ui.activity.ShowsListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.arwandar.myseriesaddict.ui.activity.HomeActivity"/>
+                android:value=".ui.activity.old.HomeActivity"/>
         </activity>
-        <activity android:name=".ui.activity.FriendsActivity">
+        <activity android:name=".ui.activity.old.FriendsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.arwandar.myseriesaddict.ui.activity.HomeActivity"/>
+                android:value=".ui.activity.old.HomeActivity"/>
         </activity>
         <activity
             android:name=".ui.activity.SplashScreenActivity"
@@ -65,6 +65,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.ShowsActivity">
+        </activity>
+        <activity
+            android:name=".ui.activity.BaseActivity"
+            android:label="@string/title_activity_base"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

@@ -4,16 +4,22 @@ import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.ServiceGenerator;
 import com.arwandar.myseriesaddict.data.converter.EpisodeComplexConverter;
+import com.arwandar.myseriesaddict.data.converter.ErrorsComplexConverter;
+import com.arwandar.myseriesaddict.data.converter.ErrorsConverter;
 import com.arwandar.myseriesaddict.data.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.ShowDisplayComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.ShowsComplexConverter;
 import com.arwandar.myseriesaddict.data.converter.UsersConverter;
 import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsDTO;
 import com.arwandar.myseriesaddict.data.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowDisplayComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
 import com.arwandar.myseriesaddict.data.model.EpisodeComplex;
+import com.arwandar.myseriesaddict.data.model.Errors;
+import com.arwandar.myseriesaddict.data.model.ErrorsComplex;
 import com.arwandar.myseriesaddict.data.model.MemberComplex;
 import com.arwandar.myseriesaddict.data.model.ShowDisplayComplex;
 import com.arwandar.myseriesaddict.data.model.ShowsComplex;
@@ -213,6 +219,25 @@ public class CallManager {
     public static void markShowAsArchivedAsync(String showId, final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.markShowAsArchived(showId);
+        call.enqueue(callback);
+    }
+
+    public static ErrorsComplex destroyToken() {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ErrorsComplexDTO> call = service.destroyToken();
+        try {
+            ErrorsComplexDTO list = call.execute().body();
+            ErrorsComplexConverter errorsComplexConverter = new ErrorsComplexConverter();
+            return errorsComplexConverter.convertDtoToErrorsComplex(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void destroyTokenAsync(final Callback<ErrorsComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ErrorsComplexDTO> call = service.destroyToken();
         call.enqueue(callback);
     }
 }

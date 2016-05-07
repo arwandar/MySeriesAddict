@@ -2,6 +2,8 @@ package com.arwandar.myseriesaddict.data.service;
 
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsDTO;
 import com.arwandar.myseriesaddict.data.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowDisplayComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
@@ -69,4 +71,8 @@ public interface IBetaSeriesService {
     Call<ShowDisplayComplexDTO> markShowAsArchived(
             @Field("id") String showId
     );
+
+    @POST("/members/destroy")
+    Call<ErrorsComplexDTO> destroyToken();
+
 }

@@ -14,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.BasePagerAdapter;
-import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
-import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
-import com.arwandar.myseriesaddict.data.service.CallManager;
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.arwandar.myseriesaddict.ui.adpater.BasePagerAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

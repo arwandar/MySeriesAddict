@@ -10,8 +10,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
-import com.arwandar.myseriesaddict.data.service.CallManager;
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.service.CallManager;
 
 public class LoginActivity extends AppCompatActivity {
 

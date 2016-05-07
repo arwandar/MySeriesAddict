@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.ShowsAdapter;
-import com.arwandar.myseriesaddict.data.model.Shows;
+import com.arwandar.myseriesaddict.api.model.Shows;
+import com.arwandar.myseriesaddict.ui.adpater.ShowsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

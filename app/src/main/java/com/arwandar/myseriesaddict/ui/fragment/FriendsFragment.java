@@ -11,14 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.adpater.FriendsAdapter;
-import com.arwandar.myseriesaddict.common.util.ItemClickSupport;
-import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
-import com.arwandar.myseriesaddict.data.converter.UsersConverter;
-import com.arwandar.myseriesaddict.data.dto.UsersDTO;
-import com.arwandar.myseriesaddict.data.model.User;
-import com.arwandar.myseriesaddict.data.service.CallManager;
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.converter.UsersConverter;
+import com.arwandar.myseriesaddict.api.dto.UsersDTO;
+import com.arwandar.myseriesaddict.api.model.User;
+import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.arwandar.myseriesaddict.ui.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
+import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

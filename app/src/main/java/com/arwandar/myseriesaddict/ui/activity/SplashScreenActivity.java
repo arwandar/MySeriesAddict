@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

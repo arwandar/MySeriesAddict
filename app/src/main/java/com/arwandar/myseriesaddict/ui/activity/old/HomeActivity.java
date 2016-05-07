@@ -2,16 +2,23 @@ package com.arwandar.myseriesaddict.ui.activity.old;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.common.util.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsDTO;
+import com.arwandar.myseriesaddict.data.service.CallManager;
 import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.arwandar.myseriesaddict.ui.activity.ShowsActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -54,8 +61,21 @@ public class HomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.home_deconnexion)
     public void startDeconnection() {
-        SharedPrefsSingleton.setAccessToken("");
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(intent);
+        CallManager.destroyTokenAsync(new Callback<ErrorsComplexDTO>() {
+            @Override
+            public void onResponse(Call<ErrorsComplexDTO> call, Response<ErrorsComplexDTO> response) {
+                SharedPrefsSingleton.setAccessToken("");
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ErrorsComplexDTO> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
 }

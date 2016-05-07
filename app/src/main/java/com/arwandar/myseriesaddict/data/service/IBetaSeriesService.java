@@ -2,9 +2,13 @@ package com.arwandar.myseriesaddict.data.service;
 
 import com.arwandar.myseriesaddict.data.AccessToken;
 import com.arwandar.myseriesaddict.data.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ErrorsDTO;
 import com.arwandar.myseriesaddict.data.dto.MemberComplexDTO;
+import com.arwandar.myseriesaddict.data.dto.ShowDisplayComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.data.dto.UsersDTO;
+import com.arwandar.myseriesaddict.data.model.ShowDisplayComplex;
 import com.arwandar.myseriesaddict.data.model.ShowsComplex;
 
 import retrofit2.Call;
@@ -56,4 +60,19 @@ public interface IBetaSeriesService {
     Call<EpisodeComplexDTO> getEpisodeDisplay(
             @Query("id") String episodeId
     );
+
+    @GET("/shows/display")
+    Call<ShowDisplayComplexDTO> getShowDisplay(
+            @Query("id") String showId
+    );
+
+    @FormUrlEncoded
+    @POST("/shows/archive")
+    Call<ShowDisplayComplexDTO> markShowAsArchived(
+            @Field("id") String showId
+    );
+
+    @POST("/members/destroy")
+    Call<ErrorsComplexDTO> destroyToken();
+
 }

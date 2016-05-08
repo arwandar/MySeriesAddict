@@ -51,7 +51,7 @@ public class BaseActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mAdapter = new BasePagerAdapter(getSupportFragmentManager(), 0);
+        mAdapter = new BasePagerAdapter(getSupportFragmentManager(), 1);
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
     }
@@ -122,4 +122,11 @@ public class BaseActivity extends AppCompatActivity
             }
         });
     }
+
+    public void setFragment(int fragment) {
+        mViewPager.setCurrentItem(fragment);
+
+    }
+
+
 }

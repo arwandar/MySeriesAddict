@@ -1,9 +1,12 @@
 package com.arwandar.myseriesaddict.ui.fragment;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,11 +36,10 @@ import retrofit2.Response;
  * Created by Arwandar on 07/05/2016.
  */
 public class FriendsFragment extends Fragment {
-
     protected final List<User> mUsers = new ArrayList<>();
+    protected ProgressDialog progress;
     @Bind(R.id.friends_recycler_view)
     RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
     FriendsAdapter mAdapter;
 
     @Override
@@ -46,7 +48,7 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, view);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new FriendsAdapter(getActivity(), mUsers);
         mRecyclerView.setAdapter(mAdapter);
@@ -60,6 +62,8 @@ public class FriendsFragment extends Fragment {
             }
         });
 
+        progress = ProgressDialog.show(getActivity(), "Patientez",
+                "Chargement de la liste", true);
         getContent();
 
 
@@ -79,6 +83,7 @@ public class FriendsFragment extends Fragment {
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
+                progress.dismiss();
                 if (response.isSuccessful()) {
                     UsersConverter converter = new UsersConverter();
                     mUsers.clear();
@@ -86,9 +91,9 @@ public class FriendsFragment extends Fragment {
                         mUsers.add(us);
                     }
                     mAdapter.notifyDataSetChanged();
+
                 } else {
                     if (response.code() == 400) {
-                        //Erreur d'authentification, déconnecter le client et le renvoyer sur la page login
                         SharedPrefsSingleton.setAccessToken("");
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
@@ -98,7 +103,16 @@ public class FriendsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
-
+                progress.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.dialog_message_error)
+                        .setTitle(R.string.dialog_title_error);
+                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                AlertDialog dialog = builder.create();
             }
         });
     }

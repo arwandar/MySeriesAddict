@@ -27,13 +27,11 @@ public class SharedPrefsSingleton {
 
     public static void initInstance(SharedPreferences prefs) {
         if (instance == null) {
-            // Create the instance
             instance = new SharedPrefsSingleton(prefs);
         }
     }
 
     public static SharedPrefsSingleton getInstance() {
-        // Return the instance
         return instance;
     }
 

@@ -142,9 +142,9 @@ public class CallManager {
     }
 
 
-    public static MemberComplex getMemberInfos() {
+    public static MemberComplex getMemberInfos(){
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<MemberComplexDTO> call = service.getMemberInfos(true);
+        Call<MemberComplexDTO> call = service.getMemberInfos("shows");
         try {
             MemberComplexDTO list = call.execute().body();
             MemberComplexConverter converter = new MemberComplexConverter();
@@ -158,7 +158,7 @@ public class CallManager {
 
     public static void getMemberInfosAsync(final Callback<MemberComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<MemberComplexDTO> call = service.getMemberInfos(true);
+        Call<MemberComplexDTO> call = service.getMemberInfos("shows");
         call.enqueue(callback);
     }
 

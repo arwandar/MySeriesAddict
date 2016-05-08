@@ -25,6 +25,7 @@ public class UserConverter {
         User user = new User();
         StatsConverter statsConverter = new StatsConverter();
         OptionsConverter optionsConverter = new OptionsConverter();
+        ShowsConverter showsConverter = new ShowsConverter();
 
         user.setmId(dto.getmId());
         user.setmLogin(dto.getmLogin());
@@ -35,6 +36,8 @@ public class UserConverter {
         user.setMProfileBbanner(dto.getMProfileBbanner());
         user.setmAvatar(dto.getmAvatar());
         user.setmOptions(optionsConverter.convertDtoToOptions(dto.getmOptions()));
+        user.setmFavorites(showsConverter.convertDtoToShows(dto.getmFavorites()));
+        user.setmShows(showsConverter.convertDtoToShows(dto.getmShows()));
 
         return user;
     }

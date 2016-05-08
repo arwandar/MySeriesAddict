@@ -50,7 +50,7 @@ public interface IBetaSeriesService {
 
     @GET("/members/infos")
     Call<MemberComplexDTO> getMemberInfos(
-            @Query("summary") Boolean summary
+            @Query("only") String only
     );
 
     @GET("/episodes/display")

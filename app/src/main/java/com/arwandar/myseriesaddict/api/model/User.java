@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.api.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by olivi on 07/04/2016.
@@ -17,6 +18,10 @@ public class User implements Serializable {
     private String MProfileBbanner;
     private String mAvatar;
     private Options mOptions;
+    //Ci-dessous, propriétés supp pour les informations d'un membre
+    private List<Shows> mFavorites;
+    private List<Shows> mShows;
+
 
     public long getmId() {
         return mId;
@@ -88,5 +93,21 @@ public class User implements Serializable {
 
     public void setmOptions(Options mOptions) {
         this.mOptions = mOptions;
+    }
+
+    public List<Shows> getmFavorites() {
+        return mFavorites;
+    }
+
+    public void setmFavorites(List<Shows> mFavorites) {
+        this.mFavorites = mFavorites;
+    }
+
+    public List<Shows> getmShows() {
+        return mShows;
+    }
+
+    public void setmShows(List<Shows> mShows) {
+        this.mShows = mShows;
     }
 }

@@ -2,6 +2,8 @@ package com.arwandar.myseriesaddict.api.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by olivi on 31/03/2016.
  */
@@ -26,7 +28,11 @@ public class UserDTO {
     private String mAvatar;
     @SerializedName("options")
     private OptionsDTO mOptions;
-
+    //Ci-dessous, propriétés supp pour les informations d'un membre
+    @SerializedName("favorites")
+    private List<ShowsDTO> mFavorites;
+    @SerializedName("shows")
+    private List<ShowsDTO> mShows;
 
     public long getmId() {
         return mId;
@@ -62,5 +68,13 @@ public class UserDTO {
 
     public OptionsDTO getmOptions() {
         return mOptions;
+    }
+
+    public List<ShowsDTO> getmFavorites() {
+        return mFavorites;
+    }
+
+    public List<ShowsDTO> getmShows() {
+        return mShows;
     }
 }

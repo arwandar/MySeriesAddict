@@ -15,10 +15,18 @@ import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
+import com.arwandar.myseriesaddict.api.converter.ShowsComplexConverter;
 import com.arwandar.myseriesaddict.api.converter.UsersConverter;
+import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
+import com.arwandar.myseriesaddict.api.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
+import com.arwandar.myseriesaddict.api.model.MemberComplex;
+import com.arwandar.myseriesaddict.api.model.Shows;
+import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.arwandar.myseriesaddict.api.service.NetworkTester;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
@@ -62,8 +70,7 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-        progress = ProgressDialog.show(getActivity(), "Patientez",
-                "Chargement de la liste", true);
+
         getContent();
 
 
@@ -80,10 +87,18 @@ public class FriendsFragment extends Fragment {
     }
 
     private void getContent() {
+        progress = ProgressDialog.show(getActivity(), "Patientez",
+            "Chargement de la liste", true);
+
+        if (!NetworkTester.checkNetwork(this.getContext())) {
+            System.out.print("Pas d'internet.");
+        }
+
+
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
-                progress.dismiss();
+                 progress.dismiss();
                 if (response.isSuccessful()) {
                     UsersConverter converter = new UsersConverter();
                     mUsers.clear();

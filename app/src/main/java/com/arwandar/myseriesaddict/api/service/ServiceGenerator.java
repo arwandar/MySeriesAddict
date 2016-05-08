@@ -1,6 +1,9 @@
-package com.arwandar.myseriesaddict.api;
+package com.arwandar.myseriesaddict.api.service;
+
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

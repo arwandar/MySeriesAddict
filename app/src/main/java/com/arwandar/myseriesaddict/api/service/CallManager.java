@@ -1,7 +1,6 @@
 package com.arwandar.myseriesaddict.api.service;
 
-import com.arwandar.myseriesaddict.api.AccessToken;
-import com.arwandar.myseriesaddict.api.ServiceGenerator;
+import com.arwandar.myseriesaddict.api.model.AccessToken;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.api.converter.EpisodeComplexConverter;
 import com.arwandar.myseriesaddict.api.converter.ErrorsComplexConverter;

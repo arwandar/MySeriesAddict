@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by olivi on 07/04/2016.
  */
-public class User implements Serializable {
+public class User implements Serializable, Comparable {
 
     private long mId;
     private String mLogin;
@@ -109,5 +109,10 @@ public class User implements Serializable {
 
     public void setmShows(List<Shows> mShows) {
         this.mShows = mShows;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return this.getmLogin().compareTo(((User) another).getmLogin());
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by olivi on 17/04/2016.
  */
-public class Shows implements Serializable {
+public class Shows implements Serializable, Comparable {
 
     private String mCreation;
     private List<String> mGenres;
@@ -251,5 +251,10 @@ public class Shows implements Serializable {
 
     public void setmUnseen(List<Unseen> mUnseen) {
         this.mUnseen = mUnseen;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return this.getmTitle().compareTo(((Shows) another).getmTitle());
     }
 }

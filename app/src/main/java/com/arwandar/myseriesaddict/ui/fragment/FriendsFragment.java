@@ -1,12 +1,10 @@
 package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +22,7 @@ import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -62,8 +61,8 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-        progress = ProgressDialog.show(getActivity(), "Patientez",
-                "Chargement de la liste", true);
+        // progress = ProgressDialog.show(getActivity(), "Patientez",
+        //       "Chargement de la liste", true);
         getContent();
 
 
@@ -83,13 +82,14 @@ public class FriendsFragment extends Fragment {
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
-                progress.dismiss();
+                // progress.dismiss();
                 if (response.isSuccessful()) {
                     UsersConverter converter = new UsersConverter();
                     mUsers.clear();
                     for (User us : converter.convertDtoToUsers(response.body()).getUsers()) {
                         mUsers.add(us);
                     }
+                    Collections.sort(mUsers);
                     mAdapter.notifyDataSetChanged();
 
                 } else {
@@ -103,16 +103,16 @@ public class FriendsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
-                progress.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.dialog_message_error)
-                        .setTitle(R.string.dialog_title_error);
-                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
+//                progress.dismiss();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                builder.setMessage(R.string.dialog_message_error)
+//                        .setTitle(R.string.dialog_title_error);
+//                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // User clicked OK button
+//                    }
+//                });
+//                AlertDialog dialog = builder.create();
             }
         });
     }

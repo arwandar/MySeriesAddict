@@ -10,9 +10,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
+import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
+import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
+import com.arwandar.myseriesaddict.api.model.MemberComplex;
+import com.arwandar.myseriesaddict.api.model.User;
+import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.adpater.BasePagerAdapter;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,9 +34,6 @@ public class BaseActivity extends CustomActivity {
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
     private BasePagerAdapter mAdapter;
-
-
-    private CharSequence title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,8 @@ public class BaseActivity extends CustomActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //Charge les infos du client dans la nav bar
+        setCustomNavBar();
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.base, menu);
         return true;
@@ -86,5 +95,31 @@ public class BaseActivity extends CustomActivity {
     public void setFragment(int fragment) {
         mAdapter.notifyDataSetChanged();
         mViewPager.setCurrentItem(fragment);
+
+    }
+
+    private void setCustomNavBar() {
+        CallManager.getMemberInfosAsync(new Callback<MemberComplexDTO>() {
+            @Override
+            public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
+                MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
+                User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
+
+                TextView login = (TextView) findViewById(R.id.nav_bar_login);
+                TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
+                ImageView picture = (ImageView)findViewById(R.id.nav_bar_picture);
+
+                login.setText(user.getmLogin());
+                xp.setText(user.getmXp() + " xp");
+                Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
+
+            }
+
+            @Override
+            public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
+
+            }
+        });
+
     }
 }

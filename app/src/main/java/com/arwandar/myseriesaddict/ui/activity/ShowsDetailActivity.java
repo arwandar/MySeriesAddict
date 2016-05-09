@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.ui.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ import retrofit2.Response;
 
 public class ShowsDetailActivity extends CustomActivity {
     protected ProgressDialog progress;
+    @Bind(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     Shows mShows;
     @Bind(R.id.shows_detail_archived)
     Switch mSwitchArchived;
@@ -36,14 +39,23 @@ public class ShowsDetailActivity extends CustomActivity {
 
         initActivity();
 
-        getContent(getIntent().getStringExtra("showsId"));
+        getContent(getIntent().getStringExtra("showsId"), false);
 
+        mSwipeRefreshLayout.setAnimation(null);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
+            @Override
+            public void onRefresh() {
+                getContent(mShows.getmId(), true);
+            }
+        });
     }
 
-    private void getContent(String showsId) {
-        progress = ProgressDialog.show(ShowsDetailActivity.this, "Patientez",
-                "Chargement de la série", true);
+    private void getContent(String showsId, boolean isRefreshing) {
+        if (!isRefreshing) {
+            progress = ProgressDialog.show(ShowsDetailActivity.this, "Patientez",
+                    "Chargement de la série", true);
+        }
         CallManager.getShowDisplayAsync(showsId, new Callback<ShowDisplayComplexDTO>() {
             @Override
             public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
@@ -55,11 +67,17 @@ public class ShowsDetailActivity extends CustomActivity {
                     showErrorLogin(response.code());
                 }
                 progress.dismiss();
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
                 progress.dismiss();
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
                 showError();
             }
         });

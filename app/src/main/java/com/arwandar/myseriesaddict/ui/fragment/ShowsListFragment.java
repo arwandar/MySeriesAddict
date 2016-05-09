@@ -45,11 +45,15 @@ public abstract class ShowsListFragment extends Fragment {
 
     protected ProgressDialog progress;
 
+    protected int title;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_shows_list, container, false);
         ButterKnife.bind(this, view);
+
+        getActivity().setTitle(title);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -73,8 +77,6 @@ public abstract class ShowsListFragment extends Fragment {
             }
         });
 
-//        progress = ProgressDialog.show(getActivity(), "Patientez",
-//                "Chargement de la liste", true);
         getContent();
         return view;
     }

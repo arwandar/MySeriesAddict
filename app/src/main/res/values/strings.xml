@@ -8,17 +8,17 @@
     <string name="friends_label">Liste des amis</string>
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_content">BIENVENUE\nSUR\nMySeriesAddict</string>
     <string name="deconnexion_label">Déconnexion</string>
-    <string name="title_activity_navigation">NavigationActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_main_activity_with_navigation">MainActivityWithNavigation</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="dialog_message_error">La liste ne peut être chargée</string>
     <string name="dialog_title_error">Erreur</string>
     <string name="ok_error">Ok</string>
+    <string name="title_activity_friends">FriendsActivity</string>
+    <string name="title_activity_custom">CustomActivity</string>
+    <string name="title_activity_shows_list">ShowsListActivity</string>
 
 </resources>

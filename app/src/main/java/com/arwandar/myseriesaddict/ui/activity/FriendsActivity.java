@@ -1,17 +1,19 @@
-package com.arwandar.myseriesaddict.ui.fragment;
+package com.arwandar.myseriesaddict.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
@@ -20,9 +22,7 @@ import com.arwandar.myseriesaddict.api.converter.UsersConverter;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.api.service.NetworkTester;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
-import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
 
 import java.util.ArrayList;
@@ -35,10 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Arwandar on 07/05/2016.
- */
-public class FriendsFragment extends Fragment {
+public class FriendsActivity extends CustomActivity {
+
     protected final List<User> mUsers = new ArrayList<>();
     protected ProgressDialog progress;
     @Bind(R.id.friends_recycler_view)
@@ -46,14 +44,36 @@ public class FriendsFragment extends Fragment {
     FriendsAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friends);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        ButterKnife.bind(this, view);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        ButterKnife.bind(this);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FriendsAdapter(getActivity(), mUsers);
+        mAdapter = new FriendsAdapter(this, mUsers);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -76,12 +96,11 @@ public class FriendsFragment extends Fragment {
                 return false;
             }
         });
-        return view;
     }
 
     private void getContent() {
-        progress = ProgressDialog.show(getActivity(), "Patientez",
-            "Chargement de la liste", true);
+        progress = ProgressDialog.show(FriendsActivity.this, "Patientez",
+                "Chargement de la liste", true);
 
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
@@ -98,7 +117,7 @@ public class FriendsFragment extends Fragment {
                 } else {
                     if (response.code() == 400) {
                         SharedPrefsSingleton.setAccessToken("");
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        Intent intent = new Intent(FriendsActivity.this, LoginActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -107,9 +126,9 @@ public class FriendsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
-                Toast.makeText(getActivity(), "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-                //progress.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                Toast.makeText(FriendsActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
                 builder.setMessage(R.string.dialog_message_error)
                         .setTitle(R.string.dialog_title_error);
                 builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {

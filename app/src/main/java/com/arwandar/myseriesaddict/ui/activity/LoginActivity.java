@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
                     + SharedPrefsSingleton.getVersion() + "&redirect_uri="
                     + SharedPrefsSingleton.getRedirectURI());
         } else {
-            Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+            Intent intent = new Intent(LoginActivity.this, ShowsListActivity.class);
             startActivity(intent);
         }
     }
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (code != null) {
                     CallManager.getAccessToken(code);
                     //redirection to homepage
-                    Intent intent = new Intent(LoginActivity.this, BaseActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ShowsListActivity.class);
                     startActivity(intent);
 
                 } else if (uri.getQueryParameter("error") != null) {

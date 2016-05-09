@@ -7,12 +7,12 @@ import com.arwandar.myseriesaddict.ui.fragment.ArchivedShowsListFragment;
 import com.arwandar.myseriesaddict.ui.fragment.PendingShowsListFragment;
 
 /**
- * Created by Arwandar on 05/05/2016.
+ * Created by Arwandar on 09/05/2016.
  */
-public class BasePagerAdapter extends FragmentStatePagerAdapter {
+public class ShowsListPagerAdapter extends FragmentStatePagerAdapter {
     private int mActivityFragment;
 
-    public BasePagerAdapter(android.support.v4.app.FragmentManager fm, int pBaseActivityFragment) {
+    public ShowsListPagerAdapter(android.support.v4.app.FragmentManager fm, int pBaseActivityFragment) {
         super(fm);
         mActivityFragment = pBaseActivityFragment;
     }
@@ -22,7 +22,7 @@ public class BasePagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 return new PendingShowsListFragment();
-            case 2:
+            case 1:
                 return new ArchivedShowsListFragment();
         }
         return null;
@@ -30,7 +30,7 @@ public class BasePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     @Override

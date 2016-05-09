@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,6 +38,8 @@ public abstract class ShowsListFragment extends Fragment {
     protected List<Shows> mShows = new ArrayList<>();
     @Bind(R.id.shows_list)
     protected RecyclerView mRecyclerView;
+    @Bind(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     protected ShowsAdapter mAdapter;
 
     protected String wantPending;
@@ -76,6 +79,13 @@ public abstract class ShowsListFragment extends Fragment {
                 return false;
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                getContent();
+            }
+        });
 
         getContent();
         return view;
@@ -94,15 +104,25 @@ public abstract class ShowsListFragment extends Fragment {
                     }
                     Collections.sort(mShows);
                     mAdapter.notifyDataSetChanged();
+                    if (mSwipeRefreshLayout.isRefreshing()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
 
                 } else {
                     ((CustomActivity) getActivity()).showErrorLogin(response.code());
+                    if (mSwipeRefreshLayout.isRefreshing()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
                 ((CustomActivity) getActivity()).showError();
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }

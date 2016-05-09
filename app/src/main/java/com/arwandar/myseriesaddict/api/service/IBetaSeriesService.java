@@ -9,6 +9,7 @@ import com.arwandar.myseriesaddict.api.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -73,4 +74,21 @@ public interface IBetaSeriesService {
     @POST("/members/destroy")
     Call<ErrorsComplexDTO> destroyToken();
 
+    @FormUrlEncoded
+    @POST("/shows/favorite")
+    Call<ShowDisplayComplexDTO> markShowAsFavorite(
+            @Field("id") String showId
+    );
+
+    @FormUrlEncoded
+    @DELETE("/shows/favorite")
+    Call<ShowDisplayComplexDTO> deleteShowFromFavorite(
+            @Field("id") String showId
+    );
+
+    @FormUrlEncoded
+    @DELETE("/shows/archive")
+    Call<ShowDisplayComplexDTO> deleteShowFromArchive(
+            @Field("id") String showId
+    );
 }

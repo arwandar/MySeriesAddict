@@ -119,4 +119,22 @@ public class CallManager {
         Call<ErrorsComplexDTO> call = service.destroyToken();
         call.enqueue(callback);
     }
+
+    public static void markShowAsFavoriteAsync(String showId, final Callback<ShowDisplayComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowDisplayComplexDTO> call = service.markShowAsFavorite(showId);
+        call.enqueue(callback);
+    }
+
+    public static void deleteShowFromArchivedAsync(String showId, final Callback<ShowDisplayComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowDisplayComplexDTO> call = service.deleteShowFromArchive(showId);
+        call.enqueue(callback);
+    }
+
+    public static void deleteShowFromFavoriteAsync(String showId, final Callback<ShowDisplayComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<ShowDisplayComplexDTO> call = service.deleteShowFromFavorite(showId);
+        call.enqueue(callback);
+    }
 }

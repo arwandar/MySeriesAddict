@@ -123,7 +123,7 @@ public class CustomActivity extends AppCompatActivity
     }
 
     protected void setCustomNavBar() {
-        CallManager.getMemberInfosAsync(new Callback<MemberComplexDTO>() {
+        CallManager.getMemberInfosAsync(true, new Callback<MemberComplexDTO>() {
             @Override
             public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
                 MemberComplexConverter memberComplexConverter = new MemberComplexConverter();

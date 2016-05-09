@@ -1,26 +1,23 @@
 package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
-import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
+import com.arwandar.myseriesaddict.ui.activity.CustomActivity;
 import com.arwandar.myseriesaddict.ui.activity.ShowsDetailActivity;
 import com.arwandar.myseriesaddict.ui.adpater.ShowsAdapter;
 
@@ -41,6 +38,8 @@ public abstract class ShowsListFragment extends Fragment {
     protected List<Shows> mShows = new ArrayList<>();
     @Bind(R.id.shows_list)
     protected RecyclerView mRecyclerView;
+    @Bind(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     protected ShowsAdapter mAdapter;
 
     protected String wantPending;
@@ -80,6 +79,13 @@ public abstract class ShowsListFragment extends Fragment {
                 return false;
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                getContent();
+            }
+        });
 
         getContent();
         return view;
@@ -98,29 +104,25 @@ public abstract class ShowsListFragment extends Fragment {
                     }
                     Collections.sort(mShows);
                     mAdapter.notifyDataSetChanged();
+                    if (mSwipeRefreshLayout.isRefreshing()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
 
                 } else {
-                    if (response.code() == 400) {
-                        SharedPrefsSingleton.setAccessToken("");
-                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
+                    ((CustomActivity) getActivity()).showErrorLogin(response.code());
+                    if (mSwipeRefreshLayout.isRefreshing()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
-                Toast.makeText(getActivity(), "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.dialog_message_error)
-                        .setTitle(R.string.dialog_title_error);
-                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                ((CustomActivity) getActivity()).showError();
+                if (mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }

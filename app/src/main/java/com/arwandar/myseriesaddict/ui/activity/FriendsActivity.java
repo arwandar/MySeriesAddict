@@ -1,18 +1,13 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.api.converter.UsersConverter;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
 import com.arwandar.myseriesaddict.api.model.User;
@@ -91,29 +86,14 @@ public class FriendsActivity extends CustomActivity {
                     mAdapter.notifyDataSetChanged();
 
                 } else {
-                    if (response.code() == 400) {
-                        SharedPrefsSingleton.setAccessToken("");
-                        Intent intent = new Intent(FriendsActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }
+                    showErrorLogin(response.code());
                 }
                 progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
-                Toast.makeText(FriendsActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-                progress.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsActivity.this);
-                builder.setMessage(R.string.dialog_message_error)
-                        .setTitle(R.string.dialog_title_error);
-                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                showError();
             }
         });
     }

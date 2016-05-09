@@ -160,4 +160,28 @@ public class CustomActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         setCustomNavBar();
     }
+
+    public void showError() {
+        Toast.makeText(CustomActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
+        builder.setMessage(R.string.dialog_message_error)
+                .setTitle(R.string.dialog_title_error);
+        builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showErrorLogin(int code) {
+        if (code == 400) {
+            Toast.makeText(CustomActivity.this, "Votre session a expiré, veuillez vous reconnecter.", Toast.LENGTH_SHORT).show();
+            SharedPrefsSingleton.setAccessToken("");
+            Intent intent = new Intent(CustomActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    }
 }

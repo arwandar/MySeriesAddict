@@ -59,6 +59,25 @@
                 android:layout_gravity="center_horizontal"
                 android:padding="5dp"/>
 
+            <Switch
+                android:id="@+id/shows_detail_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/scrollView"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/scrollView"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.50"
+                android:text="Favorite"/>
+
+            <Switch
+                android:id="@+id/shows_detail_archived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.50"
+                android:text="Archivée"/>
+
         </LinearLayout>
     </ScrollView>
 

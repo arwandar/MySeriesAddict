@@ -1,12 +1,12 @@
 package com.arwandar.myseriesaddict.api.service;
 
-import com.arwandar.myseriesaddict.api.model.AccessToken;
 import com.arwandar.myseriesaddict.api.dto.EpisodeComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
+import com.arwandar.myseriesaddict.api.model.AccessToken;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -80,15 +80,15 @@ public interface IBetaSeriesService {
             @Field("id") String showId
     );
 
-    @FormUrlEncoded
+
     @DELETE("/shows/favorite")
     Call<ShowDisplayComplexDTO> deleteShowFromFavorite(
-            @Field("id") String showId
+            @Query("id") String showId
     );
 
-    @FormUrlEncoded
+
     @DELETE("/shows/archive")
     Call<ShowDisplayComplexDTO> deleteShowFromArchive(
-            @Field("id") String showId
+            @Query("id") String showId
     );
 }

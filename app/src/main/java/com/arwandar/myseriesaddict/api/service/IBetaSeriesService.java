@@ -40,7 +40,8 @@ public interface IBetaSeriesService {
 
     @GET("/episodes/list")
     Call<ShowsComplexDTO> getEpisodesList(
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @Query("specials") String includeSpecials
     );
 
     @FormUrlEncoded

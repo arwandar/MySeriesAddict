@@ -72,7 +72,7 @@ public class CallManager {
 
     public static void getEpisodesListAsync(Integer limit, final Callback<ShowsComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<ShowsComplexDTO> call = service.getEpisodesList(limit);
+        Call<ShowsComplexDTO> call = service.getEpisodesList(limit, "true");
         call.enqueue(callback);
     }
 

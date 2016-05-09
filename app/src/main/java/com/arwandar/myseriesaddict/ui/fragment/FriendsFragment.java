@@ -1,15 +1,18 @@
 package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -77,13 +80,8 @@ public class FriendsFragment extends Fragment {
     }
 
     private void getContent() {
-//        progress = ProgressDialog.show(getActivity(), "Patientez",
-//            "Chargement de la liste", true);
-
-        if (!NetworkTester.checkNetwork(this.getContext())) {
-            System.out.print("Pas d'internet.");
-        }
-
+        progress = ProgressDialog.show(getActivity(), "Patientez",
+            "Chargement de la liste", true);
 
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
@@ -104,20 +102,23 @@ public class FriendsFragment extends Fragment {
                         startActivity(intent);
                     }
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
-//                progress.dismiss();
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                builder.setMessage(R.string.dialog_message_error)
-//                        .setTitle(R.string.dialog_title_error);
-//                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // User clicked OK button
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
+                Toast.makeText(getActivity(), "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
+                //progress.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.dialog_message_error)
+                        .setTitle(R.string.dialog_title_error);
+                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

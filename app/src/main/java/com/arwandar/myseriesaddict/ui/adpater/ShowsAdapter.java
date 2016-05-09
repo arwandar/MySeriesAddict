@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.model.Shows;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,9 +41,9 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Shows shows = mShowsList.get(position);
 
-        //holder.mColorView.setBackgroundColor(shows.getmColor());
         holder.mNameView.setText(shows.getmTitle());
         holder.mDescriptionView.setText(shows.getmDescription());
+        Picasso.with(this.mActivity).load(shows.getmImages().getmBox()).into(holder.mPictureView);
     }
 
     @Override
@@ -51,8 +53,8 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.small_item_shows_color)
-        protected View mColorView;
+        @Bind(R.id.small_item_shows_picture)
+        public ImageView mPictureView;
         @Bind(R.id.small_item_shows_name)
         protected TextView mNameView;
         @Bind(R.id.small_item_shows_description)

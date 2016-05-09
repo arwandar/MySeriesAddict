@@ -7,8 +7,8 @@
               android:orientation="horizontal"
               android:padding="8dp">
 
-    <View
-        android:id="@+id/small_item_shows_color"
+    <ImageView
+        android:id="@+id/small_item_shows_picture"
         android:layout_width="64dp"
         android:layout_height="64dp"
         tools:background="@color/colorAccent"/>

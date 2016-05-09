@@ -1,6 +1,6 @@
 package com.arwandar.myseriesaddict.api.service;
 
-import com.arwandar.myseriesaddict.api.AccessToken;
+import com.arwandar.myseriesaddict.api.model.AccessToken;
 import com.arwandar.myseriesaddict.api.dto.EpisodeComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;

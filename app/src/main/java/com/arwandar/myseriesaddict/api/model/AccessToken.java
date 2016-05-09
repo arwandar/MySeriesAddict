@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.api;
+package com.arwandar.myseriesaddict.api.model;
 
 
 /**

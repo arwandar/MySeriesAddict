@@ -59,11 +59,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.BaseActivity"
-            android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".ui.activity.FriendsActivity"
             android:label="@string/title_activity_friends"
             android:theme="@style/AppTheme.NoActionBar">

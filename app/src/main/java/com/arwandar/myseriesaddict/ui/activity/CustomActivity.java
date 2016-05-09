@@ -7,11 +7,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
+import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
+import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -94,5 +100,30 @@ public class CustomActivity extends AppCompatActivity
                 //TODO ajout poop deco foirée
             }
         });
+    }
+
+    protected void setCustomNavBar() {
+        CallManager.getMemberInfosAsync(new Callback<MemberComplexDTO>() {
+            @Override
+            public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
+                MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
+                User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
+
+                TextView login = (TextView) findViewById(R.id.nav_bar_login);
+                TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
+                ImageView picture = (ImageView) findViewById(R.id.nav_bar_picture);
+
+                login.setText(user.getmLogin());
+                xp.setText(user.getmXp() + " xp");
+                Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
+
+            }
+
+            @Override
+            public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
+
+            }
+        });
+
     }
 }

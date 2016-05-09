@@ -67,6 +67,7 @@ public class FriendsActivity extends CustomActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setCustomNavBar();
 
 
         ButterKnife.bind(this);

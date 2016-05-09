@@ -34,6 +34,7 @@ public class ShowsListActivity extends CustomActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setCustomNavBar();
 
         mAdapter = new ShowsListPagerAdapter(getSupportFragmentManager(), 0);
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());

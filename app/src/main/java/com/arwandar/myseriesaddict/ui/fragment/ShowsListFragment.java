@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.AppContext;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
-import com.arwandar.myseriesaddict.ui.activity.BaseActivity;
 import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.arwandar.myseriesaddict.ui.adpater.ShowsAdapter;
 
@@ -63,15 +61,13 @@ public abstract class ShowsListFragment extends Fragment {
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                AppContext.setShowsSelected(mShows.get(position));
-                ((BaseActivity) getActivity()).setFragment(3);
+                //TODO activity shows detail
             }
         });
         ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                AppContext.setShowsSelected(mShows.get(position));
-                ((BaseActivity) getActivity()).setFragment(3);
+                //TODO activity shows detail
 
                 return false;
             }

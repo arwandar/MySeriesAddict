@@ -12,9 +12,8 @@ import com.arwandar.myseriesaddict.ui.fragment.PendingShowsListFragment;
 public class ShowsListPagerAdapter extends FragmentStatePagerAdapter {
     private int mActivityFragment;
 
-    public ShowsListPagerAdapter(android.support.v4.app.FragmentManager fm, int pBaseActivityFragment) {
+    public ShowsListPagerAdapter(android.support.v4.app.FragmentManager fm) {
         super(fm);
-        mActivityFragment = pBaseActivityFragment;
     }
 
     @Override

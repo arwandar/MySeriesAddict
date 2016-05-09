@@ -73,6 +73,11 @@
             android:label="@string/title_activity_shows_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".ui.activity.ShowsDetailActivity"
+            android:label="@string/title_activity_shows_detail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

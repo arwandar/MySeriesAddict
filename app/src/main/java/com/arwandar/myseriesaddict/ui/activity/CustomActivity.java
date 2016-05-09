@@ -1,14 +1,19 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -20,6 +25,7 @@ import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +35,10 @@ public class CustomActivity extends AppCompatActivity
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     public void onBackPressed() {
@@ -73,11 +83,11 @@ public class CustomActivity extends AppCompatActivity
             startActivity(new Intent(CustomActivity.this, FriendsActivity.class));
         } else if (id == R.id.nav_archived_shows) {
             Intent intent = new Intent(CustomActivity.this, ShowsListActivity.class);
-            //TODO rajouter le put extra
+            intent.putExtra("fragmentChoose", 0);
             startActivity(intent);
         } else if (id == R.id.nav_pending_shows) {
             Intent intent = new Intent(CustomActivity.this, ShowsListActivity.class);
-            //TODO rajouter le put extra
+            intent.putExtra("fragmentChoose", 1);
             startActivity(intent);
         } else if (id == R.id.nav_deconnection) {
             disconnection();
@@ -97,7 +107,17 @@ public class CustomActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<ErrorsComplexDTO> call, Throwable t) {
-                //TODO ajout poop deco foirée
+                Toast.makeText(CustomActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
+                builder.setMessage(R.string.dialog_message_error)
+                        .setTitle(R.string.dialog_title_error);
+                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
@@ -124,6 +144,20 @@ public class CustomActivity extends AppCompatActivity
 
             }
         });
+    }
 
+    protected void initActivity() {
+        ButterKnife.bind(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+        setCustomNavBar();
     }
 }

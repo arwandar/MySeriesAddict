@@ -7,7 +7,7 @@ import com.arwandar.myseriesaddict.R;
  */
 public class ArchivedShowsListFragment extends ShowsListFragment {
     public ArchivedShowsListFragment() {
-        this.wantPending = "true";
+        this.wantPending = "false";
         this.title = R.string.archived_shows_label;
     }
 }

@@ -1,14 +1,17 @@
 package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -18,6 +21,7 @@ import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
+import com.arwandar.myseriesaddict.ui.activity.ShowsDetailActivity;
 import com.arwandar.myseriesaddict.ui.adpater.ShowsAdapter;
 
 import java.util.ArrayList;
@@ -46,7 +50,7 @@ public abstract class ShowsListFragment extends Fragment {
     protected int title;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_shows_list, container, false);
         ButterKnife.bind(this, view);
@@ -61,14 +65,18 @@ public abstract class ShowsListFragment extends Fragment {
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                //TODO activity shows detail
+                Intent intent = new Intent(getActivity(), ShowsDetailActivity.class);
+                intent.putExtra("showsId", mShows.get(position).getmId());
+                startActivity(intent);
+
             }
         });
         ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                //TODO activity shows detail
-
+                Intent intent = new Intent(getActivity(), ShowsDetailActivity.class);
+                intent.putExtra("showsId", mShows.get(position).getmId());
+                startActivity(intent);
                 return false;
             }
         });
@@ -86,7 +94,7 @@ public abstract class ShowsListFragment extends Fragment {
                     MemberComplexConverter converter = new MemberComplexConverter();
                     mShows.clear();
                     for (Shows shows : converter.convertDtoToMember(response.body()).getUser().getmShows()) {
-                        if (shows.getmUser().getmArchived() == wantPending) mShows.add(shows);
+                        if (shows.getmUser().getmArchived().equals(wantPending)) mShows.add(shows);
                     }
                     Collections.sort(mShows);
                     mAdapter.notifyDataSetChanged();
@@ -102,7 +110,17 @@ public abstract class ShowsListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
-
+                Toast.makeText(getActivity(), "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.dialog_message_error)
+                        .setTitle(R.string.dialog_title_error);
+                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

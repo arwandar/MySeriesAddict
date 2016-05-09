@@ -7,7 +7,7 @@ import com.arwandar.myseriesaddict.R;
  */
 public class PendingShowsListFragment extends ShowsListFragment {
     public PendingShowsListFragment() {
-        this.wantPending = "false";
+        this.wantPending = "true";
         this.title = R.string.pending_shows_label;
     }
 

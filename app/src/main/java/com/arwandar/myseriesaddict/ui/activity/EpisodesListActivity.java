@@ -119,6 +119,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
      * @param childPosition
      */
     private void removeEpisodeFromList(int groupPosition, int childPosition) {
+        //TODO supprimer tous les episodes precedents aussi
         mShowsListHashMap.get(mShowsList.get(groupPosition)).remove(childPosition);
         if (mShowsListHashMap.get(mShowsList.get(groupPosition)).isEmpty()) {
             mShowsListHashMap.remove(mShowsList.get(groupPosition));

@@ -25,8 +25,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     private Activity mActivity;
     private List<User> mUsersList;
 
-    public FriendsAdapter(Activity activity, List<User> pUsersList) {
-        mActivity = activity;
+    public FriendsAdapter(Activity pActivity, List<User> pUsersList) {
+        mActivity = pActivity;
         mUsersList = pUsersList;
     }
 

@@ -23,4 +23,12 @@ public class CustomModelShowEpisode {
     public void setmUnseen(Unseen mUnseen) {
         this.mUnseen = mUnseen;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof CustomModelShowEpisode) {
+            return mShow.getmId().equals(((CustomModelShowEpisode) o).getmShow().getmId());
+        }
+        return false;
+    }
 }

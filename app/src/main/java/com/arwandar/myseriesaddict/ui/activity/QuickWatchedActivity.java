@@ -1,18 +1,26 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.converter.ShowsComplexConverter;
+import com.arwandar.myseriesaddict.api.dto.EpisodeComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowsComplexDTO;
 import com.arwandar.myseriesaddict.api.model.CustomModelShowEpisode;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.arwandar.myseriesaddict.ui.ItemClickSupport;
+import com.arwandar.myseriesaddict.ui.adpater.QuickWatchedAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,9 +28,15 @@ import retrofit2.Response;
 public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
 
     boolean getFavoritesCompleted, getEpisodesCompleted;
+    @Bind(R.id.quick_watched_recycler_view)
+    RecyclerView mRecyclerView;
+    QuickWatchedAdapter mAdapter;
     private List<CustomModelShowEpisode> mCustomModelShowEpisodes =
-            new ArrayList<CustomModelShowEpisode>();
+            new ArrayList<>();
+    private List<CustomModelShowEpisode> mCustomModelShowEpisodesCall =
+            new ArrayList<>();
     private List<Shows> mShowsList = new ArrayList<>();
+    private List<Shows> mShowsListBefore = new ArrayList<>();
     private ShowsComplexConverter mShowsComplexConverter;
 
     @Override
@@ -31,13 +45,24 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
         setContentView(R.layout.activity_quick_watched);
         initActivity();
 
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new QuickWatchedAdapter(this, mCustomModelShowEpisodes);
+        mRecyclerView.setAdapter(mAdapter);
+
         mShowsComplexConverter = new ShowsComplexConverter();
+
+        getContent();
+
+        initItemClikSupport();
     }
 
     /**
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        //mCustomModelShowEpisodes.clear();
         getEpisodesCompleted = false;
         getFavoritesCompleted = false;
         getEpisodes();
@@ -76,12 +101,13 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
      * @param pShowsComplex
      */
     private void setmCustomModelShowEpisodes(ShowsComplex pShowsComplex) {
+        mCustomModelShowEpisodesCall.clear();
         for (Shows s : pShowsComplex.getmShows()) {
             if (s.getmUser().getmArchived() == "false" &&
                     s.getmUser().getmRemaining() != "0") {
                 CustomModelShowEpisode c = new CustomModelShowEpisode();
                 c.setmShow(s);
-                mCustomModelShowEpisodes.add(c);
+                mCustomModelShowEpisodesCall.add(c);
             }
         }
     }
@@ -115,16 +141,70 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
      * recherche des lignes communes
      */
     private void makeMatch() {
+//        mCustomModelShowEpisodes;
         if (getEpisodesCompleted && getFavoritesCompleted) {
             for (Shows show : mShowsList) {
-                for (CustomModelShowEpisode episode : mCustomModelShowEpisodes) {
-                    if (episode.getmShow().getmId().equals(show.getmId())) {
-                        episode.setmUnseen(show.getmUnseen().get(0));
-                        break;
+
+                for (CustomModelShowEpisode episode : mCustomModelShowEpisodesCall) {
+                    if (!mCustomModelShowEpisodes.contains(episode)) {
+                        if (episode.getmShow().getmId().equals(show.getmId())) {
+                            episode.setmUnseen(show.getmUnseen().get(0));
+                            mCustomModelShowEpisodes.add(episode);
+                            // break;
+                        }
                     }
                 }
             }
+            mAdapter.notifyDataSetChanged();
+            mSwipeRefreshLayout.setRefreshing(false);
+            mShowsListBefore = mShowsList;
         }
+    }
+
+    private void initItemClikSupport() {
+        ItemClickSupport.addTo(mRecyclerView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, final int position, View
+                            v) {
+                        String episodeId = mCustomModelShowEpisodes.get(position).getmUnseen()
+                                .getmId();
+                        CallManager.markEpisodeAsWatchedAsync(episodeId,
+                                new Callback<EpisodeComplexDTO>() {
+                                    @Override
+                                    public void onResponse(Call<EpisodeComplexDTO> call,
+                                            Response<EpisodeComplexDTO> response) {
+                                        if (response.isSuccessful()) {
+                                            String toastString =
+                                                    mCustomModelShowEpisodes.get(position)
+                                                            .getmUnseen().getmCode() +
+                                                            " a été marqué comme vu.";
+                                            Toast.makeText(getApplicationContext(), toastString,
+                                                    Toast.LENGTH_LONG).show();
+                                            mCustomModelShowEpisodes.remove(position);
+                                            mAdapter.notifyDataSetChanged();
+                                            getContent();
+                                        } else {
+                                            showErrorLogin(response.code());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<EpisodeComplexDTO> call,
+                                            Throwable t) {
+                                        showError();
+                                    }
+                                });
+                    }
+                });
+        ItemClickSupport.addTo(mRecyclerView)
+                .setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClicked(RecyclerView recyclerView, int position,
+                            View v) {
+                        return false;
+                    }
+                });
     }
 }
 

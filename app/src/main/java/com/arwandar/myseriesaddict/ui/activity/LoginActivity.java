@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * choix de l'activité à charger une fois logué
      */
-    private Class<EpisodesListActivity> mActivityClass = EpisodesListActivity.class;
+    private Class<QuickWatchedActivity> mActivityClass = QuickWatchedActivity.class;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

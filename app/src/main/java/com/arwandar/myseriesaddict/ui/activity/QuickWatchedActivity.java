@@ -19,67 +19,113 @@ import retrofit2.Response;
 
 public class QuickWatchedActivity extends CustomActivity {
 
-    public List<CustomModelShowEpisode> list = new ArrayList<CustomModelShowEpisode>();
+    boolean getFavoritesCompleted, getEpisodesCompleted;
+    private List<CustomModelShowEpisode> mCustomModelShowEpisodes =
+            new ArrayList<CustomModelShowEpisode>();
+    private List<Shows> mShowsList = new ArrayList<>();
+    private ShowsComplexConverter mShowsComplexConverter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_watched);
         initActivity();
+
+        mShowsComplexConverter = new ShowsComplexConverter();
     }
 
     /**
      * appel au webservice pour recuperer les données
      */
     private void getContent() {
+        getEpisodesCompleted = false;
+        getFavoritesCompleted = false;
+        getEpisodes();
+        getFavorites();
+    }
+
+    /**
+     * recuperation des séries favorites
+     */
+    private void getFavorites() {
         CallManager.getFavoritesShowsAsync(new Callback<ShowsComplexDTO>() {
             @Override
             public void onResponse(Call<ShowsComplexDTO> call,
                     Response<ShowsComplexDTO> response) {
-                final ShowsComplexConverter showsComplexConverter =
-                        new ShowsComplexConverter();
-                ShowsComplex showsComplex =
-                        showsComplexConverter.convertDtoToShowsComplex(response.body());
-
-                for (Shows s : showsComplex.getmShows()) {
-                    if (s.getmUser().getmArchived() == "false" &&
-                            s.getmUser().getmRemaining() != "0") {
-                        CustomModelShowEpisode c = new CustomModelShowEpisode();
-                        c.setmShow(s);
-                        list.add(c);
-                    }
+                if (response.isSuccessful()) {
+                    ShowsComplex showsComplex =
+                            mShowsComplexConverter.convertDtoToShowsComplex(response.body());
+                    setmCustomModelShowEpisodes(showsComplex);
+                    getFavoritesCompleted = true;
+                    makeMatch();
+                } else {
+                    showErrorLogin(response.code());
                 }
-                //Ici, on a récupéré toutes les séries favorites non archivées avec un épisode au moins à voir
-                //On va matcher avec les épisodes non-vus
-
-                CallManager.getEpisodesListAsync(1, new Callback<ShowsComplexDTO>() {
-                    @Override
-                    public void onResponse(Call<ShowsComplexDTO> call,
-                            Response<ShowsComplexDTO> response) {
-                        for (Shows show : showsComplexConverter
-                                .convertDtoToShowsComplex(response.body()).getmShows()) {
-                            //On vient vérifier que les séries sont présentes dans les deux listes
-                            for (int i = 0; i < list.size(); i++) {
-                                if (list.get(i).getmShow().getmId().equals(show.getmId())) {
-                                    list.get(i).setmUnseen(show.getmUnseen().get(0));
-                                    break;
-                                }
-                            }
-                        }
-
-                        System.out.print("FINI DE RECUPERER TOUS LES EPISODES ! ");
-                    }
-
-                    @Override
-                    public void onFailure(Call<ShowsComplexDTO> call, Throwable t) {
-
-                    }
-                });
             }
 
             @Override
             public void onFailure(Call<ShowsComplexDTO> call, Throwable t) {
+                showError();
             }
         });
     }
+
+    /**
+     * tri des resultats pour n'avoir que les séries non archivées ayant des episodes
+     *
+     * @param pShowsComplex
+     */
+    private void setmCustomModelShowEpisodes(ShowsComplex pShowsComplex) {
+        for (Shows s : pShowsComplex.getmShows()) {
+            if (s.getmUser().getmArchived() == "false" &&
+                    s.getmUser().getmRemaining() != "0") {
+                CustomModelShowEpisode c = new CustomModelShowEpisode();
+                c.setmShow(s);
+                mCustomModelShowEpisodes.add(c);
+            }
+        }
+    }
+
+    /**
+     * recuperation de tous les premiers episodes non vus
+     */
+    private void getEpisodes() {
+        CallManager.getEpisodesListAsync(1, new Callback<ShowsComplexDTO>() {
+            @Override
+            public void onResponse(Call<ShowsComplexDTO> call,
+                    Response<ShowsComplexDTO> response) {
+                if (response.isSuccessful()) {
+                    mShowsList = mShowsComplexConverter
+                            .convertDtoToShowsComplex(response.body()).getmShows();
+                    getEpisodesCompleted = true;
+                    makeMatch();
+                } else {
+                    showErrorLogin(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShowsComplexDTO> call, Throwable t) {
+                showError();
+            }
+        });
+    }
+
+    /**
+     * recherche des lignes communes
+     */
+    private void makeMatch() {
+        if (getEpisodesCompleted && getFavoritesCompleted) {
+            for (Shows show : mShowsList) {
+                for (CustomModelShowEpisode episode : mCustomModelShowEpisodes) {
+                    if (episode.getmShow().getmId().equals(show.getmId())) {
+                        episode.setmUnseen(show.getmUnseen().get(0));
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
+
+

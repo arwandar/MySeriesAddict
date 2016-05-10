@@ -18,9 +18,7 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-
                 <action android:name="android.intent.action.VIEW"/>
-
                 <data
                     android:host="127.0.0.1"
                     android:scheme="http"/>
@@ -34,33 +32,37 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.FriendsActivity"
             android:label="@string/title_activity_friends"
+            android:parentActivityName=".ui.activity.QuickWatchedActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.activity.CustomActivity"
             android:label="@string/title_activity_custom"
+            android:parentActivityName=".ui.activity.QuickWatchedActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.activity.ShowsListActivity"
             android:label="@string/title_activity_shows_list"
+            android:parentActivityName=".ui.activity.QuickWatchedActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.activity.ShowsDetailActivity"
             android:label="@string/title_activity_shows_detail"
+            android:parentActivityName=".ui.activity.EpisodesListActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.activity.EpisodesListActivity"
             android:label="@string/title_activity_episodes_list"
+            android:parentActivityName=".ui.activity.QuickWatchedActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

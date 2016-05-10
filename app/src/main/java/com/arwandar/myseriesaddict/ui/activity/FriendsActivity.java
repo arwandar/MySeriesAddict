@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsActivity extends CustomActivity {
+public class FriendsActivity extends CustomShakableActivity {
 
     protected final List<User> mUsers = new ArrayList<>();
     @Bind(R.id.swipeRefreshLayout)

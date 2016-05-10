@@ -53,54 +53,13 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final User user = mUsersList.get(position);
 
-        //Récupération des informations du membre
-
-        CallManager.getFriendsInfosAsync(user.getmId(), new Callback<MemberComplexDTO>() {
-            @Override
-            public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
-                if (response.isSuccessful()) {
-                    MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
-                    User u = memberComplexConverter.convertDtoToMember(response.body()).getUser();
-
-                    //TODO: gérer l'alignement des infos de small_item_friend.xml
-                    if(u.getmAvatar() == null){
-                        holder.mPictureView.setBackgroundResource(R.mipmap.ic_launcher);
-                    }
-                    else {
-                        Picasso.with(mActivity).load(u.getmAvatar()).into(holder.mPictureView);
-                    }
-                    holder.mUserName.setText(u.getmLogin());
-                    holder.mUserXp.setText(u.getmXp() + " xp");
-                } else {
-                    //Todo: check si ça marche
-                    if (response.code() == 400) {
-                        Toast.makeText(mActivity, "Votre session a expiré, veuillez vous reconnecter.", Toast.LENGTH_SHORT).show();
-                        SharedPrefsSingleton.setAccessToken("");
-                        Intent intent = new Intent(mActivity, LoginActivity.class);
-                        mActivity.getBaseContext().startActivity(intent);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
-                //Todo: check si ça marche
-                Toast.makeText(mActivity, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setMessage(R.string.dialog_message_error)
-                        .setTitle(R.string.dialog_title_error);
-                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
-
-
+        if (user.getmAvatar() == null) {
+            holder.mPictureView.setBackgroundResource(R.mipmap.ic_launcher);
+        } else {
+            Picasso.with(mActivity).load(user.getmAvatar()).into(holder.mPictureView);
+        }
+        holder.mUserName.setText(user.getmLogin());
+        holder.mUserXp.setText(user.getmXp() + " xp");
     }
 
     @Override

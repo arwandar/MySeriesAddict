@@ -1,9 +1,6 @@
 package com.arwandar.myseriesaddict.api;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.arwandar.myseriesaddict.ui.SecurePreferences;
 
 /**
  * Created by Arwandar on 05/05/2016.
@@ -12,22 +9,27 @@ public class SharedPrefsSingleton {
 
     private static SharedPrefsSingleton instance;
 
-    public SecurePreferences prefs;
+    public SharedPreferences prefs;
 
-    private SharedPrefsSingleton(Context context) {
-        prefs = new SecurePreferences(context, "preferencesMyBetaSeries", "KHjiO4Mp!Oi4542A", true);
+    private SharedPrefsSingleton(SharedPreferences prefs) {
 
-        prefs.put("url", "https://www.betaseries.com/authorize");
-        prefs.put("clientId", "a93691358c05");
-        prefs.put("clientSecret", "17d90f0c382e7623a09c6c29d3519028");
-        prefs.put("version", "2.4");
-        prefs.put("redirectUri", "http://127.0.0.1");
-        prefs.put("baseUrl", "https://api.betaseries.com");
+
+
+        // Constructor hidden because this is a singleton
+        this.prefs = prefs;
+        SharedPreferences.Editor editor = this.prefs.edit();
+        editor.putString("url", "https://www.betaseries.com/authorize");
+        editor.putString("clientId", "a93691358c05");
+        editor.putString("clientSecret", "17d90f0c382e7623a09c6c29d3519028");
+        editor.putString("version", "2.4");
+        editor.putString("redirectUri", "http://127.0.0.1");
+        editor.putString("baseUrl", "https://api.betaseries.com");
+        editor.commit();
     }
 
-    public static void initInstance(SharedPreferences prefs, Context context) {
+    public static void initInstance(SharedPreferences prefs) {
         if (instance == null) {
-            instance = new SharedPrefsSingleton(context);
+            instance = new SharedPrefsSingleton(prefs);
         }
     }
 
@@ -60,7 +62,9 @@ public class SharedPrefsSingleton {
     }
 
     public static void setAccessToken(String pAccessToken) {
-        instance.prefs.put("accessToken", pAccessToken);
+        SharedPreferences.Editor editor = instance.prefs.edit();
+        editor.putString("accessToken", pAccessToken);
+        editor.commit();
     }
 
     public static String getBaseUrl() {
@@ -72,6 +76,9 @@ public class SharedPrefsSingleton {
     }
 
     public static void setEpisodesLimit(int pLimit) {
-        instance.prefs.putInt("episodesLimit", pLimit);
+        SharedPreferences.Editor editor = instance.prefs.edit();
+
+        editor.putInt("episodesLimit", pLimit);
+        editor.commit();
     }
 }

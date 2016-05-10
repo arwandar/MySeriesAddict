@@ -9,6 +9,7 @@ import com.arwandar.myseriesaddict.R;
  * Created by Arwandar on 22/02/2016.
  */
 public class ItemClickSupport {
+
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;

@@ -7,6 +7,7 @@ import java.util.List;
  * Created by olivi on 04/05/2016.
  */
 public class EpisodeComplex implements Serializable {
+
     private List<String> mErrors;
     private Episode mEpisode;
 

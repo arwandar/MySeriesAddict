@@ -27,5 +27,4 @@ public class SeasonsDetailsConverter {
         seasonsDetails.setmNumber(dto.getmNumber());
         return seasonsDetails;
     }
-
 }

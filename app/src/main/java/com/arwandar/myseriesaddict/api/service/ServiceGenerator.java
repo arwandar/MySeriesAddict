@@ -3,7 +3,6 @@ package com.arwandar.myseriesaddict.api.service;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -16,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by olivi on 31/03/2016.
  */
 public class ServiceGenerator {
-
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -43,9 +41,9 @@ public class ServiceGenerator {
         }
 
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = builder.baseUrl(SharedPrefsSingleton.getBaseUrl()).client(client).build();
+        Retrofit retrofit =
+                builder.baseUrl(SharedPrefsSingleton.getBaseUrl()).client(client).build();
         return retrofit.create(serviceClass);
     }
-
 }
 

@@ -17,7 +17,6 @@ public class ShowsUser implements Serializable {
     private String mDownloaded;
     private String mSeen;
 
-
     public String getmTags() {
         return mTags;
     }

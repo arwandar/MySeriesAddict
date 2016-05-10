@@ -1,39 +1,27 @@
 package com.arwandar.myseriesaddict.ui.adpater;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
-import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
-import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.User;
-import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.activity.LoginActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Arwandar on 05/05/2016.
  */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
+
     private Activity mActivity;
     private List<User> mUsersList;
 
@@ -68,6 +56,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         @Bind((R.id.friend_name_textview))
         protected TextView mUserName;
         @Bind(R.id.friend_picture)

@@ -22,7 +22,6 @@ public class User implements Serializable, Comparable {
     private List<Shows> mFavorites;
     private List<Shows> mShows;
 
-
     public long getmId() {
         return mId;
     }

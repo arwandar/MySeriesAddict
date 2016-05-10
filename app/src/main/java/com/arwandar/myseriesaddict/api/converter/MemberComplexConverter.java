@@ -7,6 +7,7 @@ import com.arwandar.myseriesaddict.api.model.MemberComplex;
  * Created by olivi on 06/05/2016.
  */
 public class MemberComplexConverter {
+
     public MemberComplex convertDtoToMember(MemberComplexDTO dto) {
         MemberComplex memberComplex = new MemberComplex();
         UserConverter userConverter = new UserConverter();

@@ -81,13 +81,13 @@ public class EpisodesListActivity extends CustomActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(EpisodesListActivity.this);
         builder.setMessage(mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
                 childPosition).getmCode() + "va être marqué comme vu.");
-        builder.setPositiveButton(getString(R.string.valid_message),
+        builder.setPositiveButton(getString(R.string.submit_button),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         makeCallForMarkAsWatched(groupPosition, childPosition);
                     }
                 });
-        builder.setNegativeButton(getString(R.string.cancel_message),
+        builder.setNegativeButton(getString(R.string.cancel_button),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

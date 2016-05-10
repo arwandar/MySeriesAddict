@@ -83,12 +83,12 @@ public class FriendsActivity extends CustomActivity {
         });
     }
 
-
     private void getUserDetails(final User user) {
         mSwipeRefreshLayout.setRefreshing(true);
         CallManager.getFriendsInfosAsync(user.getmId(), new Callback<MemberComplexDTO>() {
             @Override
-            public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
+            public void onResponse(Call<MemberComplexDTO> call,
+                    Response<MemberComplexDTO> response) {
                 if (response.isSuccessful()) {
                     MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
                     User u = memberComplexConverter.convertDtoToMember(response.body()).getUser();

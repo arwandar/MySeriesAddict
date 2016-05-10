@@ -16,16 +16,16 @@
         android:id="@+id/friend_name_textview"
         android:layout_width="106dp"
         android:layout_height="36dp"
+        android:gravity="center"
         android:paddingLeft="10px"
-        android:text="New Text"
-        android:gravity="center"/>
+        android:text="New Text"/>
 
     <TextView
         android:id="@+id/friend_xp_textview"
         android:layout_width="86dp"
         android:layout_height="35dp"
+        android:gravity="center"
         android:paddingLeft="10px"
-        android:text="New Text"
-        android:gravity="center"/>
+        android:text="New Text"/>
 
 </LinearLayout>

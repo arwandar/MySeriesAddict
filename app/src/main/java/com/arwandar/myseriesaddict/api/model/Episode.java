@@ -7,6 +7,7 @@ import java.util.List;
  * Created by olivi on 04/05/2016.
  */
 public class Episode implements Serializable {
+
     private List<String> mSubtitles;
     private String mEpisode;
     private String mThetvdbid;

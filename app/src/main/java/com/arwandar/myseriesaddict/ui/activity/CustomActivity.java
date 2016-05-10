@@ -175,7 +175,7 @@ public abstract class CustomActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
         builder.setMessage(R.string.dialog_message_error)
                 .setTitle(R.string.dialog_title_error);
-        builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.submit_button, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
             }

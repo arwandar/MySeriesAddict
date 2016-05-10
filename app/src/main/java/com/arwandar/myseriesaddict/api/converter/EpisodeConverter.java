@@ -10,6 +10,7 @@ import java.util.List;
  * Created by olivi on 04/05/2016.
  */
 public class EpisodeConverter {
+
     public List<Episode> convertDtoToEpisode(List<EpisodeDTO> dtos) {
         if (dtos == null) dtos = new ArrayList<EpisodeDTO>();
         List<Episode> episodes = new ArrayList<>();

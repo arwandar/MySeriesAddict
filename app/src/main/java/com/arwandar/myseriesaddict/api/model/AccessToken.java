@@ -1,6 +1,5 @@
 package com.arwandar.myseriesaddict.api.model;
 
-
 /**
  * Created by olivi on 01/04/2016.
  */
@@ -24,7 +23,5 @@ public class AccessToken {
 
         return tokenType;
     }
-
-
 }
 

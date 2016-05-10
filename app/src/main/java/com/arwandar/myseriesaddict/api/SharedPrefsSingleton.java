@@ -22,7 +22,6 @@ public class SharedPrefsSingleton {
         editor.putString("redirectUri", "http://127.0.0.1");
         editor.putString("baseUrl", "https://api.betaseries.com");
         editor.commit();
-
     }
 
     public static void initInstance(SharedPreferences prefs) {
@@ -79,5 +78,4 @@ public class SharedPrefsSingleton {
         editor.putInt("episodesLimit", pLimit);
         editor.commit();
     }
-
 }

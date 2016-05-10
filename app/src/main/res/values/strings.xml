@@ -1,38 +1,46 @@
 <resources>
     <string name="app_name">MySeriesAddict</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_detail">DetailActivity</string>
-    <string name="episodes_label">Episodes non vus</string>
-    <string name="pending_shows_label">Séries en cours</string>
-    <string name="archived_shows_label">Séries archivées</string>
-    <string name="friends_label">Liste des amis</string>
 
-    <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="dummy_content">BIENVENUE\nSUR\nMySeriesAddict</string>
-    <string name="deconnexion_label">Déconnexion</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_base">BaseActivity</string>
-    <string name="dialog_message_error">La liste ne peut être chargée</string>
-    <string name="dialog_title_error">Erreur</string>
-    <string name="ok_error">Ok</string>
+    <!-- Activity Name-->
+    <string name="title_activity_quick_watched_view">Quick View</string>
     <string name="title_activity_friends">Liste des amis</string>
     <string name="title_activity_custom">CustomActivity</string>
     <string name="title_activity_shows_list">Liste des séries</string>
     <string name="title_activity_shows_detail">Infos détaillées</string>
     <string name="title_activity_episodes_list">EpisodesListActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+
+    <!-- Nav bar-->
+    <string name="episodes_label">Episodes non vus</string>
+    <string name="pending_shows_label">Séries en cours</string>
+    <string name="archived_shows_label">Séries archivées</string>
+    <string name="friends_label">Liste des amis</string>
+    <string name="quick_view_label">Quick View</string>
+
+    <!-- Settings-->
+    <string name="action_settings">Settings</string>
+
+    <!-- Label-->
     <string name="nb_episode_non_vus_label">Nb d\'épisodes non-vus</string>
-    <string name="settings_submit">Valider</string>
-    <string name="session_expirée_message">Votre session a expiré, veuillez vous reconnecter.</string>
-    <string name="cancel_message">Annuler</string>
-    <string name="valid_message">Valider</string>
+    <string name="deconnection_label">Déconnexion</string>
+    <string name="splash_screen_label">BIENVENUE\n\nSUR\n\nMySeriesAddict</string>
+
+    <!-- Message-->
     <string name="save_modification_ok_message">Les modifications ont été enregistrées.</string>
     <string name="mark_favorite_ok_message">La série a été marquée comme favorite.</string>
-    <string name="mark_no_favorite_ok">La série a été enlevée des favorites.</string>
-    <string name="mark_archived_ok">La série a été marquée comme archivée.</string>
-    <string name="mark_no_archived_ok">La série a été enlevée des archivées.</string>
-    <string name="title_activity_quick_watched_view">QuickWatchedView</string>
+    <string name="mark_no_favorite_ok_message">La série a été enlevée des favorites.</string>
+    <string name="mark_archived_ok_message">La série a été marquée comme archivée.</string>
+    <string name="mark_no_archived_ok_message">La série a été enlevée des archivées.</string>
+    <string name="session_expirée_message">Votre session a expiré, veuillez vous reconnecter.</string>
+    <string name="dialog_message_error">La liste ne peut être chargée</string>
+    <string name="dialog_title_error">Erreur</string>
 
+    <!-- Useless-->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Button-->
+    <string name="cancel_button">Annuler</string>
+    <string name="submit_button">Valider</string>
 </resources>

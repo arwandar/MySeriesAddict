@@ -87,12 +87,10 @@ public interface IBetaSeriesService {
             @Field("id") String showId
     );
 
-
     @DELETE("/shows/favorite")
     Call<ShowDisplayComplexDTO> deleteShowFromFavorite(
             @Query("id") String showId
     );
-
 
     @DELETE("/shows/archive")
     Call<ShowDisplayComplexDTO> deleteShowFromArchive(

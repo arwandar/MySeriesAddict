@@ -10,6 +10,7 @@ import java.util.List;
  * Created by olivi on 17/04/2016.
  */
 public class ShowsConverter {
+
     public List<Shows> convertDtoToShows(List<ShowsDTO> dtos) {
         if (dtos == null) dtos = new ArrayList<ShowsDTO>();
         List<Shows> shows = new ArrayList<>();
@@ -28,11 +29,11 @@ public class ShowsConverter {
         ShowsUserConverter showsUserConverter = new ShowsUserConverter();
         UnseenConverter unseenConverter = new UnseenConverter();
 
-
         shows.setmCreation(dto.getmCreation());
         shows.setmGenres(dto.getmGenres());
         shows.setmThetvdbid(dto.getmThetvdbid());
-        shows.setmSeasonsDetails(seasonsDetailsConverter.convertDtoToSeasonsDetails(dto.getmSeasonsDetails()));
+        shows.setmSeasonsDetails(
+                seasonsDetailsConverter.convertDtoToSeasonsDetails(dto.getmSeasonsDetails()));
         shows.setmEpisodes(dto.getmEpisodes());
         shows.setmAliases(dto.getmAliases());
         shows.setmNetwork(dto.getmNetwork());

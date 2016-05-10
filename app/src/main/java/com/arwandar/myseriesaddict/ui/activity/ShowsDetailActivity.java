@@ -154,7 +154,7 @@ public class ShowsDetailActivity extends CustomActivity {
                             Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(ShowsDetailActivity.this,
-                                    R.string.mark_no_favorite_ok,
+                                    R.string.mark_no_favorite_ok_message,
                                     Toast.LENGTH_SHORT).show();
                             mSwitchFavorite.setChecked(false);
                             alreadyFavoriteCall = false;
@@ -199,7 +199,7 @@ public class ShowsDetailActivity extends CustomActivity {
                             Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(ShowsDetailActivity.this,
-                                    R.string.mark_no_archived_ok,
+                                    R.string.mark_no_archived_ok_message,
                                     Toast.LENGTH_SHORT).show();
                             mSwitchArchived.setChecked(false);
                         } else {
@@ -227,7 +227,7 @@ public class ShowsDetailActivity extends CustomActivity {
                             Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(ShowsDetailActivity.this,
-                                    R.string.mark_archived_ok,
+                                    R.string.mark_archived_ok_message,
                                     Toast.LENGTH_SHORT).show();
                             mSwitchArchived.setChecked(true);
                         } else {

@@ -8,6 +8,7 @@ import java.util.List;
  * Created by olivi on 04/05/2016.
  */
 public class EpisodeDTO {
+
     @SerializedName("subtitles")
     private List<String> mSubtitles;
     @SerializedName("episode")

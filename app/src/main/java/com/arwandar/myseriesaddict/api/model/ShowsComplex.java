@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.api.model;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class ShowsComplex implements Serializable {
     }
 
     public void setmShows(List<Shows> mShows) {
+        Collections.sort(mShows);
         this.mShows = mShows;
     }
 }

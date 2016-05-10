@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_episodes"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/episodes_label"/>
+        <item
             android:id="@+id/nav_pending_shows"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/pending_shows_label"/>

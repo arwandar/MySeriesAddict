@@ -21,5 +21,9 @@
     <string name="title_activity_custom">CustomActivity</string>
     <string name="title_activity_shows_list">Liste des séries</string>
     <string name="title_activity_shows_detail">Infos détaillées</string>
+    <string name="title_activity_episodes_list">EpisodesListActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="nb_episode_non_vus_label">Nb d\'épisodes non-vus</string>
+    <string name="settings_submit">Valider</string>
 
 </resources>

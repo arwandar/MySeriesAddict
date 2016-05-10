@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.arwandar.myseriesaddict.ui.activity.CustomActivity">
+    tools:context=".ui.activity.EpisodesListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,6 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_custom"/>
+    <include layout="@layout/content_episodes_list"/>
 
 </android.support.design.widget.CoordinatorLayout>

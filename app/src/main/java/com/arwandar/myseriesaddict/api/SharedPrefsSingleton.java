@@ -69,4 +69,15 @@ public class SharedPrefsSingleton {
         return instance.prefs.getString("baseUrl", "");
     }
 
+    public static int getEpisodesLimit() {
+        return instance.prefs.getInt("episodesLimit", 2);
+    }
+
+    public static void setEpisodesLimit(int pLimit) {
+        SharedPreferences.Editor editor = instance.prefs.edit();
+
+        editor.putInt("episodesLimit", pLimit);
+        editor.commit();
+    }
+
 }

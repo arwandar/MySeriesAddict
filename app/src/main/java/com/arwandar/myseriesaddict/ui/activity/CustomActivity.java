@@ -66,6 +66,7 @@ public class CustomActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(CustomActivity.this, SettingsActivity.class));
             return true;
         }
 
@@ -75,22 +76,28 @@ public class CustomActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_friends) {
-            startActivity(new Intent(CustomActivity.this, FriendsActivity.class));
-        } else if (id == R.id.nav_archived_shows) {
-            Intent intent = new Intent(CustomActivity.this, ShowsListActivity.class);
-            intent.putExtra("fragmentChoose", 0);
-            startActivity(intent);
-        } else if (id == R.id.nav_pending_shows) {
-            Intent intent = new Intent(CustomActivity.this, ShowsListActivity.class);
-            intent.putExtra("fragmentChoose", 1);
-            startActivity(intent);
-        } else if (id == R.id.nav_deconnection) {
-            disconnection();
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.nav_friends:
+                startActivity(new Intent(CustomActivity.this, FriendsActivity.class));
+                break;
+            case R.id.nav_archived_shows:
+                intent = new Intent(CustomActivity.this, ShowsListActivity.class);
+                intent.putExtra("fragmentChoose", 0);
+                startActivity(intent);
+                break;
+            case R.id.nav_pending_shows:
+                intent = new Intent(CustomActivity.this, ShowsListActivity.class);
+                intent.putExtra("fragmentChoose", 1);
+                startActivity(intent);
+                break;
+            case R.id.nav_deconnection:
+                disconnection();
+                break;
+            case R.id.nav_episodes:
+                intent = new Intent(CustomActivity.this, EpisodesListActivity.class);
+                startActivity(intent);
+                break;
         }
         drawer.closeDrawers();
         return true;

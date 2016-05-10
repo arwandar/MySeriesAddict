@@ -62,10 +62,15 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
                     MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
                     User u = memberComplexConverter.convertDtoToMember(response.body()).getUser();
 
-                    //TODO: rajouter des infos du genre xp
-                    //TODO: gérer les comptes sans avatar (merci Val)
-                    Picasso.with(mActivity).load(u.getmAvatar()).into(holder.mPictureView);
-                    holder.mUserName.setText(user.getmLogin());
+                    //TODO: gérer l'alignement des infos de small_item_friend.xml
+                    if(u.getmAvatar() == null){
+                        holder.mPictureView.setBackgroundResource(R.mipmap.ic_launcher);
+                    }
+                    else {
+                        Picasso.with(mActivity).load(u.getmAvatar()).into(holder.mPictureView);
+                    }
+                    holder.mUserName.setText(u.getmLogin());
+                    holder.mUserXp.setText(u.getmXp() + " xp");
                 } else {
                     //Todo: check si ça marche
                     if (response.code() == 400) {
@@ -108,6 +113,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         protected TextView mUserName;
         @Bind(R.id.friend_picture)
         protected ImageView mPictureView;
+        @Bind((R.id.friend_xp_textview))
+        protected TextView mUserXp;
 
         public ViewHolder(View v) {
             super(v);

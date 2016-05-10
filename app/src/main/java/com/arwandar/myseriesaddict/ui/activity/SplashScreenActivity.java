@@ -23,7 +23,7 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        SharedPrefsSingleton.initInstance(PreferenceManager.getDefaultSharedPreferences(this));
+        SharedPrefsSingleton.initInstance(PreferenceManager.getDefaultSharedPreferences(this), SplashScreenActivity.this);
 
         new Handler().postDelayed(new Runnable() {
             @Override

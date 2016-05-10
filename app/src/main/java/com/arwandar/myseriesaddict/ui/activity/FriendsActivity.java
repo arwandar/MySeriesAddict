@@ -1,7 +1,6 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -23,11 +22,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsActivity extends CustomShakableActivity {
+public class FriendsActivity extends CustomSwipeAndShakableActivity {
 
     protected final List<User> mUsers = new ArrayList<>();
-    @Bind(R.id.swipeRefreshLayout)
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Bind(R.id.friends_recycler_view)
     RecyclerView mRecyclerView;
     FriendsAdapter mAdapter;

@@ -2,7 +2,6 @@ package com.arwandar.myseriesaddict.ui.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -28,10 +27,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EpisodesListActivity extends CustomShakableActivity {
+public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
 
-    @Bind(R.id.swipeRefreshLayout)
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.episodes_list_expendable_list_view)
     ExpandableListView mExpandableListView;
     ListEpisodesExpandableListAdapter mAdapter;
@@ -48,13 +45,6 @@ public class EpisodesListActivity extends CustomShakableActivity {
         mShowsListHashMap = new HashMap<>();
 
         getContent();
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getContent();
-            }
-        });
 
         mAdapter = new ListEpisodesExpandableListAdapter(this, mShowsList, mShowsListHashMap);
         mExpandableListView.setAdapter(mAdapter);

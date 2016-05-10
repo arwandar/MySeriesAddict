@@ -1,10 +1,10 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -13,7 +13,7 @@ import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 2000;

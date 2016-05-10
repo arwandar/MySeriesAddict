@@ -7,7 +7,7 @@
     <string name="title_activity_custom">CustomActivity</string>
     <string name="title_activity_shows_list">Liste des séries</string>
     <string name="title_activity_shows_detail">Infos détaillées</string>
-    <string name="title_activity_episodes_list">EpisodesListActivity</string>
+    <string name="title_activity_episodes_list">Liste des épisodes non-vus</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
 

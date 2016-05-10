@@ -10,7 +10,7 @@ import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class SettingsActivity extends CustomActivity {
+public class SettingsActivity extends CustomSwipeAndShakableActivity {
 
     @Bind(R.id.settings_nb_episodes)
     TextView mNbEpisodes;
@@ -20,7 +20,7 @@ public class SettingsActivity extends CustomActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         initActivity();
-        mNbEpisodes.setText(String.valueOf(SharedPrefsSingleton.getEpisodesLimit()));
+        getContent();
     }
 
     /**
@@ -31,5 +31,10 @@ public class SettingsActivity extends CustomActivity {
         SharedPrefsSingleton.setEpisodesLimit(Integer.parseInt(mNbEpisodes.getText().toString()));
         Toast.makeText(SettingsActivity.this, R.string.save_modification_ok_message,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    void getContent() {
+        mNbEpisodes.setText(String.valueOf(SharedPrefsSingleton.getEpisodesLimit()));
     }
 }

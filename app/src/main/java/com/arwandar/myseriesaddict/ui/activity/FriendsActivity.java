@@ -1,18 +1,15 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.converter.UsersConverter;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +25,8 @@ import retrofit2.Response;
 public class FriendsActivity extends CustomActivity {
 
     protected final List<User> mUsers = new ArrayList<>();
-    protected ProgressDialog progress;
+    @Bind(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.friends_recycler_view)
     RecyclerView mRecyclerView;
     FriendsAdapter mAdapter;
@@ -47,32 +45,14 @@ public class FriendsActivity extends CustomActivity {
         mAdapter = new FriendsAdapter(this, mUsers);
         mRecyclerView.setAdapter(mAdapter);
 
-        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                String toDiplay = mUsers.get(position).getmLogin();
-                Snackbar snack = Snackbar.make(recyclerView, toDiplay, Snackbar.LENGTH_LONG);
-                snack.show();
-            }
-        });
-
         getContent();
-
-        ItemClickSupport.addTo(mRecyclerView).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                String toDisplay = mUsers.get(position).getmLogin();
-                Snackbar snack = Snackbar.make(recyclerView, toDisplay, Snackbar.LENGTH_LONG);
-                snack.show();
-                return false;
-            }
-        });
     }
 
+    /**
+     * appel au webservice pour recuperer les données
+     */
     private void getContent() {
-        progress = ProgressDialog.show(FriendsActivity.this, "Patientez",
-                "Chargement de la liste", true);
-
+        mSwipeRefreshLayout.setRefreshing(true);
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {
@@ -84,16 +64,16 @@ public class FriendsActivity extends CustomActivity {
                     }
                     Collections.sort(mUsers);
                     mAdapter.notifyDataSetChanged();
-
                 } else {
                     showErrorLogin(response.code());
                 }
-                progress.dismiss();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
                 showError();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

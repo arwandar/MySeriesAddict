@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,10 +37,7 @@ public class FriendsActivity extends CustomShakableActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
-
         initActivity();
-
-        ButterKnife.bind(this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -54,8 +50,8 @@ public class FriendsActivity extends CustomShakableActivity {
     /**
      * appel au webservice pour recuperer les données
      */
-    private void getContent() {
-        mSwipeRefreshLayout.setRefreshing(true);
+    protected void getContent() {
+        //mSwipeRefreshLayout.setRefreshing(true);
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {

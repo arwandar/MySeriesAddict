@@ -17,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuickWatchedActivity extends CustomActivity {
+public class QuickWatchedActivity extends CustomShakableActivity {
 
     boolean getFavoritesCompleted, getEpisodesCompleted;
     private List<CustomModelShowEpisode> mCustomModelShowEpisodes =
@@ -37,7 +37,7 @@ public class QuickWatchedActivity extends CustomActivity {
     /**
      * appel au webservice pour recuperer les données
      */
-    private void getContent() {
+    protected void getContent() {
         getEpisodesCompleted = false;
         getFavoritesCompleted = false;
         getEpisodes();

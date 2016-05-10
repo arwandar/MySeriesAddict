@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EpisodesListActivity extends CustomActivity {
+public class EpisodesListActivity extends CustomShakableActivity {
 
     @Bind(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
@@ -139,7 +139,7 @@ public class EpisodesListActivity extends CustomActivity {
     /**
      * appel au webservice pour recuperer les données
      */
-    private void getContent() {
+    protected void getContent() {
         mSwipeRefreshLayout.setRefreshing(true);
         CallManager.getEpisodesListAsync(SharedPrefsSingleton.getEpisodesLimit(),
                 new Callback<ShowsComplexDTO>() {

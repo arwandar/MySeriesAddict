@@ -96,6 +96,10 @@ public abstract class CustomActivity extends AppCompatActivity
                 intent = new Intent(CustomActivity.this, EpisodesListActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_quick_view:
+                intent = new Intent(CustomActivity.this, QuickWatchedActivity.class);
+                startActivity(intent);
+                break;
         }
         mLayout.closeDrawers();
         return true;

@@ -2,12 +2,16 @@ package com.arwandar.myseriesaddict.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
+
+import in.co.ophio.secure.core.ObscuredPreferencesBuilder;
+
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,7 +27,14 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        SharedPrefsSingleton.initInstance(PreferenceManager.getDefaultSharedPreferences(this), SplashScreenActivity.this);
+        SharedPreferences sharedPreferences = new ObscuredPreferencesBuilder()
+                .setApplication(getApplication())
+                .obfuscateValue(true)
+                .obfuscateKey(true)
+                .setSharePrefFileName("shared_preferences_name")
+                .setSecret("chat")     //secret key
+                .createSharedPrefs();
+        SharedPrefsSingleton.initInstance(sharedPreferences);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -34,4 +45,5 @@ public class SplashScreenActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
+
 }

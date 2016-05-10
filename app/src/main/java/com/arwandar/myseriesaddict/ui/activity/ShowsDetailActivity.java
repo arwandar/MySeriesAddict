@@ -1,6 +1,5 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
@@ -22,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ShowsDetailActivity extends CustomActivity {
-    protected ProgressDialog progress;
+
     @Bind(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     Shows mShows;
@@ -30,6 +29,9 @@ public class ShowsDetailActivity extends CustomActivity {
     Switch mSwitchArchived;
     @Bind(R.id.shows_detail_favorite)
     Switch mSwitchFavorite;
+    /**
+     * flag pour interdire les appels parallèles
+     */
     private boolean alreadyArchivedCall = true, alreadyFavoriteCall = true;
 
     @Override
@@ -41,7 +43,6 @@ public class ShowsDetailActivity extends CustomActivity {
 
         getContent(getIntent().getStringExtra("showsId"), false);
 
-        mSwipeRefreshLayout.setAnimation(null);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -51,14 +52,15 @@ public class ShowsDetailActivity extends CustomActivity {
         });
     }
 
+    /**
+     * appel au webservice pour recuperer les données
+     */
     private void getContent(String showsId, boolean isRefreshing) {
-        if (!isRefreshing) {
-            progress = ProgressDialog.show(ShowsDetailActivity.this, "Patientez",
-                    "Chargement de la série", true);
-        }
+        mSwipeRefreshLayout.setRefreshing(true);
         CallManager.getShowDisplayAsync(showsId, new Callback<ShowDisplayComplexDTO>() {
             @Override
-            public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
+            public void onResponse(Call<ShowDisplayComplexDTO> call,
+                    Response<ShowDisplayComplexDTO> response) {
                 if (response.isSuccessful()) {
                     ShowDisplayComplexConverter converter = new ShowDisplayComplexConverter();
                     mShows = converter.convertDtoToShowDisplayComplex(response.body()).getmShow();
@@ -66,23 +68,20 @@ public class ShowsDetailActivity extends CustomActivity {
                 } else {
                     showErrorLogin(response.code());
                 }
-                progress.dismiss();
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+                mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
-                progress.dismiss();
-                if (mSwipeRefreshLayout.isRefreshing()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
+                mSwipeRefreshLayout.setRefreshing(false);
                 showError();
             }
         });
     }
 
+    /**
+     * mise à jour des champs avec les infos recupérées
+     */
     public void setUI() {
         ((TextView) findViewById(R.id.shows_detail_title)).setText(mShows.getmTitle());
         String shows_detail_pending = mShows.getmStatus() + " ("
@@ -99,16 +98,35 @@ public class ShowsDetailActivity extends CustomActivity {
         alreadyFavoriteCall = false;
     }
 
+    /**
+     * gestion du swipe favori
+     */
     @OnCheckedChanged(R.id.shows_detail_favorite)
     public void setFavorite() {
+        //gestion de l'unicité de l'appel
         if (!alreadyFavoriteCall) {
             alreadyFavoriteCall = true;
             if (mSwitchFavorite.isChecked()) {
-                CallManager.markShowAsFavoriteAsync(mShows.getmId(), new Callback<ShowDisplayComplexDTO>() {
+                markAsFavorite();
+            } else {
+                markAsNoFavorite();
+            }
+        }
+    }
+
+    /**
+     * appel au WS pour marquer la série comme favorite
+     */
+    private void markAsFavorite() {
+        CallManager.markShowAsFavoriteAsync(mShows.getmId(),
+                new Callback<ShowDisplayComplexDTO>() {
                     @Override
-                    public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
+                    public void onResponse(Call<ShowDisplayComplexDTO> call,
+                            Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(ShowsDetailActivity.this, "La série a été marquée comme favorite.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ShowsDetailActivity.this,
+                                    R.string.mark_favorite_ok_message,
+                                    Toast.LENGTH_SHORT).show();
                             mSwitchFavorite.setChecked(true);
                             alreadyFavoriteCall = false;
                         } else {
@@ -123,12 +141,21 @@ public class ShowsDetailActivity extends CustomActivity {
                         alreadyFavoriteCall = false;
                     }
                 });
-            } else {
-                CallManager.deleteShowFromFavoriteAsync(mShows.getmId(), new Callback<ShowDisplayComplexDTO>() {
+    }
+
+    /**
+     * appel au WS pour marquer la série comme non favorite
+     */
+    private void markAsNoFavorite() {
+        CallManager.deleteShowFromFavoriteAsync(mShows.getmId(),
+                new Callback<ShowDisplayComplexDTO>() {
                     @Override
-                    public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
+                    public void onResponse(Call<ShowDisplayComplexDTO> call,
+                            Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(ShowsDetailActivity.this, "La série a été enlevée des favorites.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ShowsDetailActivity.this,
+                                    R.string.mark_no_favorite_ok,
+                                    Toast.LENGTH_SHORT).show();
                             mSwitchFavorite.setChecked(false);
                             alreadyFavoriteCall = false;
                         } else {
@@ -143,46 +170,42 @@ public class ShowsDetailActivity extends CustomActivity {
                         alreadyFavoriteCall = false;
                     }
                 });
+    }
+
+    /**
+     * gestion du swipe archivé
+     */
+    @OnCheckedChanged(R.id.shows_detail_archived)
+    public void setArchived() {
+        //gestion de l'unicité de l'appel
+        if (!alreadyArchivedCall) {
+            alreadyArchivedCall = true;
+            if (mSwitchArchived.isChecked()) {
+                markAsArchived();
+            } else {
+                markAsNoArchived();
             }
         }
     }
 
-    @OnCheckedChanged(R.id.shows_detail_archived)
-    public void setArchived() {
-        if (!alreadyArchivedCall) {
-            alreadyArchivedCall = true;
-            if (mSwitchArchived.isChecked()) {
-                CallManager.markShowAsArchivedAsync(mShows.getmId(), new Callback<ShowDisplayComplexDTO>() {
+    /**
+     * appel au WS pour marquer la série comme archivée
+     */
+    private void markAsNoArchived() {
+        CallManager.deleteShowFromArchivedAsync(mShows.getmId(),
+                new Callback<ShowDisplayComplexDTO>() {
                     @Override
-                    public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
+                    public void onResponse(Call<ShowDisplayComplexDTO> call,
+                            Response<ShowDisplayComplexDTO> response) {
                         if (response.isSuccessful()) {
-                            Toast.makeText(ShowsDetailActivity.this, "La série a été marquée comme archivée.", Toast.LENGTH_SHORT).show();
-                            mSwitchArchived.setChecked(true);
-                            alreadyArchivedCall = false;
-                        } else {
-                            showErrorLogin(response.code());
-                            alreadyArchivedCall = false;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
-                        showError();
-                        alreadyArchivedCall = false;
-                    }
-                });
-            } else {
-                CallManager.deleteShowFromArchivedAsync(mShows.getmId(), new Callback<ShowDisplayComplexDTO>() {
-                    @Override
-                    public void onResponse(Call<ShowDisplayComplexDTO> call, Response<ShowDisplayComplexDTO> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(ShowsDetailActivity.this, "La série a été enlevée des archivées.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ShowsDetailActivity.this,
+                                    R.string.mark_no_archived_ok,
+                                    Toast.LENGTH_SHORT).show();
                             mSwitchArchived.setChecked(false);
-                            alreadyArchivedCall = false;
                         } else {
                             showErrorLogin(response.code());
-                            alreadyArchivedCall = false;
                         }
+                        alreadyArchivedCall = false;
                     }
 
                     @Override
@@ -191,7 +214,33 @@ public class ShowsDetailActivity extends CustomActivity {
                         alreadyArchivedCall = false;
                     }
                 });
-            }
-        }
+    }
+
+    /**
+     * appel au WS pour marquer la série comme non archivée
+     */
+    private void markAsArchived() {//si la série n'est pas encore archivée
+        CallManager.markShowAsArchivedAsync(mShows.getmId(),
+                new Callback<ShowDisplayComplexDTO>() {
+                    @Override
+                    public void onResponse(Call<ShowDisplayComplexDTO> call,
+                            Response<ShowDisplayComplexDTO> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(ShowsDetailActivity.this,
+                                    R.string.mark_archived_ok,
+                                    Toast.LENGTH_SHORT).show();
+                            mSwitchArchived.setChecked(true);
+                        } else {
+                            showErrorLogin(response.code());
+                        }
+                        alreadyArchivedCall = false;
+                    }
+
+                    @Override
+                    public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
+                        showError();
+                        alreadyArchivedCall = false;
+                    }
+                });
     }
 }

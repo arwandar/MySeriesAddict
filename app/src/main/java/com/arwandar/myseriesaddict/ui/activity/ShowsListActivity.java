@@ -9,6 +9,7 @@ import com.arwandar.myseriesaddict.ui.adpater.ShowsListPagerAdapter;
 import butterknife.Bind;
 
 public class ShowsListActivity extends CustomActivity {
+
     @Bind(R.id.content_shows_list)
     ViewPager mViewPager;
 

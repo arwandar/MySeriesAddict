@@ -25,5 +25,14 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="nb_episode_non_vus_label">Nb d\'épisodes non-vus</string>
     <string name="settings_submit">Valider</string>
+    <string name="session_expirée_message">Votre session a expiré, veuillez vous reconnecter.</string>
+    <string name="cancel_message">Annuler</string>
+    <string name="valid_message">Valider</string>
+    <string name="save_modification_ok_message">Les modifications ont été enregistrées.</string>
+    <string name="mark_favorite_ok_message">La série a été marquée comme favorite.</string>
+    <string name="mark_no_favorite_ok">La série a été enlevée des favorites.</string>
+    <string name="mark_archived_ok">La série a été marquée comme archivée.</string>
+    <string name="mark_no_archived_ok">La série a été enlevée des archivées.</string>
+    <string name="title_activity_quick_watched_view">QuickWatchedView</string>
 
 </resources>

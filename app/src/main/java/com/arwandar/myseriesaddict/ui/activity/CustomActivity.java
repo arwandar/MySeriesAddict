@@ -30,21 +30,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomActivity extends AppCompatActivity
+public abstract class CustomActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.drawer_layout)
-    DrawerLayout drawer;
+    DrawerLayout mLayout;
     @Bind(R.id.nav_view)
-    NavigationView navigationView;
+    NavigationView mNavigationView;
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    Toolbar mToolbar;
 
     @Override
     public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mLayout.isDrawerOpen(GravityCompat.START)) {
+            mLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -73,7 +72,6 @@ public class CustomActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Intent intent;
@@ -99,14 +97,18 @@ public class CustomActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
         }
-        drawer.closeDrawers();
+        mLayout.closeDrawers();
         return true;
     }
 
+    /**
+     * gesstion de la deconnexion de l'utilisateur
+     */
     private void disconnection() {
         CallManager.destroyTokenAsync(new Callback<ErrorsComplexDTO>() {
             @Override
-            public void onResponse(Call<ErrorsComplexDTO> call, Response<ErrorsComplexDTO> response) {
+            public void onResponse(Call<ErrorsComplexDTO> call,
+                    Response<ErrorsComplexDTO> response) {
                 SharedPrefsSingleton.setAccessToken("");
                 Intent intent = new Intent(CustomActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -114,25 +116,38 @@ public class CustomActivity extends AppCompatActivity
 
             @Override
             public void onFailure(Call<ErrorsComplexDTO> call, Throwable t) {
-                Toast.makeText(CustomActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
-                builder.setMessage(R.string.dialog_message_error)
-                        .setTitle(R.string.dialog_title_error);
-                builder.setNeutralButton(R.string.ok_error, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                showError();
             }
         });
     }
 
+    /**
+     * lignes commune à tous les OnCreate
+     * CustomActivity ne contient pas de OnCreate car elle est Override dans les classes héritantes
+     */
+    protected void initActivity() {
+        ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mLayout, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        mLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavigationView.setNavigationItemSelectedListener(this);
+        setCustomNavBar();
+    }
+
+    /**
+     * Permet de recuperer l'avatar de l'utilisateur et de l'afficher dans la barre latérale
+     */
     protected void setCustomNavBar() {
         CallManager.getMemberInfosAsync(true, new Callback<MemberComplexDTO>() {
             @Override
-            public void onResponse(Call<MemberComplexDTO> call, Response<MemberComplexDTO> response) {
+            public void onResponse(Call<MemberComplexDTO> call,
+                    Response<MemberComplexDTO> response) {
                 MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
                 User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
 
@@ -143,7 +158,6 @@ public class CustomActivity extends AppCompatActivity
                 login.setText(user.getmLogin());
                 xp.setText(user.getmXp() + " xp");
                 Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
-
             }
 
             @Override
@@ -153,24 +167,11 @@ public class CustomActivity extends AppCompatActivity
         });
     }
 
-    protected void initActivity() {
-        ButterKnife.bind(this);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
-        setCustomNavBar();
-    }
-
+    /**
+     * affiche une fenetre de dialog pour informer l'utilisateur
+     * d'un problème probablement lié à la connectivité
+     */
     public void showError() {
-        Toast.makeText(CustomActivity.this, "Pas d'accès à internet, veuillez réessayer plus tard.", Toast.LENGTH_SHORT).show();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
         builder.setMessage(R.string.dialog_message_error)
                 .setTitle(R.string.dialog_title_error);
@@ -183,9 +184,17 @@ public class CustomActivity extends AppCompatActivity
         dialog.show();
     }
 
+    /**
+     * affiche des informations et résout les erreurs ayant des codes http
+     * Pour le moment, seule l'erreur d'authentification est implementée
+     *
+     * @param code -> le code de retour de la réponse serveur
+     */
     public void showErrorLogin(int code) {
         if (code == 400) {
-            Toast.makeText(CustomActivity.this, "Votre session a expiré, veuillez vous reconnecter.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CustomActivity.this,
+                    R.string.session_expirée_message, Toast.LENGTH_SHORT)
+                    .show();
             SharedPrefsSingleton.setAccessToken("");
             Intent intent = new Intent(CustomActivity.this, LoginActivity.class);
             startActivity(intent);

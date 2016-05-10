@@ -14,6 +14,7 @@ import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreenActivity extends AppCompatActivity {
+
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 2000;
 
@@ -29,8 +30,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
                 startActivity(i);
-
-                // close this activity
                 finish();
             }
         }, SPLASH_TIME_OUT);

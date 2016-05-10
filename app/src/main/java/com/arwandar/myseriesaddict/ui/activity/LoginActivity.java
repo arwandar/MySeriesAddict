@@ -15,24 +15,32 @@ import com.arwandar.myseriesaddict.api.service.CallManager;
 
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * choix de l'activité à charger une fois logué
+     */
+    private Class<EpisodesListActivity> mActivityClass = EpisodesListActivity.class;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //SharedPrefsSingleton.setAccessToken("");
         if (SharedPrefsSingleton.getAccessToken().isEmpty()) {
 
             WebView myWebView = (WebView) findViewById(R.id.webview);
             WebSettings webSettings = myWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             myWebView.setWebViewClient(new MyWebViewClient());
-            myWebView.loadUrl(SharedPrefsSingleton.getUrl() + "?client_id="
-                    + SharedPrefsSingleton.getClientId() + "&version="
-                    + SharedPrefsSingleton.getVersion() + "&redirect_uri="
-                    + SharedPrefsSingleton.getRedirectURI());
+
+            StringBuilder builder = new StringBuilder();
+            builder.append(SharedPrefsSingleton.getUrl());
+            builder.append("?client_id=" + SharedPrefsSingleton.getClientId());
+            builder.append("&version=" + SharedPrefsSingleton.getVersion());
+            builder.append("&redirect_uri=" + SharedPrefsSingleton.getRedirectURI());
+
+            myWebView.loadUrl(builder.toString());
         } else {
-            Intent intent = new Intent(LoginActivity.this, ShowsListActivity.class);
+            Intent intent = new Intent(LoginActivity.this, mActivityClass);
             startActivity(intent);
         }
     }
@@ -43,9 +51,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private class MyWebViewClient extends WebViewClient {
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.ThreadPolicy policy =
+                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
 
             if (url != null && url.startsWith(SharedPrefsSingleton.getRedirectURI())) {
@@ -55,19 +65,18 @@ public class LoginActivity extends AppCompatActivity {
                 if (code != null) {
                     CallManager.getAccessToken(code);
                     //redirection to homepage
-                    Intent intent = new Intent(LoginActivity.this, ShowsListActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, mActivityClass);
                     startActivity(intent);
-
                 } else if (uri.getQueryParameter("error") != null) {
                     // show an error message here
                 }
                 return false;
             }
-            // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
+            // Otherwise, the link is not for a page on my site,
+            // so launch another Activity that handles URLs
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
             return true;
         }
-
     }
 }

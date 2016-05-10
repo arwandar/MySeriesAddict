@@ -77,5 +77,4 @@ public class FriendsActivity extends CustomActivity {
             }
         });
     }
-
 }

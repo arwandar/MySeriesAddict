@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -19,13 +20,16 @@ public class SettingsActivity extends CustomActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         initActivity();
-        int test = SharedPrefsSingleton.getEpisodesLimit();
         mNbEpisodes.setText(String.valueOf(SharedPrefsSingleton.getEpisodesLimit()));
     }
 
+    /**
+     * enregistrement des modifications
+     */
     @OnClick(R.id.submit_button)
     public void save() {
-        int test = Integer.parseInt(mNbEpisodes.getText().toString());
-        SharedPrefsSingleton.setEpisodesLimit(test);
+        SharedPrefsSingleton.setEpisodesLimit(Integer.parseInt(mNbEpisodes.getText().toString()));
+        Toast.makeText(SettingsActivity.this, R.string.save_modification_ok_message,
+                Toast.LENGTH_SHORT).show();
     }
 }

@@ -10,7 +10,6 @@ import com.arwandar.myseriesaddict.ui.fragment.PendingShowsListFragment;
  * Created by Arwandar on 09/05/2016.
  */
 public class ShowsListPagerAdapter extends FragmentStatePagerAdapter {
-    private int mActivityFragment;
 
     public ShowsListPagerAdapter(android.support.v4.app.FragmentManager fm) {
         super(fm);

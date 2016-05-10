@@ -56,6 +56,12 @@ public interface IBetaSeriesService {
             @Query("summary") String summary
     );
 
+    @GET("/members/infos")
+    Call<MemberComplexDTO> getFriendInfos(
+            @Query("summary") String summary,
+            @Query("id") long id
+    );
+
     @GET("/episodes/display")
     Call<EpisodeComplexDTO> getEpisodeDisplay(
             @Query("id") String episodeId

@@ -71,6 +71,7 @@ public class CallManager {
     }
 
     public static void getEpisodesListAsync(Integer limit, final Callback<ShowsComplexDTO> callback) {
+        if(limit <= 0) limit = null;
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowsComplexDTO> call = service.getEpisodesList(limit, "true");
         call.enqueue(callback);
@@ -93,6 +94,11 @@ public class CallManager {
         call.enqueue(callback);
     }
 
+    public static void getFriendsInfosAsync(long id, final Callback<MemberComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<MemberComplexDTO> call = service.getFriendInfos("true", id);
+        call.enqueue(callback);
+    }
 
     public static void getEpisodeDisplayAsync(String episodeId, final Callback<EpisodeComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);

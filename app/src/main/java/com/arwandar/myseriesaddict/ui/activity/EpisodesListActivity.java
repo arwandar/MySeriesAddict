@@ -62,7 +62,7 @@ public class EpisodesListActivity extends CustomShakableActivity {
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
-                    final int groupPosition, final int childPosition, long id) {
+                                        final int groupPosition, final int childPosition, long id) {
                 markAsWatch(groupPosition, childPosition);
 
                 return false;
@@ -79,8 +79,9 @@ public class EpisodesListActivity extends CustomShakableActivity {
      */
     private void markAsWatch(final int groupPosition, final int childPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EpisodesListActivity.this);
-        builder.setMessage(mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
-                childPosition).getmCode() + "va être marqué comme vu.");
+        builder.setMessage("L'épisode " + mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
+                childPosition).getmCode() + " - " + mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
+                childPosition).getmTitle() + " va être marqué comme vu.");
         builder.setPositiveButton(getString(R.string.submit_button),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -103,7 +104,7 @@ public class EpisodesListActivity extends CustomShakableActivity {
         CallManager.markEpisodeAsWatchedAsync(episodeId, new Callback<EpisodeComplexDTO>() {
             @Override
             public void onResponse(Call<EpisodeComplexDTO> call,
-                    Response<EpisodeComplexDTO> response) {
+                                   Response<EpisodeComplexDTO> response) {
                 if (response.isSuccessful()) {
                     String toastString = mShowsListHashMap.get(mShowsList.get(groupPosition))
                             .get(childPosition).getmCode() + " a été marqué comme vu.";
@@ -145,7 +146,7 @@ public class EpisodesListActivity extends CustomShakableActivity {
                 new Callback<ShowsComplexDTO>() {
                     @Override
                     public void onResponse(Call<ShowsComplexDTO> call,
-                            Response<ShowsComplexDTO> response) {
+                                           Response<ShowsComplexDTO> response) {
                         if (response.isSuccessful()) {
                             ShowsComplexConverter showsComplexConverter =
                                     new ShowsComplexConverter();

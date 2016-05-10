@@ -43,5 +43,5 @@
     <!-- Button-->
     <string name="cancel_button">Annuler</string>
     <string name="submit_button">Valider</string>
-    <string name="shake_message">Contenu rafraichi</string>
+    <string name="shake_message">Rafraîchissement en cours</string>
 </resources>

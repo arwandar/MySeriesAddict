@@ -11,7 +11,7 @@ import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.UsersDTO;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.adpater.FriendsAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.FriendsAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

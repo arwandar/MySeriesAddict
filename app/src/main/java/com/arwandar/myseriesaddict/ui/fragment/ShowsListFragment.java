@@ -18,7 +18,7 @@ import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.activity.CustomActivity;
 import com.arwandar.myseriesaddict.ui.activity.ShowsDetailActivity;
-import com.arwandar.myseriesaddict.ui.adpater.ShowsAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.ShowsAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

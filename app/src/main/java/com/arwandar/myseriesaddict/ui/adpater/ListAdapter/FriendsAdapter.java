@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui.adpater;
+package com.arwandar.myseriesaddict.ui.adpater.ListAdapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

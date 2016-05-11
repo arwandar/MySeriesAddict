@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui.adpater;
+package com.arwandar.myseriesaddict.ui.adpater.PagerAdapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;

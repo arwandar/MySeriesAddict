@@ -16,7 +16,7 @@ import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.model.Unseen;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.adpater.ListEpisodesExpandableListAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.ListEpisodesExpandableListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

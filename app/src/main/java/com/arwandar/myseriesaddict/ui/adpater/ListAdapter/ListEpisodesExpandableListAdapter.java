@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui.adpater;
+package com.arwandar.myseriesaddict.ui.adpater.ListAdapter;
 
 import android.content.Context;
 import android.graphics.Typeface;

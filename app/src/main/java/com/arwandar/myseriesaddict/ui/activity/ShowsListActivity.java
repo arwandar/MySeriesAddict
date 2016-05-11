@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.ui.adpater.ShowsListPagerAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.PagerAdapter.ShowsListPagerAdapter;
 
 import butterknife.Bind;
 

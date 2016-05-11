@@ -15,7 +15,7 @@ import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.ItemClickSupport;
-import com.arwandar.myseriesaddict.ui.adpater.QuickWatchedAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.QuickWatchedAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

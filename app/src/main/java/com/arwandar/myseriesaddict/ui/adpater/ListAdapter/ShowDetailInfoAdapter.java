@@ -1,34 +1,28 @@
-package com.arwandar.myseriesaddict.ui.adpater;
+package com.arwandar.myseriesaddict.ui.adpater.ListAdapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.model.Shows;
-import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Arwandar on 05/05/2016.
+ * Created by olivi on 11/05/2016.
  */
-public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> {
+public class ShowDetailInfoAdapter extends RecyclerView.Adapter<ShowDetailInfoAdapter.ViewHolder> {
 
     private Activity mActivity;
-    private List<Shows> mShowsList;
 
-    public ShowsAdapter(Activity activity, List<Shows> pShowsList) {
+    public ShowDetailInfoAdapter(Activity activity) {
         mActivity = activity;
-        mShowsList = pShowsList;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,25 +33,21 @@ public class ShowsAdapter extends RecyclerView.Adapter<ShowsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Shows shows = mShowsList.get(position);
 
-        holder.mNameView.setText(shows.getmTitle());
-        holder.mDescriptionView.setText(shows.getmDescription());
-        Picasso.with(this.mActivity).load(shows.getmImages().getmBox()).into(holder.mPictureView);
     }
 
     @Override
     public int getItemCount() {
-        return mShowsList.size();
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.small_item_shows_picture)
-        public ImageView mPictureView;
-        @Bind(R.id.small_item_shows_name)
-        protected TextView mNameView;
-        @Bind(R.id.small_item_shows_description)
+        @Bind(R.id.shows_detail_title)
+        protected TextView mTitleView;
+        @Bind(R.id.shows_detail_pending)
+        protected TextView mPendingView;
+        @Bind(R.id.shows_detail_description)
         protected TextView mDescriptionView;
 
         public ViewHolder(View v) {

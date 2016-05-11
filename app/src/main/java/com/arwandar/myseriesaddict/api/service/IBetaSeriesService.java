@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.api.service;
 
 import com.arwandar.myseriesaddict.api.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.api.dto.EpisodesComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
@@ -94,6 +95,11 @@ public interface IBetaSeriesService {
 
     @DELETE("/shows/archive")
     Call<ShowDisplayComplexDTO> deleteShowFromArchive(
+            @Query("id") String showId
+    );
+
+    @GET("/shows/episodes")
+    Call<EpisodesComplexDTO> getEpisodesFromShow(
             @Query("id") String showId
     );
 }

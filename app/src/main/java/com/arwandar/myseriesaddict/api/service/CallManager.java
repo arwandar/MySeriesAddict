@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.api.service;
 
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import com.arwandar.myseriesaddict.api.dto.EpisodeComplexDTO;
+import com.arwandar.myseriesaddict.api.dto.EpisodesComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
@@ -55,7 +56,7 @@ public class CallManager {
     }
 
     public static void getEpisodesListAsync(Integer limit,
-            final Callback<ShowsComplexDTO> callback) {
+                                            final Callback<ShowsComplexDTO> callback) {
         if (limit <= 0) limit = null;
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowsComplexDTO> call = service.getEpisodesList(limit, "true");
@@ -63,7 +64,7 @@ public class CallManager {
     }
 
     public static void markEpisodeAsWatchedAsync(String episodeId,
-            final Callback<EpisodeComplexDTO> callback) {
+                                                 final Callback<EpisodeComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId);
         call.enqueue(callback);
@@ -74,7 +75,7 @@ public class CallManager {
     }
 
     public static void getMemberInfosAsync(boolean isSummary,
-            final Callback<MemberComplexDTO> callback) {
+                                           final Callback<MemberComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<MemberComplexDTO> call = service.getMemberInfos("shows", isSummary ? "true" : "");
         call.enqueue(callback);
@@ -87,21 +88,21 @@ public class CallManager {
     }
 
     public static void getEpisodeDisplayAsync(String episodeId,
-            final Callback<EpisodeComplexDTO> callback) {
+                                              final Callback<EpisodeComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<EpisodeComplexDTO> call = service.getEpisodeDisplay(episodeId);
         call.enqueue(callback);
     }
 
     public static void getShowDisplayAsync(String showId,
-            final Callback<ShowDisplayComplexDTO> callback) {
+                                           final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.getShowDisplay(showId);
         call.enqueue(callback);
     }
 
     public static void markShowAsArchivedAsync(String showId,
-            final Callback<ShowDisplayComplexDTO> callback) {
+                                               final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.markShowAsArchived(showId);
         call.enqueue(callback);
@@ -114,23 +115,30 @@ public class CallManager {
     }
 
     public static void markShowAsFavoriteAsync(String showId,
-            final Callback<ShowDisplayComplexDTO> callback) {
+                                               final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.markShowAsFavorite(showId);
         call.enqueue(callback);
     }
 
     public static void deleteShowFromArchivedAsync(String showId,
-            final Callback<ShowDisplayComplexDTO> callback) {
+                                                   final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.deleteShowFromArchive(showId);
         call.enqueue(callback);
     }
 
     public static void deleteShowFromFavoriteAsync(String showId,
-            final Callback<ShowDisplayComplexDTO> callback) {
+                                                   final Callback<ShowDisplayComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
         Call<ShowDisplayComplexDTO> call = service.deleteShowFromFavorite(showId);
+        call.enqueue(callback);
+    }
+
+    public static void getEpisodesFromShow(String showId,
+                                           final Callback<EpisodesComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<EpisodesComplexDTO> call = service.getEpisodesFromShow(showId);
         call.enqueue(callback);
     }
 }

@@ -66,7 +66,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         mAdapter = new ShowDetailPagerAdapter(getSupportFragmentManager());
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(0);
+//        mViewPager.setCurrentItem(0);
 
 
     }

@@ -14,44 +14,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/shows_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignLeft="@+id/scrollView"
-                android:layout_alignStart="@+id/scrollView"
-                android:layout_alignTop="@+id/scrollView"
-                android:nestedScrollingEnabled="true"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
 
-                <ImageView
-                    android:id="@+id/shows_detail_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Image"/>
+                android:adjustViewBounds="true"
+                android:contentDescription="Image"/>
 
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shows_detail_image"
+                android:background="?attr/colorPrimary"
+                android:textColor="@android:color/secondary_text_light"/>
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tabs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/colorPrimary"
-                        android:textColor="@android:color/secondary_text_light"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/shows_detail_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tabs"/>
+        </RelativeLayout>
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/shows_detail_view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tabs"/>
-            </LinearLayout>
-        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

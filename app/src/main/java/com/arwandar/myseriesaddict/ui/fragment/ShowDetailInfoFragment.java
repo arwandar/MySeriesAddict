@@ -59,7 +59,8 @@ public class ShowDetailInfoFragment extends Fragment {
 
     public void setUI() {
         Shows shows = ((ShowsDetailActivity) getActivity()).getShows();
-
+        alreadyArchivedCall = true;
+        alreadyFavoriteCall = true;
         if (shows != null) {
             mTitle.setText(shows.getmTitle());
             String shows_detail_pending = shows.getmStatus() + " ("

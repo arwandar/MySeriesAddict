@@ -44,4 +44,6 @@
     <string name="cancel_button">Annuler</string>
     <string name="submit_button">Valider</string>
     <string name="shake_message">Rafraîchissement en cours</string>
+    <string name="switch_favorite">Favorite</string>
+    <string name="switch_archived">Archivée</string>
 </resources>

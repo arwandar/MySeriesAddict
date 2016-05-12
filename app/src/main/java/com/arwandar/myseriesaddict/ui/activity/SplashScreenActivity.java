@@ -5,6 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
 import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
@@ -20,7 +27,7 @@ import in.co.ophio.secure.core.ObscuredPreferencesBuilder;
 public class SplashScreenActivity extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,8 @@ public class SplashScreenActivity extends Activity {
                 .createSharedPrefs();
         SharedPrefsSingleton.initInstance(sharedPreferences);
 
+        StartAnimations();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -45,5 +54,17 @@ public class SplashScreenActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
+    private void StartAnimations() {
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        anim.reset();
+        FrameLayout l = (FrameLayout) findViewById(R.id.splash_layout);
+        l.clearAnimation();
+        l.startAnimation(anim);
 
+        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+        anim.reset();
+        TextView iv = (TextView) findViewById(R.id.fullscreen_content);
+        iv.clearAnimation();
+        iv.startAnimation(anim);
+    }
 }

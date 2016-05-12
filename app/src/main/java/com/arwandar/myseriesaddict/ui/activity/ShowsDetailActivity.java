@@ -56,7 +56,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
         initTabLayout();
 
-        showId = getIntent().getStringExtra("showId");
+        showId = getIntent().getExtras().getString("showsId");
 
         getContent();
 

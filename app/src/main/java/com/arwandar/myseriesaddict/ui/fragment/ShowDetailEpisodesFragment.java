@@ -58,6 +58,7 @@ public class ShowDetailEpisodesFragment extends Fragment {
     }
 
     private void getContent() {
+        ((ShowsDetailActivity) getActivity()).setRefreshing();
         CallManager.getEpisodesFromShow(showsId, new Callback<EpisodesComplexDTO>() {
             @Override
             public void onResponse(Call<EpisodesComplexDTO> call,

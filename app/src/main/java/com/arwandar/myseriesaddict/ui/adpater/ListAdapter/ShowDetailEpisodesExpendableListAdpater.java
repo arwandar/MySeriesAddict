@@ -84,9 +84,9 @@ public class ShowDetailEpisodesExpendableListAdpater extends BaseExpandableListA
             View convertView, ViewGroup parent) {
         String headerTitle = "";
         if (!mListDataChild.isEmpty()) {
-            headerTitle = mListDataChild.get
-                    (groupPosition).get(0).getmSeason() + " (" + mListDataChild.get
-                    (groupPosition).size() + ")";
+
+            headerTitle = "Saison " + getGroup(groupPosition)
+                    + " (" + getChildrenCount(groupPosition) + ")";
         }
 
         if (convertView == null) {

@@ -7,17 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.converter.ShowDisplayComplexConverter;
-import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
-import com.arwandar.myseriesaddict.api.model.Shows;
-import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.adpater.PagerAdapter.ShowDetailPagerAdapter;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
@@ -27,16 +20,15 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
     TabLayout mTabLayout;
     @Bind(R.id.shows_detail_view_pager)
     ViewPager mViewPager;
+    @Bind(R.id.shows_detail_image)
+    ImageView image;
     ShowDetailPagerAdapter mAdapter;
-    String showId;
-    Shows mShows;
-    boolean isEpisodesLoaded, isDetailsLoaded;
+    String showId, mUrl;
+    boolean isEpisodesLoaded = false, isDetailsLoaded = false;
 
     public String getShowId() {
         return showId;
     }
-
-    public Shows getShows() {return mShows;}
 
     public void isEpisodesLoaded(boolean pIsEpisodesLoaded) {
         isEpisodesLoaded = pIsEpisodesLoaded;
@@ -45,7 +37,6 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
     public void isDetailsLoaded(boolean pIsDetailsLoaded) {
         isDetailsLoaded = pIsDetailsLoaded;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +49,6 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
         showId = getIntent().getExtras().getString("showsId");
 
-        getContent();
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -70,8 +59,6 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         mAdapter = new ShowDetailPagerAdapter(getSupportFragmentManager());
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
-//        mViewPager.setCurrentItem(0);
-
     }
 
     private void initTabLayout() {
@@ -103,51 +90,24 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
      */
     protected void getContent() {
         mSwipeRefreshLayout.setRefreshing(true);
+        mAdapter.notifyDataSetChanged();
         isEpisodesLoaded = false;
         isDetailsLoaded = false;
-        getDetails();
     }
 
-    private void getDetails() {
-        CallManager.getShowDisplayAsync(showId, new Callback<ShowDisplayComplexDTO>() {
-            @Override
-            public void onResponse(Call<ShowDisplayComplexDTO> call,
-                    Response<ShowDisplayComplexDTO> response) {
-                if (response.isSuccessful()) {
-                    ShowDisplayComplexConverter converter = new ShowDisplayComplexConverter();
-                    mShows = converter.convertDtoToShowDisplayComplex(response.body()).getmShow();
-                    isDetailsLoaded = true;
-                    onDataLoaded();
-                } else {
-                    showErrorLogin(response.code());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                showError();
-            }
-        });
+    public void onDataLoaded(String url) {
+        this.mUrl = url;
+        onDataLoaded();
     }
 
     public void onDataLoaded() {
         if (isEpisodesLoaded && isDetailsLoaded) {
             mSwipeRefreshLayout.setRefreshing(false);
-            setUI();
-            //TODO reconstruire les fragments
-            //mViewPager.destroyDrawingCache();
-            mAdapter.notifyDataSetChanged();
-            // mViewPager.setCurrentItem(0);
+            Picasso.with(ShowsDetailActivity.this).load(mUrl).into(image);
         }
     }
 
-    /**
-     * mise à jour des champs avec les infos recupérées
-     */
-    private void setUI() {
-        ImageView image = (ImageView) findViewById(R.id.shows_detail_image);
-        Picasso.with(ShowsDetailActivity.this).load(mShows.getmImages().getmShow()).into(image);
+    public void setRefreshing() {
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 }

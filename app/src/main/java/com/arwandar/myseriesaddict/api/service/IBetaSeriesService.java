@@ -48,7 +48,12 @@ public interface IBetaSeriesService {
     @FormUrlEncoded
     @POST("/episodes/watched")
     Call<EpisodeComplexDTO> markEpisodeAsWatched(
-            @Field("id") String episodeId
+            @Field("id") String episodeId,
+            @Field("bulk") String bulk
+    );
+    @DELETE("/episodes/watched")
+    Call<EpisodeComplexDTO> markEpisodeAsUnWatched(
+            @Query("id") String episodeId
     );
 
     @GET("/members/infos")

@@ -65,8 +65,18 @@ public class CallManager {
 
     public static void markEpisodeAsWatchedAsync(String episodeId,
                                                  final Callback<EpisodeComplexDTO> callback) {
+        markEpisodeAsWatchedAsync(episodeId, "false", callback);
+    }
+    public static void markEpisodeAsWatchedAsync(String episodeId, String bulk,
+            final Callback<EpisodeComplexDTO> callback) {
         IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
-        Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId);
+        Call<EpisodeComplexDTO> call = service.markEpisodeAsWatched(episodeId, bulk);
+        call.enqueue(callback);
+    }
+    public static void markEpisodeAsUnWatchedAsync(String episodeId,
+            final Callback<EpisodeComplexDTO> callback) {
+        IBetaSeriesService service = ServiceGenerator.createService(IBetaSeriesService.class);
+        Call<EpisodeComplexDTO> call = service.markEpisodeAsUnWatched(episodeId);
         call.enqueue(callback);
     }
 

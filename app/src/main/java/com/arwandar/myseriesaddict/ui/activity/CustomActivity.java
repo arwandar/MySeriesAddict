@@ -30,6 +30,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.lang.String.format;
+
 public abstract class CustomActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -153,14 +155,15 @@ public abstract class CustomActivity extends AppCompatActivity
             public void onResponse(Call<MemberComplexDTO> call,
                     Response<MemberComplexDTO> response) {
                 MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
-                User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
+                User user;
+                user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
 
                 TextView login = (TextView) findViewById(R.id.nav_bar_login);
                 TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
                 ImageView picture = (ImageView) findViewById(R.id.nav_bar_picture);
 
                 login.setText(user.getmLogin());
-                xp.setText(user.getmXp() + " xp");
+                xp.setText(format("%s xp", user.getmXp()));
                 Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
             }
 

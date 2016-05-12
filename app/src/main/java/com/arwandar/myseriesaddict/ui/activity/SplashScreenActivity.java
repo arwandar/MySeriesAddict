@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.arwandar.myseriesaddict.R;
@@ -18,16 +15,11 @@ import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 
 import in.co.ophio.secure.core.ObscuredPreferencesBuilder;
 
-
-
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreenActivity extends Activity {
-
-    // Splash screen timer
-    private static int SPLASH_TIME_OUT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +37,7 @@ public class SplashScreenActivity extends Activity {
 
         StartAnimations();
 
+        int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +47,7 @@ public class SplashScreenActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
+
     private void StartAnimations() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();

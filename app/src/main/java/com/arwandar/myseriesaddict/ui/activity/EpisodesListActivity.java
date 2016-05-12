@@ -64,8 +64,8 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
      * creer une alertDialog pour savoir si l'utilisateur veut vraiment marqué l'épisode comme vu
      * et gestion des reponses
      *
-     * @param groupPosition
-     * @param childPosition
+     * @param groupPosition  position du group
+     * @param childPosition  position de l'item dans le group
      */
     private void markAsWatch(final int groupPosition, final int childPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EpisodesListActivity.this);
@@ -115,8 +115,8 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
     /**
      * suppression d'un episode de la liste, et si besoin, du header
      *
-     * @param groupPosition
-     * @param childPosition
+     * @param groupPosition  position du group
+     * @param childPosition  position de l'item dans le group
      */
     private void removeEpisodeFromList(int groupPosition, int childPosition) {
         mShowsListHashMap.get(mShowsList.get(groupPosition)).remove(childPosition);
@@ -131,7 +131,9 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         CallManager.getEpisodesListAsync(SharedPrefsSingleton.getEpisodesLimit(),
                 new Callback<ShowsComplexDTO>() {
                     @Override
@@ -161,7 +163,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
     /**
      * remplissage des listes utilisées par l'ExpandableListView
      *
-     * @param pShowsComplex
+     * @param pShowsComplex    le show a utilisé
      */
     private void setData(ShowsComplex pShowsComplex) {
         mShowsList.clear();

@@ -3,61 +3,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabs">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_alignParentStart="true">
 
-            <TextView
-                android:id="@+id/shows_detail_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:textColor="@android:color/secondary_text_light"
-                android:textSize="22sp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/shows_detail_pending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textColor="@android:color/secondary_text_light"
-                android:textStyle="italic"/>
+                <TextView
+                    android:id="@+id/shows_detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="22sp"/>
 
-            <TextView
-                android:id="@+id/shows_detail_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:padding="5dp"/>
+                <TextView
+                    android:id="@+id/shows_detail_pending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textStyle="italic"/>
 
-            <Switch
-                android:id="@+id/shows_detail_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.50"
-                android:text="@string/switch_favorite"/>
+                <TextView
+                    android:id="@+id/shows_detail_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="5dp"/>
 
-            <Switch
-                android:id="@+id/shows_detail_archived"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.50"
-                android:text="@string/switch_archived"/>
-        </LinearLayout>
-    </ScrollView>
+                <Switch
+                    android:id="@+id/shows_detail_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.50"
+                    android:text="@string/switch_favorite"/>
 
+                <Switch
+                    android:id="@+id/shows_detail_archived"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.50"
+                    android:text="@string/switch_archived"/>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

@@ -86,7 +86,7 @@ public class EpisodesExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
             View convertView, ViewGroup parent) {
-        String headerTitle = (String) ((Shows) getGroup(groupPosition)).getmTitle();
+        String headerTitle = ((Shows) getGroup(groupPosition)).getmTitle();
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

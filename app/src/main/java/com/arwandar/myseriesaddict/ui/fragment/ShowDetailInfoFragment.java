@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,9 @@ public class ShowDetailInfoFragment extends Fragment {
     @Bind(R.id.shows_detail_favorite)
     Switch mSwitchFavorite;
 
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     String mShowId;
     Shows mShows;
 
@@ -57,6 +61,7 @@ public class ShowDetailInfoFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mShowId = ((ShowsDetailActivity) getActivity()).getShowId();
+        ((ShowsDetailActivity) getActivity()).setSwipeLayout(mSwipeRefreshLayout);
 
         getContent();
 

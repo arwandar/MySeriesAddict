@@ -47,7 +47,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             Picasso.with(mActivity).load(user.getmAvatar()).into(holder.mPictureView);
         }
         holder.mUserName.setText(user.getmLogin());
-        holder.mUserXp.setText(user.getmXp() + " xp");
+        holder.mUserXp.setText(String.format("%s xp", user.getmXp()));
     }
 
     @Override

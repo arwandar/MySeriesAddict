@@ -14,8 +14,6 @@ import butterknife.Bind;
 
 public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
-    @Bind(R.id.swipeRefreshLayout)
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind((R.id.tabs))
     TabLayout mTabLayout;
     @Bind(R.id.shows_detail_view_pager)
@@ -34,6 +32,11 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         isEpisodesLoaded = pIsEpisodesLoaded;
     }
 
+    public void setSwipeLayout(SwipeRefreshLayout pSwipeLayout) {
+        mSwipeRefreshLayout = pSwipeLayout;
+        initSwipe();
+    }
+
     public void isDetailsLoaded(boolean pIsDetailsLoaded) {
         isDetailsLoaded = pIsDetailsLoaded;
     }
@@ -49,13 +52,6 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
         showId = getIntent().getExtras().getString("showsId");
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getContent();
-            }
-        });
-
         mAdapter = new ShowDetailPagerAdapter(getSupportFragmentManager());
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
@@ -64,7 +60,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
     private void initTabLayout() {
         mTabLayout.addTab(mTabLayout.newTab().setText("Détails"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Episodes"));
-        mTabLayout.setTabGravity(mTabLayout.GRAVITY_FILL);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,7 +85,9 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         mAdapter.notifyDataSetChanged();
         isEpisodesLoaded = false;
         isDetailsLoaded = false;
@@ -102,12 +100,16 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
     public void onDataLoaded() {
         if (isEpisodesLoaded && isDetailsLoaded) {
-            mSwipeRefreshLayout.setRefreshing(false);
+            if (mSwipeRefreshLayout != null) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
             Picasso.with(ShowsDetailActivity.this).load(mUrl).into(image);
         }
     }
 
     public void setRefreshing() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
 }

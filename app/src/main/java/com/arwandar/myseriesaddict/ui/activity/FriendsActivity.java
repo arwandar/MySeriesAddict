@@ -66,19 +66,25 @@ public class FriendsActivity extends CustomSwipeAndShakableActivity {
                 } else {
                     showErrorLogin(response.code());
                 }
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
             public void onFailure(Call<UsersDTO> call, Throwable t) {
                 showError();
-                mSwipeRefreshLayout.setRefreshing(false);
+                if (mSwipeRefreshLayout != null) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }
 
     private void getUserDetails(final User user) {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         CallManager.getFriendsInfosAsync(user.getmId(), new Callback<MemberComplexDTO>() {
             @Override
             public void onResponse(Call<MemberComplexDTO> call,

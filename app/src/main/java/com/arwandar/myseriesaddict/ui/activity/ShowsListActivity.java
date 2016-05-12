@@ -94,8 +94,13 @@ public class ShowsListActivity extends CustomSwipeAndShakableActivity {
                 });
     }
 
+    /**
+     * appel au WS
+     */
     void getContent() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         CallManager.getMemberInfosAsync(new Callback<MemberComplexDTO>() {
             @Override
             public void onResponse(Call<MemberComplexDTO> call,

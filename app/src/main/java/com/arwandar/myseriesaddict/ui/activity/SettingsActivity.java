@@ -27,7 +27,7 @@ public class SettingsActivity extends CustomSwipeAndShakableActivity {
      * enregistrement des modifications
      */
     @OnClick(R.id.submit_button)
-    public void save() {
+    protected void save() {
         SharedPrefsSingleton.setEpisodesLimit(Integer.parseInt(mNbEpisodes.getText().toString()));
         Toast.makeText(SettingsActivity.this, R.string.save_modification_ok_message,
                 Toast.LENGTH_SHORT).show();

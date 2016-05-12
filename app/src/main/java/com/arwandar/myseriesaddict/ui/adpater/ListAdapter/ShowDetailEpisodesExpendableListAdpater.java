@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.ui.adpater.ListAdapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,14 @@ public class ShowDetailEpisodesExpendableListAdpater extends BaseExpandableListA
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+        if (episode.getmUser().getmSeen().equals("true")) {
+            txtListChild.setTextColor(ContextCompat.getColor(mContext, android.R.color
+                    .tertiary_text_light));
+        } else {
+            txtListChild.setTextColor(ContextCompat.getColor(mContext, android.R.color
+                    .primary_text_light));
+        }
+
         return convertView;
     }
 

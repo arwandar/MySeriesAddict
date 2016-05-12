@@ -47,7 +47,7 @@ public abstract class CustomSwipeAndShakableActivity extends CustomActivity {
         initSwipe();
     }
 
-    private void initSwipe() {
+    protected void initSwipe() {
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setOnRefreshListener(
                     new SwipeRefreshLayout.OnRefreshListener() {

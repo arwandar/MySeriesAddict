@@ -65,7 +65,7 @@ public class ShowDetailEpisodesFragment extends Fragment {
                     Response<EpisodesComplexDTO> response) {
                 if (response.isSuccessful()) {
                     EpisodesComplexConverter converter = new EpisodesComplexConverter();
-                    List<Episode> episodeList = new ArrayList<Episode>();
+                    List<Episode> episodeList = new ArrayList<>();
                     for (Episode ep : converter.convertDtoToEpisodesComplex(response.body())
                             .getmEpisodes()) {
                         episodeList.add(ep);

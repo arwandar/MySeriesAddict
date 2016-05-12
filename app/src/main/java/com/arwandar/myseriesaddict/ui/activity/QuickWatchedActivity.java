@@ -36,7 +36,6 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
     private List<CustomModelShowEpisode> mCustomModelShowEpisodesCall =
             new ArrayList<>();
     private List<Shows> mShowsList = new ArrayList<>();
-    private List<Shows> mShowsListBefore = new ArrayList<>();
     private ShowsComplexConverter mShowsComplexConverter;
 
     @Override
@@ -61,7 +60,9 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         //mCustomModelShowEpisodes.clear();
         getEpisodesCompleted = false;
         getFavoritesCompleted = false;
@@ -103,8 +104,8 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
     private void setmCustomModelShowEpisodes(ShowsComplex pShowsComplex) {
         mCustomModelShowEpisodesCall.clear();
         for (Shows s : pShowsComplex.getmShows()) {
-            if (s.getmUser().getmArchived() == "false" &&
-                    s.getmUser().getmRemaining() != "0") {
+            if (s.getmUser().getmArchived().equals("false") &&
+                    !s.getmUser().getmRemaining().equals("0")) {
                 CustomModelShowEpisode c = new CustomModelShowEpisode();
                 c.setmShow(s);
                 mCustomModelShowEpisodesCall.add(c);
@@ -141,7 +142,6 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
      * recherche des lignes communes
      */
     private void makeMatch() {
-//        mCustomModelShowEpisodes;
         if (getEpisodesCompleted && getFavoritesCompleted) {
             for (Shows show : mShowsList) {
 
@@ -156,8 +156,9 @@ public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
                 }
             }
             mAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setRefreshing(false);
-            mShowsListBefore = mShowsList;
+            if (mSwipeRefreshLayout != null) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
+import com.arwandar.myseriesaddict.api.converter.ShowDisplayComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
@@ -40,10 +41,13 @@ public class ShowDetailInfoFragment extends Fragment {
     @Bind(R.id.shows_detail_favorite)
     Switch mSwitchFavorite;
 
+    String mShowId;
+    Shows mShows;
+
     /**
      * flag pour interdire les appels parallèles
      */
-    private boolean alreadyArchivedCall = true, alreadyFavoriteCall = true;
+    private boolean alreadyArchivedCall, alreadyFavoriteCall;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -52,26 +56,54 @@ public class ShowDetailInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_show_detail_info, container, false);
         ButterKnife.bind(this, view);
 
-        setUI();
+        mShowId = ((ShowsDetailActivity) getActivity()).getShowId();
+
+        getContent();
 
         return view;
     }
 
+    private void getContent() {
+        ((ShowsDetailActivity) getActivity()).setRefreshing();
+        CallManager.getShowDisplayAsync(mShowId, new Callback<ShowDisplayComplexDTO>() {
+            @Override
+            public void onResponse(Call<ShowDisplayComplexDTO> call,
+                    Response<ShowDisplayComplexDTO> response) {
+                if (response.isSuccessful()) {
+                    ShowDisplayComplexConverter converter = new ShowDisplayComplexConverter();
+                    mShows = converter.convertDtoToShowDisplayComplex(response.body()).getmShow();
+                    ((ShowsDetailActivity) getActivity()).isDetailsLoaded(true);
+                    ((ShowsDetailActivity) getActivity())
+                            .onDataLoaded(mShows.getmImages().getmShow());
+                    setUI();
+                } else {
+                    ((CustomActivity) getActivity()).showErrorLogin(response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShowDisplayComplexDTO> call, Throwable t) {
+                ((CustomActivity) getActivity()).showError();
+            }
+        });
+    }
+
     public void setUI() {
-        Shows shows = ((ShowsDetailActivity) getActivity()).getShows();
         alreadyArchivedCall = true;
         alreadyFavoriteCall = true;
-        if (shows != null) {
-            mTitle.setText(shows.getmTitle());
-            String shows_detail_pending = shows.getmStatus() + " ("
-                    + shows.getmUser().getmRemaining() + " non-vu(s) épisodes sur "
-                    + shows.getmEpisodes() + ")";
+        if (mShows != null) {
+            mTitle.setText(mShows.getmTitle());
+            String shows_detail_pending = mShows.getmStatus() + " ("
+                    + mShows.getmUser().getmRemaining() + " non-vu(s) épisodes sur "
+                    + mShows.getmEpisodes() + ")";
             mPending.setText(shows_detail_pending);
             mDescription
-                    .setText(shows.getmDescription());
+                    .setText(mShows.getmDescription());
 
-            mSwitchArchived.setChecked(shows.getmUser().getmArchived().equals("true"));
-            mSwitchFavorite.setChecked(shows.getmUser().getmFavorited().equals("true"));
+            //Picasso.with(getContext()).load(mShows.getmImages().getmShow()).into(image);
+
+            mSwitchArchived.setChecked(mShows.getmUser().getmArchived().equals("true"));
+            mSwitchFavorite.setChecked(mShows.getmUser().getmFavorited().equals("true"));
             alreadyArchivedCall = false;
             alreadyFavoriteCall = false;
         }
@@ -84,12 +116,11 @@ public class ShowDetailInfoFragment extends Fragment {
     public void setFavorite() {
         //gestion de l'unicité de l'appel
         if (!alreadyFavoriteCall) {
-            Shows shows = ((ShowsDetailActivity) getActivity()).getShows();
             alreadyFavoriteCall = true;
             if (mSwitchFavorite.isChecked()) {
-                markAsFavorite(shows);
+                markAsFavorite(mShows);
             } else {
-                markAsNoFavorite(shows);
+                markAsNoFavorite(mShows);
             }
         }
     }
@@ -163,12 +194,11 @@ public class ShowDetailInfoFragment extends Fragment {
     public void setArchived() {
         //gestion de l'unicité de l'appel
         if (!alreadyArchivedCall) {
-            Shows shows = ((ShowsDetailActivity) getActivity()).getShows();
             alreadyArchivedCall = true;
             if (mSwitchArchived.isChecked()) {
-                markAsArchived(shows);
+                markAsArchived(mShows);
             } else {
-                markAsNoArchived(shows);
+                markAsNoArchived(mShows);
             }
         }
     }

@@ -18,23 +18,23 @@ import java.util.List;
 /**
  * Created by Arwandar on 10/05/2016.
  */
-public class ListEpisodesExpandableListAdapter extends BaseExpandableListAdapter {
+public class EpisodesExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context _context;
-    private List<Shows> _listDataHeader; // header titles
+    private Context mContext;
+    private List<Shows> mListDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<Shows, List<Unseen>> _listDataChild;
+    private HashMap<Shows, List<Unseen>> mListDataChild;
 
-    public ListEpisodesExpandableListAdapter(Context context, List<Shows> listDataHeader,
+    public EpisodesExpandableListAdapter(Context context, List<Shows> listDataHeader,
             HashMap<Shows, List<Unseen>> listChildData) {
-        this._context = context;
-        this._listDataHeader = listDataHeader;
-        this._listDataChild = listChildData;
+        this.mContext = context;
+        this.mListDataHeader = listDataHeader;
+        this.mListDataChild = listChildData;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+        return this.mListDataChild.get(this.mListDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
 
@@ -50,7 +50,7 @@ public class ListEpisodesExpandableListAdapter extends BaseExpandableListAdapter
         final String childText = unseen.getmCode() + " - " + unseen.getmTitle();
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
+            LayoutInflater infalInflater = (LayoutInflater) this.mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.small_item_episodes, null);
         }
@@ -64,18 +64,18 @@ public class ListEpisodesExpandableListAdapter extends BaseExpandableListAdapter
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDataChild.get(this._listDataHeader.get(groupPosition))
+        return this.mListDataChild.get(this.mListDataHeader.get(groupPosition))
                 .size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this._listDataHeader.get(groupPosition);
+        return this.mListDataHeader.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this._listDataHeader.size();
+        return this.mListDataHeader.size();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ListEpisodesExpandableListAdapter extends BaseExpandableListAdapter
             View convertView, ViewGroup parent) {
         String headerTitle = (String) ((Shows) getGroup(groupPosition)).getmTitle();
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
+            LayoutInflater infalInflater = (LayoutInflater) this.mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.episode_list_group, null);
         }

@@ -16,7 +16,7 @@ import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.model.Unseen;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.ListEpisodesExpandableListAdapter;
+import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.EpisodesExpandableListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
 
     @Bind(R.id.episodes_list_expendable_list_view)
     ExpandableListView mExpandableListView;
-    ListEpisodesExpandableListAdapter mAdapter;
+    EpisodesExpandableListAdapter mAdapter;
     List<Shows> mShowsList;
     HashMap<Shows, List<Unseen>> mShowsListHashMap;
 
@@ -46,7 +46,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
 
         getContent();
 
-        mAdapter = new ListEpisodesExpandableListAdapter(this, mShowsList, mShowsListHashMap);
+        mAdapter = new EpisodesExpandableListAdapter(this, mShowsList, mShowsListHashMap);
         mExpandableListView.setAdapter(mAdapter);
 
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

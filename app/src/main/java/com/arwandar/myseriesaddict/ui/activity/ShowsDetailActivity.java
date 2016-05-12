@@ -7,18 +7,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.api.converter.EpisodesComplexConverter;
 import com.arwandar.myseriesaddict.api.converter.ShowDisplayComplexConverter;
-import com.arwandar.myseriesaddict.api.dto.EpisodesComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.ShowDisplayComplexDTO;
-import com.arwandar.myseriesaddict.api.model.Episode;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.adpater.PagerAdapter.ShowDetailPagerAdapter;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -27,21 +21,31 @@ import retrofit2.Response;
 
 public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
-    private final List<Episode> mEpisodeList = new ArrayList<>();
     @Bind(R.id.swipeRefreshLayout)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
-    Shows mShows;
     @Bind((R.id.tabs))
     TabLayout mTabLayout;
     @Bind(R.id.shows_detail_view_pager)
     ViewPager mViewPager;
     ShowDetailPagerAdapter mAdapter;
-    String showsId;
+    String showId;
+    Shows mShows;
     boolean isEpisodesLoaded, isDetailsLoaded;
 
-    public Shows getShows() {
-        return mShows;
+    public String getShowId() {
+        return showId;
     }
+
+    public Shows getShows() {return mShows;}
+
+    public void isEpisodesLoaded(boolean pIsEpisodesLoaded) {
+        isEpisodesLoaded = pIsEpisodesLoaded;
+    }
+
+    public void isDetailsLoaded(boolean pIsDetailsLoaded) {
+        isDetailsLoaded = pIsDetailsLoaded;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
 
         initTabLayout();
 
-        showsId = getIntent().getStringExtra("showsId");
+        showId = getIntent().getStringExtra("showId");
 
         getContent();
 
@@ -67,7 +71,6 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         mViewPager.setOffscreenPageLimit(mAdapter.getCount());
         mViewPager.setAdapter(mAdapter);
 //        mViewPager.setCurrentItem(0);
-
 
     }
 
@@ -103,48 +106,22 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         isEpisodesLoaded = false;
         isDetailsLoaded = false;
         getDetails();
-        getEpisodes();
-    }
-
-    private void getEpisodes() {
-        CallManager.getEpisodesFromShow(showsId, new Callback<EpisodesComplexDTO>() {
-            @Override
-            public void onResponse(Call<EpisodesComplexDTO> call,
-                    Response<EpisodesComplexDTO> response) {
-                if (response.isSuccessful()) {
-                    EpisodesComplexConverter converter = new EpisodesComplexConverter();
-                    mEpisodeList.clear();
-                    for (Episode ep : converter.convertDtoToEpisodesComplex(response.body())
-                            .getmEpisodes()) {
-                        mEpisodeList.add(ep);
-                    }
-                } else {
-                    showErrorLogin(response.code());
-                }
-                isEpisodesLoaded = true;
-                onDataLoaded();
-            }
-
-            @Override
-            public void onFailure(Call<EpisodesComplexDTO> call, Throwable t) {
-                showError();
-            }
-        });
     }
 
     private void getDetails() {
-        CallManager.getShowDisplayAsync(showsId, new Callback<ShowDisplayComplexDTO>() {
+        CallManager.getShowDisplayAsync(showId, new Callback<ShowDisplayComplexDTO>() {
             @Override
             public void onResponse(Call<ShowDisplayComplexDTO> call,
                     Response<ShowDisplayComplexDTO> response) {
                 if (response.isSuccessful()) {
                     ShowDisplayComplexConverter converter = new ShowDisplayComplexConverter();
                     mShows = converter.convertDtoToShowDisplayComplex(response.body()).getmShow();
+                    isDetailsLoaded = true;
+                    onDataLoaded();
                 } else {
                     showErrorLogin(response.code());
                 }
-                isDetailsLoaded = true;
-                onDataLoaded();
+
             }
 
             @Override
@@ -155,7 +132,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
         });
     }
 
-    private void onDataLoaded() {
+    public void onDataLoaded() {
         if (isEpisodesLoaded && isDetailsLoaded) {
             mSwipeRefreshLayout.setRefreshing(false);
             setUI();

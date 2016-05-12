@@ -33,7 +33,7 @@
     <string name="mark_archived_ok_message">La série a été marquée comme archivée.</string>
     <string name="mark_no_archived_ok_message">La série a été enlevée des archivées.</string>
     <string name="session_expirée_message">Votre session a expiré, veuillez vous reconnecter.</string>
-    <string name="dialog_message_error">La liste ne peut être chargée</string>
+    <string name="dialog_message_error">Impossible de charger les données, vérifiez que vous êtes bien connecté à Internet.</string>
     <string name="dialog_title_error">Erreur</string>
 
     <!-- Useless-->

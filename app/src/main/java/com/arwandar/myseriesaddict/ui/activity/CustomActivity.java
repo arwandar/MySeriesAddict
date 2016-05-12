@@ -175,20 +175,13 @@ public abstract class CustomActivity extends AppCompatActivity
     }
 
     /**
-     * affiche une fenetre de dialog pour informer l'utilisateur
+     * affiche un toast pour informer l'utilisateur
      * d'un problème probablement lié à la connectivité
      */
     public void showError() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(CustomActivity.this);
-        builder.setMessage(R.string.dialog_message_error)
-                .setTitle(R.string.dialog_title_error);
-        builder.setNeutralButton(R.string.submit_button, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Toast.makeText(CustomActivity.this,
+                R.string.dialog_message_error, Toast.LENGTH_SHORT)
+                .show();
     }
 
     /**

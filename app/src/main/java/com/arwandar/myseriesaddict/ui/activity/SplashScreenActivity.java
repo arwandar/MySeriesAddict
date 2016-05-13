@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -46,6 +47,13 @@ public class SplashScreenActivity extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
+        startActivity(i);
+        return super.onTouchEvent(event);
     }
 
     private void StartAnimations() {

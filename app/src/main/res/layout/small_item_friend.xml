@@ -4,28 +4,40 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="horizontal"
+              android:padding="8dp"
               android:weightSum="1">
 
     <ImageView
         android:id="@+id/friend_picture"
-        android:layout_width="32dp"
-        android:layout_height="34dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop"
         tools:background="@color/colorAccent"/>
 
-    <TextView
-        android:id="@+id/friend_name_textview"
-        android:layout_width="106dp"
-        android:layout_height="36dp"
-        android:gravity="center"
-        android:paddingLeft="10px"
-        android:text="New Text"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="8dp">
 
-    <TextView
-        android:id="@+id/friend_xp_textview"
-        android:layout_width="86dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:paddingLeft="10px"
-        android:text="New Text"/>
+
+        <TextView
+            android:id="@+id/friend_name_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/friend_xp_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@android:color/secondary_text_light"/>
+
+    </LinearLayout>
 
 </LinearLayout>

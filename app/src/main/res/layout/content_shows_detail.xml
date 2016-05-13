@@ -10,12 +10,12 @@
     tools:showIn="@layout/app_bar_shows_detail">
 
 
-    <ImageView
-        android:id="@+id/shows_detail_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+    <!--<ImageView-->
+    <!--android:id="@+id/shows_detail_image"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_alignParentTop="true"-->
 
         android:adjustViewBounds="true"
         android:contentDescription="Image"/>
@@ -24,7 +24,8 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shows_detail_image"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:textColor="@android:color/secondary_text_light"/>
 

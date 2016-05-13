@@ -79,7 +79,7 @@ public class ShowDetailInfoFragment extends Fragment {
                     mShows = converter.convertDtoToShowDisplayComplex(response.body()).getmShow();
                     ((ShowsDetailActivity) getActivity()).isDetailsLoaded(true);
                     ((ShowsDetailActivity) getActivity())
-                            .onDataLoaded(mShows.getmImages().getmShow());
+                            .onDataLoaded(mShows.getmImages().getmPoster());
                     setUI();
                 } else {
                     ((CustomActivity) getActivity()).showErrorLogin(response.code());
@@ -120,7 +120,7 @@ public class ShowDetailInfoFragment extends Fragment {
     @OnCheckedChanged(R.id.shows_detail_favorite)
     public void setFavorite() {
         //gestion de l'unicité de l'appel
-        if (!alreadyFavoriteCall) {
+        if (!alreadyFavoriteCall && mShows != null) {
             alreadyFavoriteCall = true;
             if (mSwitchFavorite.isChecked()) {
                 markAsFavorite(mShows);
@@ -198,7 +198,7 @@ public class ShowDetailInfoFragment extends Fragment {
     @OnCheckedChanged(R.id.shows_detail_archived)
     public void setArchived() {
         //gestion de l'unicité de l'appel
-        if (!alreadyArchivedCall) {
+        if (!alreadyArchivedCall && mShows != null) {
             alreadyArchivedCall = true;
             if (mSwitchArchived.isChecked()) {
                 markAsArchived(mShows);

@@ -104,6 +104,7 @@ public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
             Picasso.with(ShowsDetailActivity.this).load(mUrl).into(image);
+            mToolbar.setMinimumHeight(image.getHeight());
         }
     }
 

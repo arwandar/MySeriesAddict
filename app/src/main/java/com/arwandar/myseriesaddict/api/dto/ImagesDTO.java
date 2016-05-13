@@ -13,6 +13,8 @@ public class ImagesDTO {
     private String mShow;
     @SerializedName("banner")
     private String mBanner;
+    @SerializedName("poster")
+    private String mPoster;
 
     public String getmBox() {
         return mBox;
@@ -24,5 +26,9 @@ public class ImagesDTO {
 
     public String getmBanner() {
         return mBanner;
+    }
+
+    public String getmPoster() {
+        return mPoster;
     }
 }

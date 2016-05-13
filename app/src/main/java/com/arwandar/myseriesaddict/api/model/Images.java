@@ -10,6 +10,7 @@ public class Images implements Serializable {
     private String mBox;
     private String mShow;
     private String mBanner;
+    private String mPoster;
 
     public String getmBox() {
         return mBox;
@@ -33,5 +34,13 @@ public class Images implements Serializable {
 
     public void setmBanner(String mBanner) {
         this.mBanner = mBanner;
+    }
+
+    public String getmPoster() {
+        return mPoster;
+    }
+
+    public void setmPoster(String mPoster) {
+        this.mPoster = mPoster;
     }
 }

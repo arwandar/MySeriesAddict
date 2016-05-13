@@ -26,6 +26,7 @@ public class ImagesConverter {
         images.setmBanner(dto.getmBanner());
         images.setmBox(dto.getmBox());
         images.setmShow(dto.getmShow());
+        images.setmPoster(dto.getmPoster());
         return images;
     }
 }

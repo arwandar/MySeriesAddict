@@ -25,6 +25,7 @@
     <string name="nb_episode_non_vus_label">Nb d\'épisodes non-vus</string>
     <string name="deconnection_label">Déconnexion</string>
     <string name="splash_screen_label">BIENVENUE\n\nSUR\n\nMySeriesAddict</string>
+    <string name="quick_view_tips">Touchez un épisode pour le marquer comme vu</string>
 
     <!-- Message-->
     <string name="save_modification_ok_message">Les modifications ont été enregistrées.</string>

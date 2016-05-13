@@ -154,22 +154,26 @@ public abstract class CustomActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<MemberComplexDTO> call,
                     Response<MemberComplexDTO> response) {
-                MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
-                User user;
-                user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
+                if(response.isSuccessful()) {
+                    MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
+                    User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
 
-                TextView login = (TextView) findViewById(R.id.nav_bar_login);
-                TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
-                ImageView picture = (ImageView) findViewById(R.id.nav_bar_picture);
+                    TextView login = (TextView) findViewById(R.id.nav_bar_login);
+                    TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
+                    ImageView picture = (ImageView) findViewById(R.id.nav_bar_picture);
 
-                login.setText(user.getmLogin());
-                xp.setText(format("%s xp", user.getmXp()));
-                Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
+                    login.setText(user.getmLogin());
+                    xp.setText(format("%s xp", user.getmXp()));
+                    Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
+                }
+                else {
+                    showErrorLogin(response.code());
+                }
             }
 
             @Override
             public void onFailure(Call<MemberComplexDTO> call, Throwable t) {
-
+                showError();
             }
         });
     }

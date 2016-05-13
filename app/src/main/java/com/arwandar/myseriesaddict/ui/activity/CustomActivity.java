@@ -57,7 +57,12 @@ public abstract class CustomActivity extends AppCompatActivity
     public void onBackPressed() {
         if (mLayout.isDrawerOpen(GravityCompat.START)) {
             mLayout.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (isTaskRoot()) {
+            startActivity(new Intent(CustomActivity.this, QuickWatchedActivity.class));
+            finish();
+        } else
+
+        {
             super.onBackPressed();
         }
     }

@@ -22,6 +22,8 @@ import in.co.ophio.secure.core.ObscuredPreferencesBuilder;
  */
 public class SplashScreenActivity extends Activity {
 
+    private final String SECRET_KEY = "bc7c3kk9a09ofjjeqeeufe9kbu";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,7 @@ public class SplashScreenActivity extends Activity {
                 .obfuscateValue(true)
                 .obfuscateKey(true)
                 .setSharePrefFileName("shared_preferences_name")
-                .setSecret("chat")     //secret key
+                .setSecret(SECRET_KEY)
                 .createSharedPrefs();
         SharedPrefsSingleton.initInstance(sharedPreferences);
 

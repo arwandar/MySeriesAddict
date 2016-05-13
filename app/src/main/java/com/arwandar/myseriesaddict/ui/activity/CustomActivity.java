@@ -22,6 +22,7 @@ import com.arwandar.myseriesaddict.api.dto.ErrorsComplexDTO;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
+import com.arwandar.myseriesaddict.ui.util.RoundedTransformation;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -164,7 +165,11 @@ public abstract class CustomActivity extends AppCompatActivity
 
                     login.setText(user.getmLogin());
                     xp.setText(format("%s xp", user.getmXp()));
-                    Picasso.with(getApplicationContext()).load(user.getmAvatar()).into(picture);
+                    Picasso.with(getApplicationContext())
+                            .load(user.getmAvatar())
+                            .transform(new RoundedTransformation(200, 0))
+                            .fit()
+                            .into(picture);
                 }
                 else {
                     showErrorLogin(response.code());

@@ -11,7 +11,7 @@ import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.ItemClickSupport;
+import com.arwandar.myseriesaddict.ui.util.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.ShowsAdapter;
 
 import java.util.ArrayList;

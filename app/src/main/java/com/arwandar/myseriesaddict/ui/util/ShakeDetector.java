@@ -1,4 +1,4 @@
-package com.arwandar.myseriesaddict.ui;
+package com.arwandar.myseriesaddict.ui.util;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;

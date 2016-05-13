@@ -8,7 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
 import com.arwandar.myseriesaddict.R;
-import com.arwandar.myseriesaddict.ui.ShakeDetector;
+import com.arwandar.myseriesaddict.ui.util.ShakeDetector;
 
 import butterknife.Bind;
 

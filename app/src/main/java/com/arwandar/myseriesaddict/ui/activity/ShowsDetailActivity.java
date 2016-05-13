@@ -85,9 +85,7 @@ public class ShowsDetailActivity extends CustomActivity {
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
-        }
+        setRefreshing();
         mAdapter.notifyDataSetChanged();
         isEpisodesLoaded = false;
         isDetailsLoaded = false;
@@ -100,17 +98,17 @@ public class ShowsDetailActivity extends CustomActivity {
 
     public void onDataLoaded() {
         if (isEpisodesLoaded && isDetailsLoaded) {
+            Picasso.with(ShowsDetailActivity.this).load(mUrl).into(image);
+            mToolbar.setMinimumHeight(image.getHeight());
             if (mSwipeRefreshLayout != null) {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-            Picasso.with(ShowsDetailActivity.this).load(mUrl).into(image);
-            mToolbar.setMinimumHeight(image.getHeight());
         }
     }
 
     public void setRefreshing() {
         if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
+            startRefresh();
         }
     }
 }

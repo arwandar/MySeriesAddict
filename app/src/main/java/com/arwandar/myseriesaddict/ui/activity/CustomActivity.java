@@ -277,4 +277,13 @@ public abstract class CustomActivity extends AppCompatActivity
             startActivity(intent);
         }
     }
+
+    protected void startRefresh() {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
 }

@@ -61,9 +61,8 @@ public class QuickWatchedActivity extends CustomActivity {
      */
     protected void getContent() {
         if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
+            startRefresh();
         }
-        //mCustomModelShowEpisodes.clear();
         getEpisodesCompleted = false;
         getFavoritesCompleted = false;
         getEpisodes();

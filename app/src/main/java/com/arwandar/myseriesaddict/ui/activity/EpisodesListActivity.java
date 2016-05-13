@@ -133,7 +133,7 @@ public class EpisodesListActivity extends CustomActivity {
      */
     protected void getContent() {
         if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
+            startRefresh();
         }
         CallManager.getEpisodesListAsync(SharedPrefsSingleton.getEpisodesLimit(),
                 new Callback<ShowsComplexDTO>() {

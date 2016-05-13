@@ -98,7 +98,7 @@ public class ShowsListActivity extends CustomActivity {
      */
     void getContent() {
         if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
+            startRefresh();
         }
         CallManager.getMemberInfosAsync(new Callback<MemberComplexDTO>() {
             @Override

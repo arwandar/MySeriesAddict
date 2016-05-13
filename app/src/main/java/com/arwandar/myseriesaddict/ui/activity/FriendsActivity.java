@@ -49,7 +49,9 @@ public class FriendsActivity extends CustomActivity {
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
-        //mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            startRefresh();
+        }
         CallManager.getFriendsListAsync(new Callback<UsersDTO>() {
             @Override
             public void onResponse(Call<UsersDTO> call, Response<UsersDTO> response) {

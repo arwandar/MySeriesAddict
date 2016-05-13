@@ -81,4 +81,14 @@ public class SharedPrefsSingleton {
         editor.putInt("episodesLimit", pLimit);
         editor.commit();
     }
+
+    public static float getShakeSensorAccuracy() { return instance.prefs.getFloat
+            ("shakeSensorAccurcay", 3.5F);}
+
+    public static void setShakeSensorAccurcay(float pAccuracy) {
+        SharedPreferences.Editor editor = instance.prefs.edit();
+
+        editor.putFloat("shakeSensorAccurcay", pAccuracy);
+        editor.commit();
+    }
 }

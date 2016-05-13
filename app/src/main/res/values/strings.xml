@@ -26,6 +26,7 @@
     <string name="deconnection_label">Déconnexion</string>
     <string name="splash_screen_label">BIENVENUE\n\nSUR\n\nMySeriesAddict</string>
     <string name="quick_view_tips">Touchez un épisode pour le marquer comme vu</string>
+    <string name="settings_cursor_label">Sensibilité du capteur</string>
 
     <!-- Message-->
     <string name="save_modification_ok_message">Les modifications ont été enregistrées.</string>

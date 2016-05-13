@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendsActivity extends CustomSwipeAndShakableActivity {
+public class FriendsActivity extends CustomActivity {
 
     protected final List<User> mUsers = new ArrayList<>();
 

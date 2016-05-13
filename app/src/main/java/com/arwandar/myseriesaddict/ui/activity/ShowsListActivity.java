@@ -11,8 +11,8 @@ import com.arwandar.myseriesaddict.api.converter.MemberComplexConverter;
 import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.util.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.ShowsAdapter;
+import com.arwandar.myseriesaddict.ui.util.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowsListActivity extends CustomSwipeAndShakableActivity {
+public class ShowsListActivity extends CustomActivity {
 
     @Bind(R.id.shows_list)
     protected RecyclerView mRecyclerView;
@@ -49,7 +49,6 @@ public class ShowsListActivity extends CustomSwipeAndShakableActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         initItemClikSupport();
-
     }
 
     /**

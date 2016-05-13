@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 
-public class ShowsDetailActivity extends CustomSwipeAndShakableActivity {
+public class ShowsDetailActivity extends CustomActivity {
 
     @Bind((R.id.tabs))
     TabLayout mTabLayout;

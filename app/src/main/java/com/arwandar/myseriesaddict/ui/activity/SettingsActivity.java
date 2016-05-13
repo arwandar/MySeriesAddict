@@ -10,7 +10,7 @@ import com.arwandar.myseriesaddict.api.SharedPrefsSingleton;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class SettingsActivity extends CustomSwipeAndShakableActivity {
+public class SettingsActivity extends CustomActivity {
 
     @Bind(R.id.settings_nb_episodes)
     TextView mNbEpisodes;

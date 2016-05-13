@@ -14,8 +14,8 @@ import com.arwandar.myseriesaddict.api.model.CustomModelShowEpisode;
 import com.arwandar.myseriesaddict.api.model.Shows;
 import com.arwandar.myseriesaddict.api.model.ShowsComplex;
 import com.arwandar.myseriesaddict.api.service.CallManager;
-import com.arwandar.myseriesaddict.ui.util.ItemClickSupport;
 import com.arwandar.myseriesaddict.ui.adpater.ListAdapter.QuickWatchedAdapter;
+import com.arwandar.myseriesaddict.ui.util.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class QuickWatchedActivity extends CustomSwipeAndShakableActivity {
+public class QuickWatchedActivity extends CustomActivity {
 
     boolean getFavoritesCompleted, getEpisodesCompleted;
     @Bind(R.id.quick_watched_recycler_view)

@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
+public class EpisodesListActivity extends CustomActivity {
 
     @Bind(R.id.episodes_list_expendable_list_view)
     ExpandableListView mExpandableListView;
@@ -52,7 +52,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
-                                        final int groupPosition, final int childPosition, long id) {
+                    final int groupPosition, final int childPosition, long id) {
                 markAsWatch(groupPosition, childPosition);
 
                 return false;
@@ -64,14 +64,15 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
      * creer une alertDialog pour savoir si l'utilisateur veut vraiment marqué l'épisode comme vu
      * et gestion des reponses
      *
-     * @param groupPosition  position du group
-     * @param childPosition  position de l'item dans le group
+     * @param groupPosition position du group
+     * @param childPosition position de l'item dans le group
      */
     private void markAsWatch(final int groupPosition, final int childPosition) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EpisodesListActivity.this);
         builder.setMessage("L'épisode " + mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
-                childPosition).getmCode() + " - " + mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
-                childPosition).getmTitle() + " va être marqué comme vu.");
+                childPosition).getmCode() + " - " +
+                mShowsListHashMap.get(mShowsList.get(groupPosition)).get(
+                        childPosition).getmTitle() + " va être marqué comme vu.");
         builder.setPositiveButton(getString(R.string.submit_button),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -94,7 +95,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
         CallManager.markEpisodeAsWatchedAsync(episodeId, new Callback<EpisodeComplexDTO>() {
             @Override
             public void onResponse(Call<EpisodeComplexDTO> call,
-                                   Response<EpisodeComplexDTO> response) {
+                    Response<EpisodeComplexDTO> response) {
                 if (response.isSuccessful()) {
                     String toastString = mShowsListHashMap.get(mShowsList.get(groupPosition))
                             .get(childPosition).getmCode() + " a été marqué comme vu.";
@@ -115,8 +116,8 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
     /**
      * suppression d'un episode de la liste, et si besoin, du header
      *
-     * @param groupPosition  position du group
-     * @param childPosition  position de l'item dans le group
+     * @param groupPosition position du group
+     * @param childPosition position de l'item dans le group
      */
     private void removeEpisodeFromList(int groupPosition, int childPosition) {
         mShowsListHashMap.get(mShowsList.get(groupPosition)).remove(childPosition);
@@ -138,7 +139,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
                 new Callback<ShowsComplexDTO>() {
                     @Override
                     public void onResponse(Call<ShowsComplexDTO> call,
-                                           Response<ShowsComplexDTO> response) {
+                            Response<ShowsComplexDTO> response) {
                         if (response.isSuccessful()) {
                             ShowsComplexConverter showsComplexConverter =
                                     new ShowsComplexConverter();
@@ -163,7 +164,7 @@ public class EpisodesListActivity extends CustomSwipeAndShakableActivity {
     /**
      * remplissage des listes utilisées par l'ExpandableListView
      *
-     * @param pShowsComplex    le show a utilisé
+     * @param pShowsComplex le show a utilisé
      */
     private void setData(ShowsComplex pShowsComplex) {
         mShowsList.clear();

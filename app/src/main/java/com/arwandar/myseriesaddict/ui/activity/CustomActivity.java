@@ -1,12 +1,15 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,6 +26,7 @@ import com.arwandar.myseriesaddict.api.dto.MemberComplexDTO;
 import com.arwandar.myseriesaddict.api.model.User;
 import com.arwandar.myseriesaddict.api.service.CallManager;
 import com.arwandar.myseriesaddict.ui.util.RoundedTransformation;
+import com.arwandar.myseriesaddict.ui.util.ShakeDetector;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -36,6 +40,12 @@ import static java.lang.String.format;
 public abstract class CustomActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    @Nullable
+    @Bind(R.id.swipeRefreshLayout)
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SensorManager mSensorManager;
+    protected Sensor mAccelerometer;
+    protected ShakeDetector mShakeDetector;
     @Bind(R.id.drawer_layout)
     DrawerLayout mLayout;
     @Bind(R.id.nav_view)
@@ -108,6 +118,23 @@ public abstract class CustomActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager
+                .registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
+
+    abstract void getContent();
+
     /**
      * gesstion de la deconnexion de l'utilisateur
      */
@@ -145,6 +172,47 @@ public abstract class CustomActivity extends AppCompatActivity
 
         mNavigationView.setNavigationItemSelectedListener(this);
         setCustomNavBar();
+
+        initShake();
+        initSwipe();
+    }
+
+    protected void initSwipe() {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+
+                        @Override
+                        public void onRefresh() {
+                            getContent();
+                        }
+                    });
+        }
+    }
+
+    /**
+     * ShakeDetector initialization
+     */
+    private void initShake() {
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+                /*
+                 * The following method, "handleShakeEvent(count):" is a stub //
+				 * method you would use to setup whatever you want done once the
+				 * device has been shook.
+				 */
+                Toast.makeText(CustomActivity.this,
+                        R.string.shake_message, Toast.LENGTH_SHORT)
+                        .show();
+                getContent();
+            }
+        });
     }
 
     /**
@@ -155,9 +223,10 @@ public abstract class CustomActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<MemberComplexDTO> call,
                     Response<MemberComplexDTO> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     MemberComplexConverter memberComplexConverter = new MemberComplexConverter();
-                    User user = memberComplexConverter.convertDtoToMember(response.body()).getUser();
+                    User user =
+                            memberComplexConverter.convertDtoToMember(response.body()).getUser();
 
                     TextView login = (TextView) findViewById(R.id.nav_bar_login);
                     TextView xp = (TextView) findViewById(R.id.nav_bar_xp);
@@ -170,8 +239,7 @@ public abstract class CustomActivity extends AppCompatActivity
                             .transform(new RoundedTransformation(200, 0))
                             .fit()
                             .into(picture);
-                }
-                else {
+                } else {
                     showErrorLogin(response.code());
                 }
             }

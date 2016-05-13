@@ -39,7 +39,7 @@ public class EpisodesListActivity extends CustomActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_episodes_list);
-        initActivity();
+        initActivity(1);
 
         mShowsList = new ArrayList<>();
         mShowsListHashMap = new HashMap<>();

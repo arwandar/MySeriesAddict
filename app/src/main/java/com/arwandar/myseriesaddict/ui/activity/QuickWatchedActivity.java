@@ -1,6 +1,7 @@
 package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -31,6 +32,7 @@ public class QuickWatchedActivity extends CustomActivity {
     @Bind(R.id.quick_watched_recycler_view)
     RecyclerView mRecyclerView;
     QuickWatchedAdapter mAdapter;
+    boolean doubleBackToExitPressedOnce = false;
     private List<CustomModelShowEpisode> mCustomModelShowEpisodes =
             new ArrayList<>();
     private List<CustomModelShowEpisode> mCustomModelShowEpisodesCall =
@@ -42,7 +44,7 @@ public class QuickWatchedActivity extends CustomActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_watched);
-        initActivity();
+        initActivity(0);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -57,12 +59,33 @@ public class QuickWatchedActivity extends CustomActivity {
     }
 
     /**
+     * depuis cette activity, un double back ferme l'app
+     */
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            this.finishAffinity();
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.leave_app_message, Toast.LENGTH_SHORT)
+                .show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
+    /**
      * appel au webservice pour recuperer les données
      */
     protected void getContent() {
         if (mSwipeRefreshLayout != null) {
             startRefresh();
         }
+        //mCustomModelShowEpisodes.clear();
         getEpisodesCompleted = false;
         getFavoritesCompleted = false;
         getEpisodes();

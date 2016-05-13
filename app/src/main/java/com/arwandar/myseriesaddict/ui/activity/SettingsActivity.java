@@ -19,7 +19,7 @@ public class SettingsActivity extends CustomActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        initActivity();
+        initActivity(-1);
         getContent();
     }
 

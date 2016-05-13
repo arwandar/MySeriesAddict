@@ -47,4 +47,5 @@
     <string name="shake_message">Rafraîchissement en cours</string>
     <string name="switch_favorite">Favorite</string>
     <string name="switch_archived">Archivée</string>
+    <string name="leave_app_message">Appuyer une deuxième fois pour quitter l\'app</string>
 </resources>

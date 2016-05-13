@@ -46,7 +46,7 @@ public class ShowsDetailActivity extends CustomActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows_detail);
 
-        initActivity();
+        initActivity(getIntent().getExtras().getInt("indexMenu"));
 
         initTabLayout();
 

@@ -88,19 +88,23 @@ public abstract class CustomActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Intent intent;
+
         switch (item.getItemId()) {
             case R.id.nav_friends:
                 startActivity(new Intent(CustomActivity.this, FriendsActivity.class));
+                finish();
                 break;
             case R.id.nav_archived_shows:
                 intent = new Intent(CustomActivity.this, ShowsListActivity.class);
                 intent.putExtra("fragmentChoose", 0);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_pending_shows:
                 intent = new Intent(CustomActivity.this, ShowsListActivity.class);
                 intent.putExtra("fragmentChoose", 1);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_deconnection:
                 disconnection();
@@ -108,10 +112,12 @@ public abstract class CustomActivity extends AppCompatActivity
             case R.id.nav_episodes:
                 intent = new Intent(CustomActivity.this, EpisodesListActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_quick_view:
                 intent = new Intent(CustomActivity.this, QuickWatchedActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
         mLayout.closeDrawers();
@@ -146,6 +152,7 @@ public abstract class CustomActivity extends AppCompatActivity
                 SharedPrefsSingleton.setAccessToken("");
                 Intent intent = new Intent(CustomActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -158,8 +165,10 @@ public abstract class CustomActivity extends AppCompatActivity
     /**
      * lignes commune à tous les OnCreate
      * CustomActivity ne contient pas de OnCreate car elle est Override dans les classes héritantes
+     *
+     * @param pIndex
      */
-    protected void initActivity() {
+    protected void initActivity(int pIndex) {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
@@ -171,6 +180,9 @@ public abstract class CustomActivity extends AppCompatActivity
         toggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
+        if (pIndex >= 0) {
+            mNavigationView.getMenu().getItem(pIndex).setChecked(true);
+        }
         setCustomNavBar();
 
         initShake();

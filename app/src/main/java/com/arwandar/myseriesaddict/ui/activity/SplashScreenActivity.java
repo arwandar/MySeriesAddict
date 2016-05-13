@@ -55,6 +55,7 @@ public class SplashScreenActivity extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
         startActivity(i);
+        finish();
         return super.onTouchEvent(event);
     }
 

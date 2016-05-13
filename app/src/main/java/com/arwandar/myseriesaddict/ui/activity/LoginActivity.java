@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(LoginActivity.this, mActivityClass);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             // so launch another Activity that handles URLs
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
+            finish();
             return true;
         }
     }

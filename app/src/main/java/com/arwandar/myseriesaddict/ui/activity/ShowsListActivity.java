@@ -31,16 +31,14 @@ public class ShowsListActivity extends CustomActivity {
     protected int title;
     private List<Shows> mShows = new ArrayList<>();
     private ShowsAdapter mAdapter;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shows_list);
-
-        initActivity();
-
         choixListe();
-
+        initActivity(index);
         getContent();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ShowsListActivity.this);
@@ -60,10 +58,12 @@ public class ShowsListActivity extends CustomActivity {
             case 0:
                 this.isArchived = "true";
                 setTitle(R.string.archived_shows_label);
+                index = 3;
                 break;
             default:
                 this.isArchived = "false";
                 setTitle(R.string.pending_shows_label);
+                index = 2;
                 break;
         }
     }
@@ -76,6 +76,7 @@ public class ShowsListActivity extends CustomActivity {
                         Intent intent =
                                 new Intent(ShowsListActivity.this, ShowsDetailActivity.class);
                         intent.putExtra("showsId", mShows.get(position).getmId());
+                        intent.putExtra("indexMenu", index);
                         startActivity(intent);
                     }
                 });
@@ -87,6 +88,7 @@ public class ShowsListActivity extends CustomActivity {
                         Intent intent =
                                 new Intent(ShowsListActivity.this, ShowsDetailActivity.class);
                         intent.putExtra("showsId", mShows.get(position).getmId());
+                        intent.putExtra("indexMenu", index);
                         startActivity(intent);
                         return false;
                     }

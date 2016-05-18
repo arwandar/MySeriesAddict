@@ -58,8 +58,6 @@ public class EpisodesListActivity extends CustomActivity {
                 return false;
             }
         });
-
-        //mExpandableListView
     }
 
     /**

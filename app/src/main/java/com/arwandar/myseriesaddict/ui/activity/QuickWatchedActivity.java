@@ -2,6 +2,7 @@ package com.arwandar.myseriesaddict.ui.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -63,12 +64,15 @@ public class QuickWatchedActivity extends CustomActivity {
      */
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (mLayout.isDrawerOpen(GravityCompat.START)) {
+            mLayout.closeDrawer(GravityCompat.START);
+        } else if (doubleBackToExitPressedOnce) {
             this.finishAffinity();
+        } else {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, R.string.leave_app_message, Toast.LENGTH_SHORT)
+                    .show();
         }
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.leave_app_message, Toast.LENGTH_SHORT)
-                .show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
